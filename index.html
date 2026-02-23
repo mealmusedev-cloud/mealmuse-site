@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MealMuse — AI-Powered Meal Planning</title>
+<meta name="description" content="A week of meals, planned in seconds. MealMuse is an AI-powered meal planning app for iOS and Android.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: #F8F6F1;
+  color: #2E2B26;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+img { max-width: 100%; display: block; }
+ul { list-style: none; }
+
+/* ========== TYPOGRAPHY ========== */
+h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
+
+/* ========== UTILITY ========== */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.accent { color: #B8885C; }
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #B8885C;
+  margin-bottom: 12px;
+}
+
+/* ========== SCROLL ANIMATIONS ========== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== NAV ========== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0 24px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(248, 246, 241, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.nav-inner {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.nav-links a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #8A857C;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: #2E2B26; }
+.btn-primary {
+  background: #2E2B26;
+  color: #F8F6F1;
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary:hover { background: #1a1815; transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent;
+  color: #2E2B26;
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  transition: border-color 0.2s, transform 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-ghost:hover { border-color: rgba(0,0,0,0.3); transform: translateY(-1px); }
+.btn-primary-light {
+  background: #F8F6F1;
+  color: #2E2B26;
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary-light:hover { background: #fff; transform: translateY(-1px); }
+
+/* Nav Dropdown */
+.nav-dropdown {
+  position: relative;
+}
+.nav-dropdown-trigger {
+  cursor: pointer;
+}
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 16px;
+  padding: 8px;
+  min-width: 200px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
+  z-index: 1001;
+}
+.nav-dropdown:hover .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nav-dropdown-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #2E2B26 !important;
+  transition: background 0.15s;
+}
+.nav-dropdown-menu a:hover {
+  background: #F8F6F1;
+}
+.nav-dropdown-menu a svg {
+  width: 18px;
+  height: 18px;
+  fill: #2E2B26;
+  flex-shrink: 0;
+}
+.nav-dropdown-menu a .platform-label {
+  display: flex;
+  flex-direction: column;
+}
+.nav-dropdown-menu a .platform-label small {
+  font-size: 0.7rem;
+  color: #8A857C;
+  font-weight: 400;
+}
+
+/* ========== HERO ========== */
+.hero {
+  padding: 160px 24px 100px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  bottom: -200px;
+  left: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(184,136,92,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(125,168,110,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero .noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+.hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.hero-text { max-width: 540px; }
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(184,136,92,0.1);
+  color: #B8885C;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+.hero-tag::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #B8885C;
+}
+.hero h1 {
+  font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+  line-height: 1.1;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: #8A857C;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 440px;
+}
+.hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-buttons .btn-primary svg { width: 18px; height: 18px; fill: currentColor; }
+.hero-buttons .btn-ghost svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  transition: transform 0.2s;
+}
+.hero-buttons .btn-ghost:hover svg { transform: translateX(3px); }
+
+/* Platform Buttons */
+.btn-platform {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: transform 0.15s, box-shadow 0.2s;
+  text-decoration: none;
+}
+.btn-platform:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+.btn-platform svg { width: 22px; height: 22px; fill: currentColor; }
+.btn-platform-dark {
+  background: #2E2B26;
+  color: #F8F6F1;
+}
+.btn-platform-outline {
+  background: transparent;
+  color: #2E2B26;
+  border: 1.5px solid rgba(0,0,0,0.15);
+}
+.btn-platform-outline:hover { border-color: rgba(0,0,0,0.3); }
+.btn-platform .platform-info { display: flex; flex-direction: column; line-height: 1.2; }
+.btn-platform .platform-info small { font-size: 0.65rem; font-weight: 400; opacity: 0.7; }
+.btn-platform .platform-info span { font-size: 0.95rem; }
+
+/* Hero Stat Strip */
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+}
+.hero-stat-number {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  color: #B8885C;
+  line-height: 1.2;
+}
+.hero-stat-label {
+  font-size: 0.75rem;
+  color: #8A857C;
+  font-weight: 500;
+}
+
+/* ========== PHONE MOCKUP ========== */
+.phone-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.phone {
+  width: 280px;
+  height: 580px;
+  background: #1a1a1a;
+  border-radius: 44px;
+  padding: 12px;
+  position: relative;
+  box-shadow:
+    0 40px 80px rgba(0,0,0,0.12),
+    0 16px 32px rgba(0,0,0,0.08),
+    inset 0 0 0 1.5px rgba(255,255,255,0.1);
+  animation: phoneFloat 6s ease-in-out infinite;
+}
+@keyframes phoneFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.phone-notch {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 28px;
+  background: #1a1a1a;
+  border-radius: 0 0 18px 18px;
+  z-index: 10;
+}
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  background: #F8F6F1;
+  border-radius: 34px;
+  overflow: hidden;
+  padding: 48px 16px 16px;
+}
+.phone-header {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+  color: #2E2B26;
+}
+.phone-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.phone-tab {
+  padding: 5px 10px;
+  border-radius: 100px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #8A857C;
+  background: transparent;
+  white-space: nowrap;
+}
+.phone-tab.active {
+  background: #2E2B26;
+  color: #F8F6F1;
+}
+.phone-meal {
+  background: #FFFFFF;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+.phone-meal-type {
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #B0AAA0;
+  margin-bottom: 4px;
+}
+.phone-meal-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: #2E2B26;
+}
+.phone-meal-meta {
+  display: flex;
+  gap: 10px;
+  font-size: 0.6rem;
+  color: #8A857C;
+}
+.phone-meal-meta span { display: flex; align-items: center; gap: 3px; }
+
+/* ========== MARQUEE ========== */
+.marquee-section {
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  padding: 20px 0;
+  overflow: hidden;
+  position: relative;
+}
+.marquee-track {
+  display: flex;
+  gap: 40px;
+  animation: marqueeScroll 30s linear infinite;
+  width: max-content;
+}
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #8A857C;
+}
+.marquee-item::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #B8885C;
+  flex-shrink: 0;
+}
+
+/* ========== STATS STRIP ========== */
+.stats-strip {
+  padding: 80px 24px;
+}
+.stats-strip-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+.stat-card {
+  padding: 32px 20px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 20px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+}
+.stat-card-number {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.4rem;
+  color: #B8885C;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.stat-card-label {
+  font-size: 0.85rem;
+  color: #8A857C;
+  font-weight: 500;
+}
+
+/* ========== FEATURES ========== */
+.features {
+  padding: 120px 24px;
+}
+.features-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.features-header h2 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  letter-spacing: -0.02em;
+}
+.features-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.feature-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-left: 3px solid transparent;
+  border-radius: 20px;
+  padding: 32px 28px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  border-left-color: #B8885C;
+}
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  background: #F8F6F1;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.feature-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: #B8885C;
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.feature-card h3 {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.feature-card p {
+  font-size: 0.9rem;
+  color: #8A857C;
+  line-height: 1.6;
+}
+
+/* ========== PRICING ========== */
+.pricing {
+  padding: 120px 24px;
+  background: linear-gradient(180deg, #F8F6F1 0%, #F3F0EA 100%);
+}
+.pricing-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.pricing-header h2 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  letter-spacing: -0.02em;
+}
+.pricing-cards {
+  display: flex;
+  gap: 20px;
+  max-width: 680px;
+  margin: 0 auto;
+  align-items: start;
+}
+.pricing-card {
+  flex: 1;
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 24px;
+  padding: 36px 28px;
+  position: relative;
+}
+.pricing-card.premium {
+  border: 2px solid #B8885C;
+  box-shadow: 0 20px 60px rgba(184,136,92,0.12);
+  transform: scale(1.03);
+}
+.pricing-cta {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+.pricing-cta .btn-primary,
+.pricing-cta .btn-ghost {
+  width: 100%;
+  justify-content: center;
+}
+.pricing-card.premium .pricing-cta { border-top-color: rgba(184,136,92,0.2); }
+.pricing-badge {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #B8885C;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 5px 16px;
+  border-radius: 100px;
+}
+.pricing-plan-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #B0AAA0;
+  margin-bottom: 8px;
+}
+.pricing-price {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.4rem;
+  margin-bottom: 4px;
+}
+.pricing-price span {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #8A857C;
+}
+.pricing-subtitle {
+  font-size: 0.85rem;
+  color: #B0AAA0;
+  margin-bottom: 24px;
+}
+.pricing-features { display: flex; flex-direction: column; gap: 12px; }
+.pricing-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #2E2B26;
+}
+.pricing-feature .icon-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(125,168,110,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.pricing-feature .icon-check svg {
+  width: 12px;
+  height: 12px;
+  stroke: #7DA86E;
+  fill: none;
+  stroke-width: 2.5;
+}
+.pricing-feature .icon-dash {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.pricing-feature .icon-dash svg {
+  width: 10px;
+  height: 10px;
+  stroke: #B0AAA0;
+  fill: none;
+  stroke-width: 2.5;
+}
+.pricing-feature.limit { color: #8A857C; }
+
+/* ========== CTA BAND ========== */
+.cta-band {
+  padding: 100px 24px;
+  text-align: center;
+  background: #2E2B26;
+  color: #F8F6F1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 32px;
+  max-width: 1200px;
+  margin: 0 auto 0;
+}
+.cta-band::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(184,136,92,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-band h2 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  color: #B8885C;
+  position: relative;
+}
+.cta-band p {
+  font-size: 1.1rem;
+  color: rgba(248,246,241,0.6);
+  margin-bottom: 32px;
+  position: relative;
+}
+.cta-band .btn-primary-light { position: relative; }
+.cta-band .cta-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding: 60px 24px 32px;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 40px;
+}
+.footer-brand .footer-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+.footer-brand .footer-tagline {
+  font-size: 0.9rem;
+  color: #8A857C;
+  line-height: 1.6;
+  max-width: 280px;
+}
+.footer-col-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #B0AAA0;
+  margin-bottom: 16px;
+}
+.footer-col a {
+  display: block;
+  font-size: 0.9rem;
+  color: #8A857C;
+  margin-bottom: 10px;
+  transition: color 0.2s;
+}
+.footer-col a:hover { color: #2E2B26; }
+.footer-bottom {
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-copy {
+  font-size: 0.8rem;
+  color: #B0AAA0;
+}
+.footer-contact {
+  font-size: 0.8rem;
+  color: #8A857C;
+}
+.footer-contact a { color: #B8885C; }
+
+/* ========== CONTENT PAGES ========== */
+.content-page {
+  display: none;
+  padding: 120px 24px 80px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.content-page.active { display: block; }
+.content-page h1 {
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.content-page .page-subtitle {
+  font-size: 0.95rem;
+  color: #B0AAA0;
+  margin-bottom: 48px;
+}
+.content-page h2 {
+  font-size: 1.15rem;
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 700;
+  margin-top: 36px;
+  margin-bottom: 12px;
+}
+.content-page p, .content-page li {
+  font-size: 0.95rem;
+  color: #8A857C;
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+.content-page ul {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+.content-page ul li {
+  position: relative;
+  padding-left: 8px;
+  margin-bottom: 8px;
+}
+.content-page ul li::before {
+  content: '—';
+  position: absolute;
+  left: -16px;
+  color: #B0AAA0;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #B8885C;
+  margin-bottom: 40px;
+  transition: gap 0.2s;
+}
+.back-link:hover { gap: 10px; }
+.faq-item { margin-bottom: 28px; }
+.faq-item h3 {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #2E2B26;
+}
+.faq-item p {
+  font-size: 0.9rem;
+  color: #8A857C;
+  line-height: 1.7;
+}
+.contact-box {
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 40px;
+}
+.contact-box p {
+  margin-bottom: 4px;
+}
+.contact-box a {
+  color: #B8885C;
+  font-weight: 500;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .nav-links > a:not(.btn-primary) { display: none; }
+  .nav-dropdown { display: block; }
+  .nav-dropdown .nav-dropdown-trigger { padding: 8px 18px; font-size: 0.85rem; }
+  .hero-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 48px;
+  }
+  .hero-text { max-width: 100%; }
+  .hero-subtitle { margin-left: auto; margin-right: auto; }
+  .hero-buttons { justify-content: center; }
+  .hero-stats { justify-content: center; }
+  .phone-wrapper { order: -1; }
+  .phone {
+    width: 240px;
+    height: 500px;
+    border-radius: 38px;
+    padding: 10px;
+  }
+  .phone-notch { width: 86px; height: 24px; border-radius: 0 0 14px 14px; top: 10px; }
+  .phone-screen { border-radius: 30px; padding: 42px 14px 14px; }
+  .stats-strip-inner { grid-template-columns: 1fr; max-width: 300px; margin: 0 auto; }
+  .features-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+  .pricing-cards { flex-direction: column; max-width: 360px; margin: 0 auto; }
+  .pricing-card.premium { transform: scale(1); }
+  .cta-band { border-radius: 20px; margin: 0 16px; padding: 64px 24px; }
+  .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 32px; }
+  .footer-brand .footer-tagline { max-width: 100%; margin: 0 auto; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== NAV ==================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo" onclick="showPage('landing')">Meal<span class="accent">Muse</span></div>
+    <div class="nav-links">
+      <a href="#" onclick="showPage('landing'); return false;">Home</a>
+      <a href="#features-section" onclick="handleNavLink(event, 'features-section')">Features</a>
+      <a href="#" onclick="showPage('support'); return false;">Support</a>
+      <div class="nav-dropdown">
+        <span class="btn-primary nav-dropdown-trigger">
+          Get the App
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+        <div class="nav-dropdown-menu">
+          <a href="https://apps.apple.com/app/meal-muse-pro/id0000000000" target="_blank" rel="noopener">
+            <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+            <span class="platform-label">Download for iOS<small>App Store</small></span>
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.mealmuse.app" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.144 1.24a1 1 0 0 1 0 1.732l-2.144 1.24-2.53-2.53 2.53-2.682zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>
+            <span class="platform-label">Download for Android<small>Google Play</small></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ==================== LANDING PAGE ==================== -->
+<main id="landing-page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="noise"></div>
+    <div class="hero-inner">
+      <div class="hero-text fade-in">
+        <div class="hero-tag">AI-Powered Meal Planning</div>
+        <h1>A week of meals,<br><span class="accent">planned in seconds.</span></h1>
+        <p class="hero-subtitle">MealMuse uses AI to build personalized meal plans, grocery lists, and recipes — tailored to your diet, budget, and schedule.</p>
+        <div class="hero-buttons">
+          <a href="https://apps.apple.com/app/meal-muse-pro/id0000000000" class="btn-platform btn-platform-dark" target="_blank" rel="noopener">
+            <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+            <span class="platform-info"><small>Download on</small><span>App Store</span></span>
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.mealmuse.app" class="btn-platform btn-platform-outline" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.144 1.24a1 1 0 0 1 0 1.732l-2.144 1.24-2.53-2.53 2.53-2.682zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>
+            <span class="platform-info"><small>Download on</small><span>Google Play</span></span>
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-number">15+</span>
+            <span class="hero-stat-label">Cuisines</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">500+</span>
+            <span class="hero-stat-label">Recipes</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-number">AI</span>
+            <span class="hero-stat-label">Powered</span>
+          </div>
+        </div>
+      </div>
+      <div class="phone-wrapper fade-in" style="transition-delay: .15s;">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-header">This Week</div>
+            <div class="phone-tabs">
+              <div class="phone-tab active">Mon</div>
+              <div class="phone-tab">Tue</div>
+              <div class="phone-tab">Wed</div>
+              <div class="phone-tab">Thu</div>
+              <div class="phone-tab">Fri</div>
+              <div class="phone-tab">Sat</div>
+              <div class="phone-tab">Sun</div>
+            </div>
+            <div class="phone-meal">
+              <div class="phone-meal-type">Breakfast</div>
+              <div class="phone-meal-name">Greek Yogurt Bowl</div>
+              <div class="phone-meal-meta">
+                <span><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 5 min</span>
+                <span><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> 320 cal</span>
+                <span>&#36;2.40</span>
+              </div>
+            </div>
+            <div class="phone-meal">
+              <div class="phone-meal-type">Lunch</div>
+              <div class="phone-meal-name">Chicken Caesar Wrap</div>
+              <div class="phone-meal-meta">
+                <span><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 15 min</span>
+                <span><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> 540 cal</span>
+                <span>&#36;4.80</span>
+              </div>
+            </div>
+            <div class="phone-meal">
+              <div class="phone-meal-type">Dinner</div>
+              <div class="phone-meal-name">Lemon Herb Salmon</div>
+              <div class="phone-meal-meta">
+                <span><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 25 min</span>
+                <span><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> 620 cal</span>
+                <span>&#36;6.50</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <section class="marquee-section">
+    <div class="marquee-track">
+      <div class="marquee-item">15+ Cuisine Types</div>
+      <div class="marquee-item">Smart Grocery Lists</div>
+      <div class="marquee-item">Macro Tracking</div>
+      <div class="marquee-item">Budget Planning</div>
+      <div class="marquee-item">Step-by-Step Recipes</div>
+      <div class="marquee-item">Barcode Scanner</div>
+      <div class="marquee-item">Allergen Filters</div>
+      <div class="marquee-item">Keto · Vegan · Paleo</div>
+      <!-- Duplicated for seamless loop -->
+      <div class="marquee-item">15+ Cuisine Types</div>
+      <div class="marquee-item">Smart Grocery Lists</div>
+      <div class="marquee-item">Macro Tracking</div>
+      <div class="marquee-item">Budget Planning</div>
+      <div class="marquee-item">Step-by-Step Recipes</div>
+      <div class="marquee-item">Barcode Scanner</div>
+      <div class="marquee-item">Allergen Filters</div>
+      <div class="marquee-item">Keto · Vegan · Paleo</div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="stats-strip">
+    <div class="stats-strip-inner">
+      <div class="stat-card fade-in" style="transition-delay: .05s;">
+        <div class="stat-card-number">500+</div>
+        <div class="stat-card-label">Unique Recipes</div>
+      </div>
+      <div class="stat-card fade-in" style="transition-delay: .1s;">
+        <div class="stat-card-number">15+</div>
+        <div class="stat-card-label">Cuisine Types</div>
+      </div>
+      <div class="stat-card fade-in" style="transition-delay: .15s;">
+        <div class="stat-card-number">$4.99</div>
+        <div class="stat-card-label">Per Month, Cancel Anytime</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features-section">
+    <div class="features-header fade-in">
+      <div class="section-label">What You Get</div>
+      <h2>Everything to plan, cook, and eat well.</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-in" style="transition-delay: .05s;">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8" y2="14.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="16" y1="14" x2="16" y2="14.01"/><line x1="8" y1="18" x2="8" y2="18.01"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg></div>
+        <h3>7-Day Meal Plans</h3>
+        <p>AI generates a full week of balanced meals based on your diet, cuisine preferences, and schedule.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay: .1s;">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/><path d="M3.5 12h3l2-4 3 8 2-4h3.5"/></svg></div>
+        <h3>Nutrition Tracking</h3>
+        <p>See calories, protein, carbs, and fat for every meal. Hit your macros without a spreadsheet.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay: .15s;">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+        <h3>Smart Grocery Lists</h3>
+        <p>Automatically generated shopping lists grouped by aisle, with quantities adjusted to your plan.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay: .2s;">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <h3>Step-by-Step Recipes</h3>
+        <p>Clear, beginner-friendly instructions for every meal. No culinary degree required.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay: .25s;">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h3>Budget Planning</h3>
+        <p>Set a weekly grocery budget and MealMuse builds plans that respect it. No surprise receipts.</p>
+      </div>
+      <div class="feature-card fade-in" style="transition-delay: .3s;">
+        <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="8" x2="7" y2="16"/><line x1="11" y1="8" x2="11" y2="16"/><line x1="15" y1="8" x2="15" y2="12"/><line x1="19" y1="8" x2="19" y2="16"/></svg></div>
+        <h3>Barcode Scanner</h3>
+        <p>Scan packaged foods to log nutrition data instantly. Great for tracking snacks and pantry staples.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing">
+    <div class="pricing-header fade-in">
+      <div class="section-label">Pricing</div>
+      <h2>Simple, transparent pricing.</h2>
+    </div>
+    <div class="pricing-cards">
+      <div class="pricing-card fade-in" style="transition-delay: .05s;">
+        <div class="pricing-plan-name">Free</div>
+        <div class="pricing-price">$0 <span>/ forever</span></div>
+        <p class="pricing-subtitle">Get started with the basics.</p>
+        <div class="pricing-features">
+          <div class="pricing-feature limit">
+            <span class="icon-dash"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            3 meal plans per month
+          </div>
+          <div class="pricing-feature limit">
+            <span class="icon-dash"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            5 meal swaps per month
+          </div>
+          <div class="pricing-feature limit">
+            <span class="icon-dash"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+            2 revisions per month
+          </div>
+          <div class="pricing-feature">
+            <span class="icon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Grocery lists
+          </div>
+          <div class="pricing-feature">
+            <span class="icon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Nutrition info
+          </div>
+          <div class="pricing-feature">
+            <span class="icon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Step-by-step recipes
+          </div>
+        </div>
+        <div class="pricing-cta">
+          <a href="#features-section" class="btn-ghost" onclick="handleNavLink(event, 'features-section')">Get Started Free</a>
+        </div>
+      </div>
+      <div class="pricing-card premium fade-in" style="transition-delay: .15s;">
+        <div class="pricing-badge">Popular</div>
+        <div class="pricing-plan-name">Premium</div>
+        <div class="pricing-price">$4.99 <span>/ month</span></div>
+        <p class="pricing-subtitle">Unlimited everything.</p>
+        <div class="pricing-features">
+          <div class="pricing-feature">
+            <span class="icon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Unlimited meal plans
+          </div>
+          <div class="pricing-feature">
+            <span class="icon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Unlimited swaps &amp; revisions
+          </div>
+          <div class="pricing-feature">
+            <span class="icon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Advanced macro tracking
+          </div>
+          <div class="pricing-feature">
+            <span class="icon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Budget planning tools
+          </div>
+          <div class="pricing-feature">
+            <span class="icon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            Barcode scanner
+          </div>
+          <div class="pricing-feature">
+            <span class="icon-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+            All cuisines &amp; diets
+          </div>
+        </div>
+        <div class="pricing-cta">
+          <a href="https://apps.apple.com/app/meal-muse-pro/id0000000000" class="btn-primary" target="_blank" rel="noopener">Start Premium</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band fade-in">
+    <h2>Ready to eat better?</h2>
+    <p>Plan your first week in under a minute.</p>
+    <div class="cta-buttons">
+      <a href="https://apps.apple.com/app/meal-muse-pro/id0000000000" class="btn-primary-light" target="_blank" rel="noopener">
+        <svg viewBox="0 0 384 512" width="18" height="18" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        Download on iOS
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.mealmuse.app" class="btn-primary-light" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.144 1.24a1 1 0 0 1 0 1.732l-2.144 1.24-2.53-2.53 2.53-2.682zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>
+        Download on Android
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==================== SUPPORT PAGE ==================== -->
+<div id="support-page" class="content-page">
+  <a href="#" class="back-link" onclick="showPage('landing'); return false;">&#8592; Back to home</a>
+  <h1>Support</h1>
+  <p class="page-subtitle">We're here to help you get the most out of MealMuse.</p>
+
+  <div class="contact-box">
+    <p><strong>Contact us</strong></p>
+    <p>Email: <a href="mailto:mealmusedev@gmail.com">mealmusedev@gmail.com</a></p>
+    <p style="color: #B0AAA0; font-size: 0.85rem;">We respond within 24 hours.</p>
+  </div>
+
+  <h2>Subscription</h2>
+  <p>MealMuse Premium costs <strong style="color:#2E2B26;">$4.99/month</strong> and auto-renews each billing cycle. You can cancel anytime through your device settings:</p>
+  <p><strong style="color:#2E2B26;">Settings → Apple ID → Subscriptions → MealMuse → Cancel</strong></p>
+
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq-item">
+    <h3>What does Premium include?</h3>
+    <p>Unlimited meal plans, swaps, and revisions. Plus advanced macro tracking, budget planning, the barcode scanner, and access to all cuisines and dietary filters.</p>
+  </div>
+  <div class="faq-item">
+    <h3>How do I cancel my subscription?</h3>
+    <p>Go to Settings → Apple ID → Subscriptions on your iPhone or iPad, find MealMuse, and tap Cancel. You'll keep access until the end of your current billing period.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Is the nutrition data accurate?</h3>
+    <p>Nutrition values are AI-generated approximations and should be used as general guidance. They are not a substitute for professional medical or dietary advice.</p>
+  </div>
+  <div class="faq-item">
+    <h3>What about food allergies?</h3>
+    <p>You can set allergen filters to exclude specific ingredients from your meal plans. However, AI detection may not catch every allergen — always verify ingredients independently if you have severe allergies.</p>
+  </div>
+  <div class="faq-item">
+    <h3>How do I restore my purchase?</h3>
+    <p>Make sure you're signed in with the same Apple ID you used to subscribe. Your subscription should restore automatically. If it doesn't, contact us at mealmusedev@gmail.com.</p>
+  </div>
+</div>
+
+<!-- ==================== PRIVACY POLICY PAGE ==================== -->
+<div id="privacy-page" class="content-page">
+  <a href="#" class="back-link" onclick="showPage('landing'); return false;">&#8592; Back to home</a>
+  <h1>Privacy Policy</h1>
+  <p class="page-subtitle">Last updated: January 2025</p>
+
+  <h2>Data We Collect</h2>
+  <p>When you use MealMuse, we collect the following information to provide and improve the service:</p>
+  <ul>
+    <li>Account information (email, display name)</li>
+    <li>Meal preferences and dietary settings</li>
+    <li>Generated meal plans and saved recipes</li>
+    <li>Subscription status and billing identifiers</li>
+  </ul>
+
+  <h2>How We Use Your Data</h2>
+  <p>Your data is used exclusively to generate meal plans, track nutrition, and manage your account. We do not serve ads, build advertising profiles, or sell your information to third parties.</p>
+
+  <h2>Storage &amp; Security</h2>
+  <p>All data is stored in Google Firebase with authentication-based access controls. Only you can access your own data through your authenticated account.</p>
+
+  <h2>Third-Party Services</h2>
+  <ul>
+    <li><strong style="color:#2E2B26;">Firebase</strong> — data storage and authentication</li>
+    <li><strong style="color:#2E2B26;">Anthropic</strong> — AI meal plan generation (receives dietary preferences only)</li>
+    <li><strong style="color:#2E2B26;">Open Food Facts</strong> — barcode nutrition lookups</li>
+    <li><strong style="color:#2E2B26;">Apple</strong> — subscription billing and payment processing</li>
+  </ul>
+
+  <h2>What We Don't Do</h2>
+  <ul>
+    <li>We don't sell your data</li>
+    <li>We don't serve ads</li>
+    <li>We don't track your location</li>
+    <li>We don't build advertising profiles</li>
+  </ul>
+
+  <h2>Data Deletion</h2>
+  <p>To delete your account and all associated data, email <a href="mailto:mealmusedev@gmail.com" style="color: #B8885C; font-weight: 500;">mealmusedev@gmail.com</a>. Requests are processed within 30 days.</p>
+</div>
+
+<!-- ==================== TERMS OF USE PAGE ==================== -->
+<div id="terms-page" class="content-page">
+  <a href="#" class="back-link" onclick="showPage('landing'); return false;">&#8592; Back to home</a>
+  <h1>Terms of Use</h1>
+  <p class="page-subtitle">Last updated: January 2025</p>
+
+  <h2>Service Description</h2>
+  <p>MealMuse is an AI-powered meal planning application that generates personalized meal plans, grocery lists, and recipes based on your dietary preferences, budget, and schedule.</p>
+
+  <h2>Medical Disclaimer</h2>
+  <p>MealMuse is not a medical service and does not provide medical advice. Meal plans and nutritional information are generated by AI and are intended for general informational purposes only. Always consult a qualified healthcare provider before making significant changes to your diet, especially if you have existing health conditions.</p>
+
+  <h2>Allergen Disclaimer</h2>
+  <p>While MealMuse allows you to set allergen filters, AI-based allergen detection may be incomplete or inaccurate. If you have food allergies or intolerances, always independently verify all ingredients before preparing or consuming any meal.</p>
+
+  <h2>Nutritional Information</h2>
+  <p>Calorie counts, macronutrient breakdowns, and other nutritional values provided by MealMuse are approximations generated by AI. They should not be relied upon for medical, clinical, or precise dietary tracking purposes.</p>
+
+  <h2>Subscriptions</h2>
+  <p>MealMuse Premium is available at $4.99 per month. Subscriptions auto-renew at the end of each billing cycle unless cancelled at least 24 hours before the renewal date. You can manage and cancel your subscription through your Apple ID settings.</p>
+
+  <h2>Limitation of Liability</h2>
+  <p>MealMuse is provided "as is" without warranty of any kind, express or implied. We do not guarantee the accuracy, completeness, or reliability of any content generated by the service. Use of MealMuse is at your own risk.</p>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">Meal<span class="accent">Muse</span></div>
+        <p class="footer-tagline">AI-powered meal planning that fits your diet, budget, and schedule.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Product</div>
+        <a href="#features-section" onclick="handleNavLink(event, 'features-section')">Features</a>
+        <a href="https://apps.apple.com/app/meal-muse-pro/id0000000000" target="_blank" rel="noopener">Download iOS</a>
+        <a href="https://play.google.com/store/apps/details?id=com.mealmuse.app" target="_blank" rel="noopener">Download Android</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="#" onclick="showPage('support'); return false;">Support</a>
+        <a href="#" onclick="showPage('privacy'); return false;">Privacy Policy</a>
+        <a href="#" onclick="showPage('terms'); return false;">Terms of Use</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2025 Meal Muse. All rights reserved.</div>
+      <div class="footer-contact"><a href="mailto:mealmusedev@gmail.com">mealmusedev@gmail.com</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ========== PAGE ROUTING ==========
+function showPage(page) {
+  const landing = document.getElementById('landing-page');
+  const support = document.getElementById('support-page');
+  const privacy = document.getElementById('privacy-page');
+  const terms = document.getElementById('terms-page');
+
+  // Hide all
+  landing.style.display = 'none';
+  support.classList.remove('active');
+  privacy.classList.remove('active');
+  terms.classList.remove('active');
+
+  // Show requested
+  switch (page) {
+    case 'landing':
+      landing.style.display = 'block';
+      break;
+    case 'support':
+      support.classList.add('active');
+      break;
+    case 'privacy':
+      privacy.classList.add('active');
+      break;
+    case 'terms':
+      terms.classList.add('active');
+      break;
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Handle nav links that point to sections on the landing page
+function handleNavLink(e, sectionId) {
+  e.preventDefault();
+  const landing = document.getElementById('landing-page');
+
+  // If landing page isn't visible, show it first
+  if (landing.style.display === 'none') {
+    showPage('landing');
+    // Wait for DOM update then scroll
+    requestAnimationFrame(() => {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    });
+  } else {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+// ========== SCROLL ANIMATIONS ==========
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Initialize landing page
+showPage('landing');
+</script>
+
+</body>
+</html>
