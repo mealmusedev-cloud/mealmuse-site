@@ -2312,6 +2312,249 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+// ========== INTERACTIVE PHONE: MEAL DATA ==========
+const weekMeals = [
+  // Monday
+  [
+    { type: 'Breakfast', name: 'Greek Yogurt Bowl', time: '5 min', cal: '320 cal', cost: '$2.40', tags: ['High Protein', 'Quick'], desc: 'Creamy yogurt with honey, granola, and mixed berries.' },
+    { type: 'Lunch', name: 'Chicken Caesar Wrap', time: '15 min', cal: '540 cal', cost: '$4.80', tags: ['Balanced', 'Meal Prep'], desc: 'Grilled chicken, romaine, parmesan, and caesar dressing.' },
+    { type: 'Dinner', name: 'Lemon Herb Salmon', time: '25 min', cal: '620 cal', cost: '$6.50', tags: ['Omega-3', 'Keto'], desc: 'Pan-seared salmon with lemon, dill, and roasted asparagus.' },
+  ],
+  // Tuesday
+  [
+    { type: 'Breakfast', name: 'Avocado Toast', time: '8 min', cal: '380 cal', cost: '$2.90', tags: ['Vegan', 'Fiber'], desc: 'Sourdough toast with smashed avocado, seeds, and chili flakes.' },
+    { type: 'Lunch', name: 'Turkey Club Sandwich', time: '10 min', cal: '490 cal', cost: '$5.20', tags: ['Classic', 'Quick'], desc: 'Smoked turkey, bacon, lettuce, tomato on toasted wheat.' },
+    { type: 'Dinner', name: 'Beef Stir Fry', time: '20 min', cal: '580 cal', cost: '$5.80', tags: ['Asian', 'High Protein'], desc: 'Tender beef strips with broccoli, peppers, and ginger soy sauce.' },
+  ],
+  // Wednesday
+  [
+    { type: 'Breakfast', name: 'Banana Pancakes', time: '12 min', cal: '410 cal', cost: '$1.80', tags: ['Kid-Friendly', 'Sweet'], desc: 'Fluffy banana pancakes with maple syrup and fresh berries.' },
+    { type: 'Lunch', name: 'Mediterranean Bowl', time: '10 min', cal: '460 cal', cost: '$4.50', tags: ['Vegetarian', 'Fresh'], desc: 'Quinoa, chickpeas, cucumber, feta, and lemon tahini dressing.' },
+    { type: 'Dinner', name: 'Chicken Tikka Masala', time: '35 min', cal: '650 cal', cost: '$5.40', tags: ['Indian', 'Spicy'], desc: 'Tender chicken in creamy tomato-spiced sauce with basmati rice.' },
+  ],
+  // Thursday
+  [
+    { type: 'Breakfast', name: 'Overnight Oats', time: '2 min', cal: '290 cal', cost: '$1.50', tags: ['Meal Prep', 'Easy'], desc: 'Oats soaked in almond milk with chia seeds and mango.' },
+    { type: 'Lunch', name: 'Tuna Poke Bowl', time: '12 min', cal: '420 cal', cost: '$6.00', tags: ['Japanese', 'Fresh'], desc: 'Sushi-grade tuna over rice with edamame and spicy mayo.' },
+    { type: 'Dinner', name: 'Pasta Primavera', time: '22 min', cal: '560 cal', cost: '$4.20', tags: ['Italian', 'Vegetarian'], desc: 'Penne with roasted seasonal vegetables and garlic olive oil.' },
+  ],
+  // Friday
+  [
+    { type: 'Breakfast', name: 'Smoothie Bowl', time: '5 min', cal: '340 cal', cost: '$3.20', tags: ['Tropical', 'Vegan'], desc: 'Blended acai, banana, and coconut topped with granola.' },
+    { type: 'Lunch', name: 'Fish Tacos', time: '18 min', cal: '480 cal', cost: '$5.60', tags: ['Mexican', 'Omega-3'], desc: 'Crispy cod tacos with cabbage slaw and chipotle crema.' },
+    { type: 'Dinner', name: 'Grilled Ribeye Steak', time: '20 min', cal: '720 cal', cost: '$9.50', tags: ['Keto', 'Treat'], desc: 'Juicy ribeye with garlic butter, roasted potatoes, and greens.' },
+  ],
+  // Saturday
+  [
+    { type: 'Breakfast', name: 'Eggs Benedict', time: '20 min', cal: '480 cal', cost: '$4.10', tags: ['Brunch', 'Classic'], desc: 'Poached eggs on english muffin with hollandaise sauce.' },
+    { type: 'Lunch', name: 'Thai Green Curry', time: '25 min', cal: '520 cal', cost: '$4.80', tags: ['Thai', 'Spicy'], desc: 'Coconut green curry with chicken, bamboo shoots, and basil.' },
+    { type: 'Dinner', name: 'Homemade Pizza', time: '40 min', cal: '680 cal', cost: '$4.00', tags: ['Italian', 'Fun'], desc: 'Crispy crust with mozzarella, fresh basil, and san marzano tomatoes.' },
+  ],
+  // Sunday
+  [
+    { type: 'Breakfast', name: 'French Toast', time: '15 min', cal: '440 cal', cost: '$2.60', tags: ['Sweet', 'Weekend'], desc: 'Brioche French toast with cinnamon, powdered sugar, and berries.' },
+    { type: 'Lunch', name: 'Caprese Salad', time: '5 min', cal: '320 cal', cost: '$4.40', tags: ['Italian', 'Light'], desc: 'Fresh mozzarella, heirloom tomatoes, basil, and balsamic glaze.' },
+    { type: 'Dinner', name: 'Roast Chicken', time: '60 min', cal: '590 cal', cost: '$5.20', tags: ['Sunday', 'Classic'], desc: 'Herb-roasted whole chicken with root vegetables and gravy.' },
+  ],
+];
+
+let currentDay = 0;
+const clockSvg = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+const fireSvg = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>';
+
+function renderMeals(dayIndex) {
+  const meals = weekMeals[dayIndex];
+  const container = document.getElementById('phone-meals');
+  if (!container) return;
+  container.innerHTML = meals.map(m => `
+    <div class="phone-meal" onclick="this.classList.toggle('expanded')">
+      <div class="phone-meal-type">${m.type}</div>
+      <div class="phone-meal-name">${m.name}</div>
+      <div class="phone-meal-meta">
+        <span>${clockSvg} ${m.time}</span>
+        <span>${fireSvg} ${m.cal}</span>
+        <span>${m.cost}</span>
+      </div>
+      <div class="phone-meal-detail">
+        <div class="phone-meal-desc">${m.desc}</div>
+        <div class="phone-meal-detail-inner">
+          ${m.tags.map(t => `<span class="phone-meal-tag">${t}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function switchDay(dayIndex) {
+  if (dayIndex === currentDay) return;
+  const container = document.getElementById('phone-meals');
+  const tabs = document.querySelectorAll('#phone-tabs .phone-tab');
+  if (!container) return;
+
+  // Update active tab
+  tabs.forEach(t => t.classList.remove('active'));
+  tabs[dayIndex].classList.add('active');
+
+  // Slide out
+  container.classList.add('sliding-out');
+  container.addEventListener('animationend', function handler() {
+    container.removeEventListener('animationend', handler);
+    container.classList.remove('sliding-out');
+    currentDay = dayIndex;
+    renderMeals(dayIndex);
+    container.classList.add('sliding-in');
+    container.addEventListener('animationend', function handler2() {
+      container.removeEventListener('animationend', handler2);
+      container.classList.remove('sliding-in');
+    });
+  });
+}
+
+// Setup phone tabs
+document.querySelectorAll('#phone-tabs .phone-tab').forEach(tab => {
+  tab.addEventListener('click', () => switchDay(parseInt(tab.dataset.day)));
+});
+
+// Render initial day
+renderMeals(0);
+
+// ========== 3D TILT EFFECT ON PHONE ==========
+const phoneEl = document.querySelector('.phone');
+const phoneWrapper = document.querySelector('.phone-wrapper');
+
+if (phoneEl && phoneWrapper) {
+  phoneWrapper.addEventListener('mousemove', (e) => {
+    const rect = phoneWrapper.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+    phoneEl.classList.add('tilt-active');
+    phoneEl.style.transform = `
+      perspective(800px)
+      rotateY(${x * 15}deg)
+      rotateX(${-y * 15}deg)
+      translateY(${-y * 8}px)
+    `;
+  });
+
+  phoneWrapper.addEventListener('mouseleave', () => {
+    phoneEl.classList.remove('tilt-active');
+    phoneEl.style.transform = '';
+  });
+}
+
+// ========== HERO CURSOR GLOW ==========
+const heroSection = document.querySelector('.hero');
+const heroGlow = document.getElementById('hero-glow');
+
+if (heroSection && heroGlow) {
+  heroSection.addEventListener('mousemove', (e) => {
+    const rect = heroSection.getBoundingClientRect();
+    heroGlow.style.left = (e.clientX - rect.left) + 'px';
+    heroGlow.style.top = (e.clientY - rect.top) + 'px';
+  });
+}
+
+// ========== ANIMATED STAT COUNTERS ==========
+function animateCounter(el, target, suffix = '', prefix = '') {
+  const duration = 1500;
+  const start = performance.now();
+  el.classList.add('counting');
+
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    // Ease out cubic
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(target * eased);
+    el.textContent = prefix + current.toLocaleString() + suffix;
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = prefix + target.toLocaleString() + suffix;
+      el.classList.remove('counting');
+      el.classList.add('done-counting');
+    }
+  }
+  requestAnimationFrame(update);
+}
+
+function animateDecimalCounter(el, target, prefix = '') {
+  const duration = 1500;
+  const start = performance.now();
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = prefix + (target * eased).toFixed(2);
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = prefix + target.toFixed(2);
+      el.classList.add('done-counting');
+    }
+  }
+  requestAnimationFrame(update);
+}
+
+const statCounterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.counted) {
+      entry.target.dataset.counted = 'true';
+      const text = entry.target.textContent.trim();
+      if (text === '500+') animateCounter(entry.target, 500, '+');
+      else if (text === '15+') animateCounter(entry.target, 15, '+');
+      else if (text === '$4.99') animateDecimalCounter(entry.target, 4.99, '$');
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.stat-card-number').forEach(el => {
+  statCounterObserver.observe(el);
+});
+
+// ========== MAGNETIC FEATURE CARDS ==========
+document.querySelectorAll('.feature-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    card.style.transform = `translateY(-4px) translate(${x * 0.04}px, ${y * 0.04}px)`;
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// ========== AUTO-CYCLE PHONE DAYS ==========
+let autoCycleTimer = null;
+
+function startAutoCycle() {
+  autoCycleTimer = setInterval(() => {
+    const nextDay = (currentDay + 1) % 7;
+    switchDay(nextDay);
+  }, 4000);
+}
+
+function stopAutoCycle() {
+  if (autoCycleTimer) {
+    clearInterval(autoCycleTimer);
+    autoCycleTimer = null;
+  }
+}
+
+// Start auto-cycling, pause on hover
+if (phoneWrapper) {
+  startAutoCycle();
+  phoneWrapper.addEventListener('mouseenter', stopAutoCycle);
+  phoneWrapper.addEventListener('mouseleave', () => {
+    stopAutoCycle();
+    startAutoCycle();
+  });
+}
+
 // Initialize landing page
 showPage('landing');
 </script>
