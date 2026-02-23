@@ -878,15 +878,99 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
   font-weight: 500;
 }
 
-/* ========== RESPONSIVE ========== */
-@media (max-width: 900px) {
-  .nav-links > a:not(.btn-primary) { display: none; }
-  .nav-dropdown { display: block; }
-  .nav-dropdown .nav-dropdown-trigger { padding: 8px 18px; font-size: 0.85rem; }
+/* ========== MOBILE MENU ========== */
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  z-index: 1002;
+}
+.mobile-menu-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #2E2B26;
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.mobile-menu-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+.mobile-menu-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.mobile-menu-overlay.active { display: block; opacity: 1; }
+
+/* ========== RESPONSIVE: TABLET & BELOW (<=1024px) ========== */
+@media (max-width: 1024px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-inner { gap: 40px; }
+  .hero { padding: 140px 24px 80px; }
+}
+
+/* ========== RESPONSIVE: SMALL TABLET & LARGE PHONE (<=768px) ========== */
+@media (max-width: 768px) {
+  /* Mobile nav */
+  .mobile-menu-btn { display: flex; }
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -280px;
+    width: 280px;
+    height: 100dvh;
+    background: #F8F6F1;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 88px 24px 32px;
+    gap: 0;
+    box-shadow: -8px 0 32px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 1001;
+    overflow-y: auto;
+  }
+  .nav-links.open { right: 0; }
+  .nav-links > a {
+    display: block !important;
+    font-size: 1rem !important;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    color: #2E2B26 !important;
+  }
+  .nav-dropdown { width: 100%; }
+  .nav-dropdown .nav-dropdown-trigger {
+    width: 100%;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  .nav-dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    border: 1px solid rgba(0,0,0,0.06);
+    margin-top: 8px;
+  }
+
+  /* Hero */
+  .hero { padding: 120px 20px 60px; }
   .hero-inner {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 48px;
+    gap: 40px;
   }
   .hero-text { max-width: 100%; }
   .hero-subtitle { margin-left: auto; margin-right: auto; }
@@ -901,14 +985,156 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
   }
   .phone-notch { width: 86px; height: 24px; border-radius: 0 0 14px 14px; top: 10px; }
   .phone-screen { border-radius: 30px; padding: 42px 14px 14px; }
-  .stats-strip-inner { grid-template-columns: 1fr; max-width: 300px; margin: 0 auto; }
-  .features-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
-  .pricing-cards { flex-direction: column; max-width: 360px; margin: 0 auto; }
+
+  /* Stats */
+  .stats-strip { padding: 60px 20px; }
+  .stats-strip-inner { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .stat-card { padding: 24px 12px; }
+  .stat-card-number { font-size: 1.8rem; }
+
+  /* Features */
+  .features { padding: 80px 20px; }
+  .features-grid { grid-template-columns: 1fr 1fr; max-width: 600px; margin: 0 auto; }
+  .feature-card { padding: 24px 20px; }
+
+  /* Pricing */
+  .pricing { padding: 80px 20px; }
+  .pricing-cards { flex-direction: column; max-width: 400px; margin: 0 auto; }
   .pricing-card.premium { transform: scale(1); }
+
+  /* CTA */
   .cta-band { border-radius: 20px; margin: 0 16px; padding: 64px 24px; }
-  .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 32px; }
+
+  /* Footer */
+  .footer { padding: 48px 20px 24px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-brand { grid-column: 1 / -1; text-align: center; }
   .footer-brand .footer-tagline { max-width: 100%; margin: 0 auto; }
+  .footer-col { text-align: center; }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+  /* Content pages */
+  .content-page { padding: 100px 20px 60px; }
+}
+
+/* ========== RESPONSIVE: PHONE (<=480px) ========== */
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .nav { padding: 0 16px; height: 64px; }
+  .logo { font-size: 1.3rem; }
+
+  /* Hero */
+  .hero { padding: 100px 16px 48px; }
+  .hero h1 { font-size: 1.9rem; }
+  .hero-subtitle { font-size: 0.95rem; }
+  .hero-buttons { flex-direction: column; align-items: center; }
+  .btn-platform { width: 100%; max-width: 260px; justify-content: center; }
+  .hero-stats { gap: 20px; flex-wrap: wrap; }
+  .hero-stat-number { font-size: 1.3rem; }
+  .phone {
+    width: 200px;
+    height: 420px;
+    border-radius: 32px;
+    padding: 8px;
+  }
+  .phone-notch { width: 72px; height: 20px; border-radius: 0 0 12px 12px; top: 8px; }
+  .phone-screen { border-radius: 26px; padding: 36px 10px 10px; }
+  .phone-header { font-size: 1rem; }
+  .phone-tab { font-size: 0.55rem; padding: 4px 7px; }
+  .phone-meal { padding: 10px; margin-bottom: 6px; }
+  .phone-meal-name { font-size: 0.75rem; }
+  .phone-meal-meta { font-size: 0.5rem; }
+
+  /* Marquee */
+  .marquee-item { font-size: 0.8rem; }
+
+  /* Stats */
+  .stats-strip { padding: 48px 16px; }
+  .stats-strip-inner { grid-template-columns: 1fr; max-width: 280px; }
+  .stat-card-number { font-size: 2rem; }
+
+  /* Features */
+  .features { padding: 60px 16px; }
+  .features-grid { grid-template-columns: 1fr; max-width: 100%; }
+  .features-header h2 { font-size: 1.5rem; }
+
+  /* Pricing */
+  .pricing { padding: 60px 16px; }
+  .pricing-cards { max-width: 100%; }
+  .pricing-header h2 { font-size: 1.5rem; }
+  .pricing-card { padding: 28px 20px; }
+  .pricing-price { font-size: 2rem; }
+
+  /* CTA */
+  .cta-band { margin: 0 12px; padding: 48px 16px; border-radius: 16px; }
+  .cta-band h2 { font-size: 1.4rem; }
+  .cta-band p { font-size: 0.95rem; }
+  .cta-buttons { flex-direction: column; align-items: center; }
+  .cta-buttons .btn-primary-light { width: 100%; max-width: 260px; justify-content: center; }
+
+  /* Footer */
+  .footer { padding: 40px 16px 20px; }
+  .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 24px; }
+  .footer-logo { font-size: 1.2rem; }
+
+  /* Content pages */
+  .content-page { padding: 88px 16px 48px; }
+  .content-page h1 { font-size: 1.7rem; }
+}
+
+/* ========== ORIENTATION: LANDSCAPE PHONE ========== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { padding: 80px 24px 40px; }
+  .hero-inner { gap: 24px; }
+  .phone-wrapper { order: 0; }
+  .phone {
+    width: 160px;
+    height: 340px;
+    border-radius: 28px;
+    padding: 6px;
+  }
+  .phone-notch { width: 60px; height: 16px; border-radius: 0 0 10px 10px; top: 6px; }
+  .phone-screen { border-radius: 24px; padding: 28px 8px 8px; }
+  .phone-header { font-size: 0.85rem; margin-bottom: 6px; }
+  .phone-tab { font-size: 0.5rem; padding: 3px 5px; }
+  .phone-tabs { margin-bottom: 8px; }
+  .phone-meal { padding: 6px; margin-bottom: 4px; border-radius: 10px; }
+  .phone-meal-type { font-size: 0.45rem; }
+  .phone-meal-name { font-size: 0.65rem; }
+  .phone-meal-meta { font-size: 0.45rem; gap: 6px; }
+  @keyframes phoneFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .stats-strip { padding: 40px 24px; }
+  .features { padding: 60px 24px; }
+  .pricing { padding: 60px 24px; }
+  .cta-band { padding: 40px 24px; }
+  .nav-links {
+    height: 100dvh;
+    padding-top: 72px;
+  }
+}
+
+/* ========== ORIENTATION: LANDSCAPE TABLET ========== */
+@media (min-width: 481px) and (max-width: 1024px) and (orientation: landscape) {
+  .hero-inner {
+    grid-template-columns: 1fr 1fr;
+    text-align: left;
+    gap: 32px;
+  }
+  .hero-subtitle { margin-left: 0; }
+  .hero-buttons { justify-content: flex-start; }
+  .hero-stats { justify-content: flex-start; }
+  .phone-wrapper { order: 0; }
+  .features-grid { grid-template-columns: repeat(3, 1fr); max-width: 100%; }
+  .stats-strip-inner { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ========== TOUCH TARGETS ========== */
+@media (pointer: coarse) {
+  .nav-links a { min-height: 44px; display: flex; align-items: center; }
+  .btn-primary, .btn-ghost, .btn-primary-light, .btn-platform { min-height: 44px; }
+  .pricing-cta .btn-primary, .pricing-cta .btn-ghost { min-height: 48px; }
+  .footer-col a { min-height: 44px; display: flex; align-items: center; justify-content: inherit; }
+  .back-link { min-height: 44px; }
 }
 </style>
 </head>
@@ -918,10 +1144,13 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
 <nav class="nav">
   <div class="nav-inner">
     <div class="logo" onclick="showPage('landing')">Meal<span class="accent">Muse</span></div>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
     <div class="nav-links">
-      <a href="#" onclick="showPage('landing'); return false;">Home</a>
-      <a href="#features-section" onclick="handleNavLink(event, 'features-section')">Features</a>
-      <a href="#" onclick="showPage('support'); return false;">Support</a>
+      <a href="#" onclick="showPage('landing'); closeMobileMenu(); return false;">Home</a>
+      <a href="#features-section" onclick="handleNavLink(event, 'features-section'); closeMobileMenu();">Features</a>
+      <a href="#" onclick="showPage('support'); closeMobileMenu(); return false;">Support</a>
       <div class="nav-dropdown">
         <span class="btn-primary nav-dropdown-trigger">
           Get the App
@@ -941,6 +1170,7 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
     </div>
   </div>
 </nav>
+<div class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
 
 <!-- ==================== LANDING PAGE ==================== -->
 <main id="landing-page">
@@ -1217,7 +1447,8 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
 
   <h2>Subscription</h2>
   <p>MealMuse Premium costs <strong style="color:#2E2B26;">$4.99/month</strong> and auto-renews each billing cycle. You can cancel anytime through your device settings:</p>
-  <p><strong style="color:#2E2B26;">Settings → Apple ID → Subscriptions → MealMuse → Cancel</strong></p>
+  <p><strong style="color:#2E2B26;">iOS:</strong> Settings → Apple ID → Subscriptions → MealMuse → Cancel</p>
+  <p><strong style="color:#2E2B26;">Android:</strong> Google Play Store → Menu → Subscriptions → MealMuse → Cancel</p>
 
   <h2>Frequently Asked Questions</h2>
 
@@ -1227,7 +1458,7 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
   </div>
   <div class="faq-item">
     <h3>How do I cancel my subscription?</h3>
-    <p>Go to Settings → Apple ID → Subscriptions on your iPhone or iPad, find MealMuse, and tap Cancel. You'll keep access until the end of your current billing period.</p>
+    <p><strong style="color:#2E2B26;">On iOS:</strong> Go to Settings → Apple ID → Subscriptions, find MealMuse, and tap Cancel.<br><strong style="color:#2E2B26;">On Android:</strong> Open the Google Play Store → Menu → Subscriptions, find MealMuse, and tap Cancel.<br>You'll keep access until the end of your current billing period on either platform.</p>
   </div>
   <div class="faq-item">
     <h3>Is the nutrition data accurate?</h3>
@@ -1239,7 +1470,7 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
   </div>
   <div class="faq-item">
     <h3>How do I restore my purchase?</h3>
-    <p>Make sure you're signed in with the same Apple ID you used to subscribe. Your subscription should restore automatically. If it doesn't, contact us at mealmusedev@gmail.com.</p>
+    <p>Make sure you're signed in with the same Apple ID or Google account you used to subscribe. Your subscription should restore automatically. If it doesn't, contact us at mealmusedev@gmail.com.</p>
   </div>
 </div>
 
@@ -1269,7 +1500,7 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
     <li><strong style="color:#2E2B26;">Firebase</strong> — data storage and authentication</li>
     <li><strong style="color:#2E2B26;">Anthropic</strong> — AI meal plan generation (receives dietary preferences only)</li>
     <li><strong style="color:#2E2B26;">Open Food Facts</strong> — barcode nutrition lookups</li>
-    <li><strong style="color:#2E2B26;">Apple</strong> — subscription billing and payment processing</li>
+    <li><strong style="color:#2E2B26;">Apple &amp; Google</strong> — subscription billing and payment processing</li>
   </ul>
 
   <h2>What We Don't Do</h2>
@@ -1303,7 +1534,7 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
   <p>Calorie counts, macronutrient breakdowns, and other nutritional values provided by MealMuse are approximations generated by AI. They should not be relied upon for medical, clinical, or precise dietary tracking purposes.</p>
 
   <h2>Subscriptions</h2>
-  <p>MealMuse Premium is available at $4.99 per month. Subscriptions auto-renew at the end of each billing cycle unless cancelled at least 24 hours before the renewal date. You can manage and cancel your subscription through your Apple ID settings.</p>
+  <p>MealMuse Premium is available at $4.99 per month. Subscriptions auto-renew at the end of each billing cycle unless cancelled at least 24 hours before the renewal date. You can manage and cancel your subscription through your Apple ID settings on iOS or Google Play Store on Android.</p>
 
   <h2>Limitation of Liability</h2>
   <p>MealMuse is provided "as is" without warranty of any kind, express or implied. We do not guarantee the accuracy, completeness, or reliability of any content generated by the service. Use of MealMuse is at your own risk.</p>
@@ -1386,6 +1617,31 @@ function handleNavLink(e, sectionId) {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   }
 }
+
+// ========== MOBILE MENU ==========
+function toggleMobileMenu() {
+  const btn = document.querySelector('.mobile-menu-btn');
+  const links = document.querySelector('.nav-links');
+  const overlay = document.querySelector('.mobile-menu-overlay');
+  const isOpen = links.classList.contains('open');
+  btn.classList.toggle('active', !isOpen);
+  links.classList.toggle('open', !isOpen);
+  overlay.classList.toggle('active', !isOpen);
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+function closeMobileMenu() {
+  const btn = document.querySelector('.mobile-menu-btn');
+  const links = document.querySelector('.nav-links');
+  const overlay = document.querySelector('.mobile-menu-overlay');
+  btn.classList.remove('active');
+  links.classList.remove('open');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+// Close mobile menu on resize to desktop
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) closeMobileMenu();
+});
 
 // ========== SCROLL ANIMATIONS ==========
 const observer = new IntersectionObserver((entries) => {
