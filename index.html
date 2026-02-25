@@ -811,6 +811,137 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
 }
 .pricing-feature.limit { color: #8A857C; }
 
+/* ========== ANDROID TESTER ========== */
+.android-tester {
+  max-width: 1200px;
+  margin: 60px auto 0;
+  padding: 0 24px;
+}
+.android-tester-inner {
+  background: linear-gradient(135deg, #2E2B26 0%, #3d3830 100%);
+  border-radius: 24px;
+  padding: 48px 56px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.android-tester-inner::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(125,168,110,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.android-tester-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(125,168,110,0.15);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.android-tester-icon svg {
+  width: 32px;
+  height: 32px;
+  fill: #7DA86E;
+}
+.android-tester-content {
+  flex: 1;
+}
+.android-tester-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #7DA86E;
+  margin-bottom: 8px;
+}
+.android-tester-content h3 {
+  font-size: 1.4rem;
+  color: #F8F6F1;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.android-tester-content p {
+  font-size: 0.95rem;
+  color: rgba(248,246,241,0.55);
+  line-height: 1.6;
+}
+.android-tester-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+.android-tester-step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 14px;
+  padding: 16px 20px;
+}
+.step-number {
+  width: 32px;
+  height: 32px;
+  background: #7DA86E;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.step-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.step-text strong {
+  color: #F8F6F1;
+  font-size: 0.95rem;
+}
+.step-text span {
+  color: rgba(248,246,241,0.5);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+.android-tester-btn {
+  background: #7DA86E;
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.android-tester-btn:hover { background: #6b9560; transform: translateY(-1px); }
+.android-tester-btn svg { width: 15px; height: 15px; }
+.android-tester-btn.btn-outline {
+  background: transparent;
+  border: 1.5px solid rgba(125,168,110,0.5);
+  color: #7DA86E;
+}
+.android-tester-btn.btn-outline:hover {
+  border-color: #7DA86E;
+  background: rgba(125,168,110,0.1);
+}
+
 /* ========== CTA BAND ========== */
 .cta-band {
   padding: 100px 24px;
@@ -1198,6 +1329,27 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
   .pricing-feature { font-size: 0.88rem; }
   .pricing-features { gap: 10px; }
   .pricing-subtitle { margin-bottom: 20px; }
+
+  /* Android Tester */
+  .android-tester { margin: 40px auto 0; padding: 0 20px; }
+  .android-tester-inner {
+    flex-direction: column;
+    text-align: center;
+    padding: 36px 28px;
+    gap: 20px;
+  }
+  .android-tester-icon { width: 52px; height: 52px; }
+  .android-tester-icon svg { width: 26px; height: 26px; }
+  .android-tester-content h3 { font-size: 1.2rem; }
+  .android-tester-content p { font-size: 0.88rem; }
+  .android-tester-step {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 16px;
+  }
+  .step-text { align-items: center; }
+  .android-tester-btn { width: 100%; justify-content: center; padding: 12px 20px; border-radius: 14px; }
 
   /* CTA — full width, no side margins */
   .cta-band {
@@ -2105,6 +2257,44 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
       </div>
     </div>
   </section>
+
+  <!-- ANDROID TESTER -->
+  <div class="android-tester fade-in">
+    <div class="android-tester-inner">
+      <div class="android-tester-icon">
+        <svg viewBox="0 0 24 24"><path d="M17.523 2.223a.6.6 0 0 0-.828.205L15.394 4.6a7.593 7.593 0 0 0-6.787 0L7.305 2.428a.6.6 0 1 0-1.033.614L7.52 5.13A7.466 7.466 0 0 0 4.5 11.5h15a7.466 7.466 0 0 0-3.02-6.37l1.248-2.088a.6.6 0 0 0-.205-.819zM9.5 9a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5zm5 0a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5zM4.5 13v5.5A2.5 2.5 0 0 0 7 21h10a2.5 2.5 0 0 0 2.5-2.5V13h-15z"/></svg>
+      </div>
+      <div class="android-tester-content">
+        <div class="android-tester-label">Early Access</div>
+        <h3>Help us build MealMuse for Android</h3>
+        <p>Get early access to new features before anyone else. Just two quick steps:</p>
+        <div class="android-tester-steps">
+          <div class="android-tester-step">
+            <span class="step-number">1</span>
+            <div class="step-text">
+              <strong>Join the testing group</strong>
+              <span>Request access via our Google Group — approval is instant.</span>
+            </div>
+            <a href="https://groups.google.com/g/mealmusetesters" class="android-tester-btn" target="_blank" rel="noopener">
+              Join Group
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+          <div class="android-tester-step">
+            <span class="step-number">2</span>
+            <div class="step-text">
+              <strong>Download on Google Play</strong>
+              <span>Once you've joined, download the app — you'll have tester access automatically.</span>
+            </div>
+            <a href="https://play.google.com/store/apps/details?id=com.mealmuse.app" class="android-tester-btn btn-outline" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.144 1.24a1 1 0 0 1 0 1.732l-2.144 1.24-2.53-2.53 2.53-2.682zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>
+              Google Play
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- CTA BAND -->
   <section class="cta-band fade-in">
