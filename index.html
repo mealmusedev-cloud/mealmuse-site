@@ -1603,9 +1603,245 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
   .dashboard-header h1 { font-size: 1.3rem; }
   .account-card { padding: 22px; border-radius: 16px; }
 }
+
+/* ========== SCROLL PROGRESS BAR ========== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #B8885C, #7DA86E);
+  z-index: 1100;
+  width: 0%;
+  transition: width 0.05s linear;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ========== BUTTON RIPPLE EFFECT ========== */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.btn-ripple .ripple-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  transform: scale(0);
+  animation: rippleExpand 0.6s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes rippleExpand {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ========== PHONE NOTIFICATION TOAST ========== */
+.phone-toast {
+  position: absolute;
+  top: 36px;
+  left: 12px;
+  right: 12px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  z-index: 20;
+  transform: translateY(-60px);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  pointer-events: none;
+}
+.phone-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+.phone-toast-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(184,136,92,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+.phone-toast-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.phone-toast-title {
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #2E2B26;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.phone-toast-body {
+  font-size: 0.48rem;
+  color: #8A857C;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========== GENERATE BUTTON ON PHONE ========== */
+.phone-generate-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  border-radius: 10px;
+  background: #2E2B26;
+  color: #F8F6F1;
+  font-size: 0.6rem;
+  font-weight: 700;
+  font-family: 'Instrument Sans', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s, background 0.2s;
+  letter-spacing: 0.04em;
+}
+.phone-generate-btn:hover {
+  background: #1a1815;
+  transform: translateY(-1px);
+}
+.phone-generate-btn:active {
+  transform: scale(0.96);
+}
+.phone-generate-btn svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.4s ease;
+}
+.phone-generate-btn.spinning svg {
+  animation: spinIcon 0.6s ease;
+}
+@keyframes spinIcon {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Phone shuffle animation */
+@keyframes mealShuffleOut {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  50% { opacity: 0; transform: translateY(-10px) scale(0.9); }
+  100% { opacity: 0; transform: translateY(-10px) scale(0.9); }
+}
+@keyframes mealShuffleIn {
+  0% { opacity: 0; transform: translateY(10px) scale(0.9); }
+  50% { opacity: 0; transform: translateY(10px) scale(0.9); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.phone-meal.shuffle-out {
+  animation: mealShuffleOut 0.3s ease forwards;
+}
+.phone-meal.shuffle-in {
+  animation: mealShuffleIn 0.4s ease forwards;
+}
+
+/* ========== FLOATING FOOD PARTICLES ========== */
+.food-particle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  font-size: 1.4rem;
+  opacity: 0;
+  animation: floatParticle linear forwards;
+  user-select: none;
+}
+@keyframes floatParticle {
+  0% { opacity: 0; transform: translateY(0) rotate(0deg) scale(0.5); }
+  10% { opacity: 0.25; transform: translateY(-30px) rotate(20deg) scale(0.8); }
+  50% { opacity: 0.18; }
+  90% { opacity: 0.08; }
+  100% { opacity: 0; transform: translateY(-280px) rotate(180deg) scale(0.4); }
+}
+
+/* ========== PRICING CARD 3D TILT ========== */
+.pricing-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ========== TEXT REVEAL ANIMATION ========== */
+.text-reveal {
+  display: inline-block;
+}
+.text-reveal .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px) rotate(5deg);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.text-reveal.revealed .char {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+}
+
+/* ========== PARALLAX ELEMENTS ========== */
+.parallax-layer {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* ========== CTA CONFETTI CANVAS ========== */
+.cta-confetti-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ========== MARQUEE HOVER PAUSE ========== */
+.marquee-section:hover .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-item {
+  transition: transform 0.2s ease, color 0.2s ease;
+  cursor: default;
+}
+.marquee-item:hover {
+  color: #2E2B26;
+  transform: scale(1.08);
+}
+
+/* ========== STAT CARD HOVER GLOW ========== */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(184,136,92,0.08) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.stat-card:hover::after {
+  opacity: 1;
+}
 </style>
 </head>
 <body>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress" id="scroll-progress"></div>
 
 <!-- ==================== NAV ==================== -->
 <nav class="nav">
@@ -1680,6 +1916,14 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
       <div class="phone-wrapper fade-in" style="transition-delay: .15s;">
         <div class="phone">
           <div class="phone-notch"></div>
+          <!-- Phone notification toast -->
+          <div class="phone-toast" id="phone-toast">
+            <div class="phone-toast-icon" id="phone-toast-icon"></div>
+            <div class="phone-toast-text">
+              <div class="phone-toast-title" id="phone-toast-title"></div>
+              <div class="phone-toast-body" id="phone-toast-body"></div>
+            </div>
+          </div>
           <div class="phone-screen">
             <div class="phone-header">This Week</div>
             <div class="phone-tabs" id="phone-tabs">
@@ -1692,6 +1936,10 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
               <div class="phone-tab" data-day="6">Sun</div>
             </div>
             <div class="phone-meals-container" id="phone-meals"></div>
+            <button class="phone-generate-btn" id="phone-generate" onclick="shuffleMeals()">
+              <svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              Generate New Plan
+            </button>
           </div>
         </div>
       </div>
@@ -1860,6 +2108,7 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
 
   <!-- CTA BAND -->
   <section class="cta-band fade-in">
+    <canvas class="cta-confetti-canvas" id="cta-confetti"></canvas>
     <h2>Ready to eat better?</h2>
     <p>Plan your first week in under a minute.</p>
     <div class="cta-buttons">
@@ -2527,6 +2776,310 @@ document.querySelectorAll('.feature-card').forEach(card => {
     card.style.transform = '';
   });
 });
+
+// ========== SHUFFLE / GENERATE MEALS ==========
+const allMealNames = {
+  Breakfast: ['Greek Yogurt Bowl','Avocado Toast','Banana Pancakes','Overnight Oats','Smoothie Bowl','Eggs Benedict','French Toast','Chia Pudding','Shakshuka','Acai Bowl','Granola Parfait','Breakfast Burrito'],
+  Lunch: ['Chicken Caesar Wrap','Turkey Club Sandwich','Mediterranean Bowl','Tuna Poke Bowl','Fish Tacos','Thai Green Curry','Caprese Salad','Falafel Wrap','BLT Sandwich','Soba Noodle Bowl','Veggie Burger','Greek Salad'],
+  Dinner: ['Lemon Herb Salmon','Beef Stir Fry','Chicken Tikka Masala','Pasta Primavera','Grilled Ribeye Steak','Homemade Pizza','Roast Chicken','Pad Thai','Lamb Tagine','Shrimp Scampi','Mushroom Risotto','Teriyaki Salmon']
+};
+
+const mealTimes = ['3 min','5 min','8 min','10 min','12 min','15 min','18 min','20 min','25 min','30 min','35 min','40 min'];
+const mealCals = ['280 cal','320 cal','380 cal','420 cal','460 cal','520 cal','540 cal','580 cal','620 cal','680 cal','720 cal'];
+const mealCosts = ['$1.50','$2.20','$2.90','$3.40','$4.00','$4.50','$5.20','$5.80','$6.50','$7.20','$8.00','$9.50'];
+const mealTagsList = [['Quick','Easy'],['High Protein','Keto'],['Vegan','Fresh'],['Asian','Spicy'],['Italian','Classic'],['Omega-3','Balanced'],['Mexican','Fun'],['Indian','Aromatic'],['Thai','Coconut'],['Kid-Friendly','Sweet']];
+const mealDescs = [
+  'A light and refreshing dish full of vibrant seasonal flavors.',
+  'Rich and savory with perfectly balanced spices and herbs.',
+  'Quick to prepare and packed with protein for sustained energy.',
+  'A crowd-pleaser that comes together in minutes.',
+  'Fresh ingredients combined with a zesty homemade dressing.',
+  'Comfort food at its finest — warm, hearty, and satisfying.',
+];
+
+function randomFrom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function generateRandomMeals() {
+  return ['Breakfast','Lunch','Dinner'].map(type => ({
+    type,
+    name: randomFrom(allMealNames[type]),
+    time: randomFrom(mealTimes),
+    cal: randomFrom(mealCals),
+    cost: randomFrom(mealCosts),
+    tags: randomFrom(mealTagsList),
+    desc: randomFrom(mealDescs),
+  }));
+}
+
+function shuffleMeals() {
+  const btn = document.getElementById('phone-generate');
+  if (!btn || btn.classList.contains('spinning')) return;
+  btn.classList.add('spinning');
+  setTimeout(() => btn.classList.remove('spinning'), 600);
+
+  const container = document.getElementById('phone-meals');
+  if (!container) return;
+
+  // Shuffle out existing
+  const existingMeals = container.querySelectorAll('.phone-meal');
+  existingMeals.forEach((m, i) => {
+    m.style.animationDelay = (i * 0.06) + 's';
+    m.classList.add('shuffle-out');
+  });
+
+  setTimeout(() => {
+    // Generate new random meals for this day
+    const newMeals = generateRandomMeals();
+    weekMeals[currentDay] = newMeals;
+    renderMeals(currentDay);
+
+    // Shuffle in new meals
+    const newMealEls = container.querySelectorAll('.phone-meal');
+    newMealEls.forEach((m, i) => {
+      m.style.animationDelay = (i * 0.08) + 's';
+      m.classList.add('shuffle-in');
+      m.addEventListener('animationend', () => m.classList.remove('shuffle-in'), { once: true });
+    });
+  }, 300);
+}
+window.shuffleMeals = shuffleMeals;
+
+// ========== PHONE NOTIFICATION TOASTS ==========
+const toastMessages = [
+  { icon: '🥗', title: 'New Recipe Added', body: 'Mediterranean Quinoa Bowl is ready!' },
+  { icon: '🔥', title: 'Streak: 7 Days', body: 'You\'ve been consistent all week!' },
+  { icon: '🛒', title: 'Grocery List Ready', body: '12 items · Est. $42.50' },
+  { icon: '⭐', title: 'Meal Rated 5 Stars', body: 'Lemon Herb Salmon was a hit!' },
+  { icon: '📊', title: 'Weekly Summary', body: 'Avg 1,480 cal/day · Under budget!' },
+  { icon: '🎉', title: 'Goal Reached', body: 'You hit your protein target today!' },
+  { icon: '🍳', title: 'Cooking Now', body: 'Start your Eggs Benedict — 20 min' },
+  { icon: '💡', title: 'Tip of the Day', body: 'Try batch-cooking grains on Sunday!' },
+];
+
+let toastTimeout = null;
+function showPhoneToast() {
+  const toast = document.getElementById('phone-toast');
+  if (!toast) return;
+  const msg = randomFrom(toastMessages);
+  document.getElementById('phone-toast-icon').textContent = msg.icon;
+  document.getElementById('phone-toast-title').textContent = msg.title;
+  document.getElementById('phone-toast-body').textContent = msg.body;
+
+  toast.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// Show first toast after 3s, then every 8-12s
+setTimeout(showPhoneToast, 3000);
+setInterval(() => {
+  showPhoneToast();
+}, 8000 + Math.random() * 4000);
+
+// ========== SCROLL PROGRESS BAR ==========
+const scrollProgressEl = document.getElementById('scroll-progress');
+function updateScrollProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  if (scrollProgressEl) scrollProgressEl.style.width = progress + '%';
+}
+window.addEventListener('scroll', updateScrollProgress, { passive: true });
+
+// ========== BUTTON RIPPLE EFFECTS ==========
+function addRipple(e) {
+  const btn = e.currentTarget;
+  const circle = document.createElement('span');
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  circle.style.width = circle.style.height = size + 'px';
+  circle.style.left = (e.clientX - rect.left - size / 2) + 'px';
+  circle.style.top = (e.clientY - rect.top - size / 2) + 'px';
+  circle.classList.add('ripple-circle');
+  btn.appendChild(circle);
+  circle.addEventListener('animationend', () => circle.remove());
+}
+
+document.querySelectorAll('.btn-primary, .btn-ghost, .btn-primary-light, .btn-platform, .btn-signin').forEach(btn => {
+  btn.classList.add('btn-ripple');
+  btn.addEventListener('click', addRipple);
+});
+
+// ========== FLOATING FOOD PARTICLES ==========
+const foodEmojis = ['🥑','🍋','🥦','🍅','🫐','🥕','🍊','🌿','🧄','🍇','🥬','🍳','🥐','🧀'];
+const heroEl = document.querySelector('.hero');
+
+function spawnFoodParticle() {
+  if (!heroEl) return;
+  const particle = document.createElement('div');
+  particle.className = 'food-particle';
+  particle.textContent = randomFrom(foodEmojis);
+  particle.style.left = (Math.random() * 100) + '%';
+  particle.style.bottom = '-30px';
+  particle.style.animationDuration = (5 + Math.random() * 6) + 's';
+  particle.style.fontSize = (0.9 + Math.random() * 0.8) + 'rem';
+  heroEl.appendChild(particle);
+  particle.addEventListener('animationend', () => particle.remove());
+}
+
+// Spawn particles periodically
+setInterval(spawnFoodParticle, 2000);
+// Spawn a few initially
+for (let i = 0; i < 3; i++) setTimeout(spawnFoodParticle, i * 600);
+
+// ========== 3D TILT ON PRICING CARDS ==========
+document.querySelectorAll('.pricing-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = card.classList.contains('premium')
+      ? `scale(1.03) perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`
+      : `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
+    card.style.boxShadow = `${-x * 15}px ${y * 15}px 40px rgba(0,0,0,0.08)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = card.classList.contains('premium') ? 'scale(1.03)' : '';
+    card.style.boxShadow = '';
+  });
+});
+
+// ========== TEXT REVEAL ON SECTION HEADINGS ==========
+function splitTextForReveal(el) {
+  const text = el.textContent;
+  el.innerHTML = '';
+  el.classList.add('text-reveal');
+  for (let i = 0; i < text.length; i++) {
+    const span = document.createElement('span');
+    span.className = 'char';
+    span.textContent = text[i] === ' ' ? '\u00a0' : text[i];
+    span.style.transitionDelay = (i * 0.02) + 's';
+    el.appendChild(span);
+  }
+}
+
+const headingsToReveal = document.querySelectorAll('.features-header h2, .pricing-header h2, .cta-band h2');
+headingsToReveal.forEach(h => splitTextForReveal(h));
+
+const textRevealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.text-reveal').forEach(el => textRevealObserver.observe(el));
+
+// ========== PARALLAX ON SCROLL ==========
+const parallaxElements = [
+  { el: document.querySelector('.hero::before'), speed: 0.3 },
+];
+
+// Apply parallax classes
+document.querySelectorAll('.stat-card').forEach(card => card.classList.add('parallax-layer'));
+
+function applyParallax() {
+  const scrollY = window.scrollY;
+  document.querySelectorAll('.stat-card.parallax-layer').forEach((el, i) => {
+    const rect = el.getBoundingClientRect();
+    const center = rect.top + rect.height / 2;
+    const offset = (center - window.innerHeight / 2) * 0.04;
+    el.style.transform = `translateY(${-offset}px)`;
+  });
+}
+window.addEventListener('scroll', applyParallax, { passive: true });
+
+// ========== STAT CARD GLOW FOLLOW ==========
+document.querySelectorAll('.stat-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    card.style.setProperty('--mouse-x', x + '%');
+    card.style.setProperty('--mouse-y', y + '%');
+  });
+});
+
+// ========== CTA CONFETTI ON HOVER ==========
+const ctaCanvas = document.getElementById('cta-confetti');
+const ctaBand = document.querySelector('.cta-band');
+let confettiParticles = [];
+let confettiAnimating = false;
+
+function initConfettiCanvas() {
+  if (!ctaCanvas || !ctaBand) return;
+  const rect = ctaBand.getBoundingClientRect();
+  ctaCanvas.width = rect.width;
+  ctaCanvas.height = rect.height;
+}
+
+function spawnConfetti(x, y) {
+  if (!ctaCanvas) return;
+  const ctx = ctaCanvas.getContext('2d');
+  const colors = ['#B8885C', '#7DA86E', '#E8D5B7', '#C4956A', '#9FC48F', '#D4A574'];
+
+  for (let i = 0; i < 12; i++) {
+    confettiParticles.push({
+      x, y,
+      vx: (Math.random() - 0.5) * 8,
+      vy: (Math.random() - 0.5) * 8 - 3,
+      size: 3 + Math.random() * 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      life: 1,
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 10,
+    });
+  }
+
+  if (!confettiAnimating) {
+    confettiAnimating = true;
+    animateConfetti();
+  }
+}
+
+function animateConfetti() {
+  if (!ctaCanvas) return;
+  const ctx = ctaCanvas.getContext('2d');
+  ctx.clearRect(0, 0, ctaCanvas.width, ctaCanvas.height);
+
+  confettiParticles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += 0.15;
+    p.life -= 0.015;
+    p.rotation += p.rotSpeed;
+
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rotation * Math.PI / 180);
+    ctx.globalAlpha = Math.max(0, p.life);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+    ctx.restore();
+  });
+
+  confettiParticles = confettiParticles.filter(p => p.life > 0);
+
+  if (confettiParticles.length > 0) {
+    requestAnimationFrame(animateConfetti);
+  } else {
+    confettiAnimating = false;
+    ctx.clearRect(0, 0, ctaCanvas.width, ctaCanvas.height);
+  }
+}
+
+if (ctaBand && ctaCanvas) {
+  initConfettiCanvas();
+  window.addEventListener('resize', initConfettiCanvas);
+
+  ctaBand.addEventListener('mousemove', (e) => {
+    const rect = ctaBand.getBoundingClientRect();
+    if (Math.random() > 0.7) {
+      spawnConfetti(e.clientX - rect.left, e.clientY - rect.top);
+    }
+  });
+}
 
 // ========== AUTO-CYCLE PHONE DAYS ==========
 let autoCycleTimer = null;
