@@ -3810,8 +3810,8 @@ async function loadAdminData() {
     }
 
     allUsageDocs.forEach(d => {
-      const monthKey = d.docId;
-      const gens = d.planGenerations || d.generations || d.plans || 0;
+      const monthKey = d.month || d.docId;
+      const gens = d.generations || d.planGenerations || d.plans || 0;
       const swaps = d.swaps || d.mealSwaps || 0;
       const revisions = d.revisions || d.edits || 0;
 
@@ -4335,8 +4335,8 @@ async function expandUserDetail(uid) {
     let planGens = 0, swaps = 0, revisions = 0;
     usageSnap.forEach(d => {
       const data = d.data();
-      planGens += data.planGenerations || data.plan_generations || 0;
-      swaps += data.mealSwaps || data.meal_swaps || 0;
+      planGens += data.generations || data.planGenerations || 0;
+      swaps += data.swaps || data.mealSwaps || 0;
       revisions += data.revisions || 0;
     });
     document.getElementById('detail-plan-gens').textContent = planGens;
