@@ -2692,7 +2692,7 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
         <div class="admin-kpi-value" id="kpi-free-users">--</div>
       </div>
       <div class="admin-kpi-card">
-        <div class="admin-kpi-label">Expired Subs</div>
+        <div class="admin-kpi-label">With Subscription Data</div>
         <div class="admin-kpi-value" id="kpi-expired-users">--</div>
       </div>
     </div>
@@ -3140,13 +3140,13 @@ async function loadAdminData() {
     }));
     console.log('[Admin] Usage this month — gens:', totalPlanGens, 'swaps:', totalSwaps, 'revisions:', totalRevisions);
 
-    // Aggregate data
+    // Aggregate data — subscription uses "tier" field: "premium" or "free"
     const totalUsers = users.length;
-    const activeSubs = subscriptions.filter(s => s.isActive === true || s.status === 'active');
-    const expiredSubs = subscriptions.filter(s => s.isActive === false || (s.status && s.status !== 'active'));
+    const activeSubs = subscriptions.filter(s => s.tier === 'premium');
+    const freeSubs = subscriptions.filter(s => s.tier === 'free');
     const premiumCount = activeSubs.length;
-    const expiredCount = expiredSubs.length;
-    const freeCount = totalUsers - premiumCount - expiredCount;
+    const expiredCount = 0;
+    const freeCount = totalUsers - premiumCount;
     console.log('[Admin] Premium:', premiumCount, 'Expired:', expiredCount, 'Free:', freeCount);
 
     // Platform breakdown
@@ -3199,7 +3199,7 @@ async function loadAdminData() {
       .slice(0, 20);
 
     // Render everything
-    renderAdminKPIs(totalUsers, premiumCount, freeCount, expiredCount);
+    renderAdminKPIs(totalUsers, premiumCount, freeCount, subscriptions.length);
     renderPlatformChart(iosCount, androidCount, unknownPlatform);
     renderSignupsChart(signupLabels, signupValues);
     renderUsageKPIs(totalPlanGens, totalSwaps, totalRevisions);
@@ -3221,13 +3221,13 @@ async function loadAdminData() {
 }
 window.loadAdminData = loadAdminData;
 
-function renderAdminKPIs(total, premium, free, expired) {
+function renderAdminKPIs(total, premium, free, subsWithData) {
   document.getElementById('kpi-total-users').textContent = total.toLocaleString();
   document.getElementById('kpi-premium-users').textContent = premium.toLocaleString();
   document.getElementById('kpi-premium-pct').textContent =
     total > 0 ? ((premium / total) * 100).toFixed(1) + '% conversion' : '';
   document.getElementById('kpi-free-users').textContent = free.toLocaleString();
-  document.getElementById('kpi-expired-users').textContent = expired.toLocaleString();
+  document.getElementById('kpi-expired-users').textContent = subsWithData.toLocaleString();
 }
 
 function renderUsageKPIs(gens, swaps, revisions) {
@@ -3402,13 +3402,9 @@ function renderRecentUsersTable(recentUsers, subscriptions) {
 
   tbody.innerHTML = recentUsers.map(user => {
     const sub = subMap[user.uid];
-    const isActive = sub && (sub.isActive === true || sub.status === 'active');
-    const isExpired = sub && (sub.isActive === false || (sub.status && sub.status !== 'active'));
     let statusBadge;
-    if (isActive) {
+    if (sub && sub.tier === 'premium') {
       statusBadge = '<span class="sub-badge active">Premium</span>';
-    } else if (isExpired) {
-      statusBadge = '<span class="sub-badge expired">Expired</span>';
     } else {
       statusBadge = '<span class="sub-badge free">Free</span>';
     }
