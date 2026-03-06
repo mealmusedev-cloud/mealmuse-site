@@ -1470,7 +1470,7 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
 .account-page {
   display: none;
   padding: 120px 24px 80px;
-  max-width: 480px;
+  max-width: 900px;
   margin: 0 auto;
 }
 .account-page.active { display: block; }
@@ -1478,6 +1478,8 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
 /* Sign-in state */
 .account-signin {
   text-align: center;
+  max-width: 480px;
+  margin: 0 auto;
 }
 .account-signin-icon {
   width: 72px;
@@ -1753,6 +1755,485 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
   .account-card { padding: 22px; border-radius: 16px; }
 }
 
+/* ========== DASHBOARD TABS ========== */
+.account-page.active .account-dashboard.active { max-width: 900px; margin: 0 auto; }
+.dash-tabs {
+  display: flex;
+  gap: 4px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 14px;
+  padding: 4px;
+  margin-bottom: 28px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.dash-tab {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  background: none;
+  color: #8A857C;
+  border: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.dash-tab.active { background: #2E2B26; color: #F8F6F1; }
+.dash-tab:hover:not(.active) { background: rgba(0,0,0,0.03); }
+.dash-tab-content { display: none; }
+.dash-tab-content.active { display: block; }
+
+/* ========== OVERVIEW TAB ========== */
+.overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.overview-stat {
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+}
+.overview-stat-value { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #2E2B26; }
+.overview-stat-label { font-size: 0.75rem; color: #8A857C; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; font-weight: 600; }
+.usage-bar-wrap { margin-top: 12px; }
+.usage-bar-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: #8A857C; margin-bottom: 4px; }
+.usage-bar { height: 6px; background: rgba(0,0,0,0.05); border-radius: 3px; overflow: hidden; }
+.usage-bar-fill { height: 100%; background: #B8885C; border-radius: 3px; transition: width 0.4s ease; }
+.usage-bar-fill.warn { background: #c05050; }
+.overview-plan-summary {
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.overview-plan-summary h3 { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #B0AAA0; margin-bottom: 12px; }
+.overview-plan-summary p { font-size: 0.9rem; color: #8A857C; line-height: 1.6; }
+.overview-plan-summary .plan-meta { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+.overview-plan-summary .plan-meta span { font-size: 0.8rem; color: #2E2B26; font-weight: 600; }
+
+/* ========== MEAL PLAN TAB ========== */
+.meal-plan-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+.meal-plan-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-dash {
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+.btn-dash:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-dash-primary { background: #B8885C; color: #F8F6F1; }
+.btn-dash-primary:hover:not(:disabled) { background: #a67a4f; transform: translateY(-1px); }
+.btn-dash-secondary { background: rgba(0,0,0,0.05); color: #2E2B26; }
+.btn-dash-secondary:hover:not(:disabled) { background: rgba(0,0,0,0.08); }
+.btn-dash-ghost { background: none; color: #B8885C; border: 1.5px solid rgba(184,136,92,0.3); }
+.btn-dash-ghost:hover:not(:disabled) { background: rgba(184,136,92,0.05); }
+
+.day-selector {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.day-btn {
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  background: rgba(0,0,0,0.04);
+  color: #8A857C;
+  border: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.day-btn.active { background: #2E2B26; color: #F8F6F1; }
+.day-btn:hover:not(.active) { background: rgba(0,0,0,0.07); }
+
+.meals-grid { display: flex; flex-direction: column; gap: 16px; }
+.meal-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.meal-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); transform: translateY(-1px); }
+.meal-card-type {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #B8885C;
+  margin-bottom: 6px;
+}
+.meal-card-name { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: #2E2B26; margin-bottom: 6px; }
+.meal-card-desc { font-size: 0.85rem; color: #8A857C; line-height: 1.5; margin-bottom: 12px; }
+.meal-card-meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: #8A857C;
+}
+.meal-card-meta span { display: flex; align-items: center; gap: 4px; }
+.meal-card-meta strong { color: #2E2B26; }
+.meal-card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.meal-tag {
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  background: rgba(184,136,92,0.08);
+  color: #B8885C;
+}
+
+/* Expanded meal detail */
+.meal-detail { display: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.06); }
+.meal-card.expanded .meal-detail { display: block; }
+.meal-detail-section { margin-bottom: 16px; }
+.meal-detail-section h4 {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #B0AAA0;
+  margin-bottom: 8px;
+}
+.macro-bar { display: flex; gap: 12px; margin-bottom: 8px; }
+.macro-item { text-align: center; flex: 1; }
+.macro-value { font-size: 1.1rem; font-weight: 700; color: #2E2B26; }
+.macro-label { font-size: 0.65rem; color: #8A857C; text-transform: uppercase; letter-spacing: 0.06em; }
+.macro-color-protein { color: #5a8f4a; }
+.macro-color-carbs { color: #B8885C; }
+.macro-color-fat { color: #c05050; }
+.ingredient-list { list-style: none; padding: 0; }
+.ingredient-list li {
+  padding: 6px 0;
+  font-size: 0.85rem;
+  color: #2E2B26;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.ingredient-list li:last-child { border-bottom: none; }
+.steps-list { list-style: none; padding: 0; counter-reset: step-counter; }
+.steps-list li {
+  padding: 10px 0 10px 32px;
+  font-size: 0.85rem;
+  color: #2E2B26;
+  line-height: 1.6;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  position: relative;
+  counter-increment: step-counter;
+}
+.steps-list li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  background: rgba(184,136,92,0.1);
+  color: #B8885C;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.steps-list li:last-child { border-bottom: none; }
+.meal-card-actions { display: flex; gap: 8px; margin-top: 16px; }
+.btn-meal-action {
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  background: rgba(0,0,0,0.05);
+  color: #2E2B26;
+}
+.btn-meal-action:hover { background: rgba(0,0,0,0.08); }
+.btn-meal-action.swap { background: rgba(184,136,92,0.1); color: #B8885C; }
+.btn-meal-action.swap:hover { background: rgba(184,136,92,0.18); }
+.btn-meal-action.fav { background: rgba(125,168,110,0.1); color: #5a8f4a; }
+.btn-meal-action.fav.active { background: rgba(125,168,110,0.2); }
+
+.no-plan-message {
+  text-align: center;
+  padding: 60px 20px;
+  color: #8A857C;
+}
+.no-plan-message h3 { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: #2E2B26; margin-bottom: 8px; }
+.no-plan-message p { font-size: 0.9rem; margin-bottom: 24px; line-height: 1.6; }
+
+.daily-summary {
+  background: rgba(184,136,92,0.06);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+.daily-summary-item { }
+.daily-summary-value { font-size: 1rem; font-weight: 700; color: #2E2B26; }
+.daily-summary-label { font-size: 0.65rem; color: #8A857C; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* Saved plans dropdown */
+.saved-plans-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.saved-plans-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 220px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  z-index: 10;
+  margin-top: 4px;
+}
+.saved-plans-menu.open { display: block; }
+.saved-plan-item {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: #2E2B26;
+  transition: background 0.15s;
+}
+.saved-plan-item:hover { background: rgba(0,0,0,0.04); }
+.saved-plan-item .saved-plan-date { font-size: 0.72rem; color: #8A857C; }
+
+/* Loading overlay for AI generation */
+.dash-loading-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(248,246,241,0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.dash-loading-overlay .spinner { width: 48px; height: 48px; margin-bottom: 20px; }
+.dash-loading-overlay p { font-size: 1rem; color: #2E2B26; font-weight: 500; }
+.dash-loading-overlay .loading-sub { font-size: 0.85rem; color: #8A857C; margin-top: 8px; }
+
+/* ========== GROCERY TAB ========== */
+.grocery-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+.grocery-category { margin-bottom: 20px; }
+.grocery-category-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #B8885C;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(184,136,92,0.15);
+}
+.grocery-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  font-size: 0.88rem;
+  color: #2E2B26;
+}
+.grocery-item:last-child { border-bottom: none; }
+.grocery-item.checked { color: #B0AAA0; text-decoration: line-through; }
+.grocery-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #B8885C;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.grocery-add {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.grocery-add input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1.5px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  background: #FFFFFF;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.grocery-add input:focus { border-color: #B8885C; }
+.no-grocery { text-align: center; padding: 40px 20px; color: #8A857C; font-size: 0.9rem; }
+
+/* ========== PREFERENCES TAB ========== */
+.pref-section { margin-bottom: 28px; }
+.pref-section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #B0AAA0;
+  margin-bottom: 12px;
+}
+.pref-field { margin-bottom: 16px; }
+.pref-label { display: block; font-size: 0.82rem; font-weight: 600; color: #2E2B26; margin-bottom: 6px; }
+.pref-select, .pref-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  background: #FFFFFF;
+  outline: none;
+  transition: border-color 0.2s;
+  color: #2E2B26;
+}
+.pref-select:focus, .pref-input:focus { border-color: #B8885C; }
+.pref-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.pref-chip {
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid rgba(0,0,0,0.08);
+  background: #FFFFFF;
+  color: #8A857C;
+  transition: all 0.2s;
+  user-select: none;
+}
+.pref-chip.active { background: #B8885C; color: #F8F6F1; border-color: #B8885C; }
+.pref-chip:hover:not(.active) { border-color: #B8885C; color: #B8885C; }
+.pref-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pref-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(184,136,92,0.1);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #B8885C;
+}
+.pref-tag-remove {
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+.pref-tag-remove:hover { opacity: 1; }
+.pref-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pref-save-bar {
+  position: sticky;
+  bottom: 0;
+  background: #F8F6F1;
+  padding: 16px 0;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  display: flex;
+  gap: 12px;
+}
+
+/* ========== PANTRY TAB ========== */
+.pantry-list { margin-bottom: 16px; }
+.pantry-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  font-size: 0.88rem;
+  color: #2E2B26;
+}
+.pantry-item:last-child { border-bottom: none; }
+.pantry-item-remove {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(200,80,80,0.08);
+  color: #c05050;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.pantry-item-remove:hover { background: rgba(200,80,80,0.15); }
+.pantry-add { display: flex; gap: 8px; margin-bottom: 20px; }
+.pantry-add input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1.5px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  background: #FFFFFF;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.pantry-add input:focus { border-color: #B8885C; }
+.no-pantry { text-align: center; padding: 40px 20px; color: #8A857C; font-size: 0.9rem; }
+
+/* ========== DASHBOARD TOAST ========== */
+.dash-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 1001;
+  transition: transform 0.3s ease;
+  pointer-events: none;
+}
+.dash-toast.show { transform: translateX(-50%) translateY(0); }
+.dash-toast.success { background: #2E2B26; color: #F8F6F1; }
+.dash-toast.error { background: #c05050; color: #F8F6F1; }
+
+/* ========== DASHBOARD RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .account-page.active .account-dashboard.active { max-width: 100%; }
+  .dash-tabs { gap: 2px; padding: 3px; }
+  .dash-tab { padding: 8px 10px; font-size: 0.72rem; }
+  .overview-grid { grid-template-columns: 1fr; }
+  .meal-plan-header { flex-direction: column; align-items: flex-start; }
+  .day-selector { gap: 4px; }
+  .day-btn { padding: 8px 12px; font-size: 0.75rem; }
+  .meal-card { padding: 16px; }
+  .meal-card-name { font-size: 1rem; }
+  .macro-bar { gap: 8px; }
+  .pref-row { grid-template-columns: 1fr; }
+  .daily-summary { flex-wrap: wrap; gap: 8px; }
+  .saved-plans-menu { right: auto; left: 0; }
+}
 
 /* ========== PHONE NOTIFICATION TOAST ========== */
 .phone-toast {
@@ -3041,37 +3522,373 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
       <p id="user-email"></p>
     </div>
 
-    <div class="account-card">
-      <div class="account-card-title">Subscription</div>
-      <div class="sub-status">
-        <span class="sub-badge" id="sub-badge">Free</span>
+    <!-- Dashboard Tabs -->
+    <div class="dash-tabs">
+      <button class="dash-tab active" onclick="switchDashTab('overview')">Overview</button>
+      <button class="dash-tab" onclick="switchDashTab('mealplan')">Meal Plan</button>
+      <button class="dash-tab" onclick="switchDashTab('grocery')">Grocery</button>
+      <button class="dash-tab" onclick="switchDashTab('preferences')">Preferences</button>
+      <button class="dash-tab" onclick="switchDashTab('pantry')">Pantry</button>
+    </div>
+
+    <!-- ===== OVERVIEW TAB ===== -->
+    <div id="dash-overview" class="dash-tab-content active">
+      <!-- Subscription Card -->
+      <div class="account-card">
+        <div class="account-card-title">Subscription</div>
+        <div class="sub-status">
+          <span class="sub-badge" id="sub-badge">Free</span>
+        </div>
+        <div id="sub-details">
+          <p class="sub-detail">You're on the <strong>Free</strong> plan.</p>
+        </div>
+        <div class="manage-sub-info">
+          <p>Subscriptions are managed through your device's app store.</p>
+          <div class="manage-links">
+            <a href="https://apps.apple.com/account/subscriptions" target="_blank" rel="noopener" class="manage-link">
+              <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+              Manage on iPhone / iPad
+            </a>
+            <a href="https://play.google.com/store/account/subscriptions" target="_blank" rel="noopener" class="manage-link">
+              <svg viewBox="0 0 24 24"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.144 1.24a1 1 0 0 1 0 1.732l-2.144 1.24-2.53-2.53 2.53-2.682zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>
+              Manage on Android
+            </a>
+          </div>
+        </div>
       </div>
-      <div id="sub-details">
-        <p class="sub-detail">You're on the <strong>Free</strong> plan.</p>
+
+      <!-- Usage Stats -->
+      <div class="account-card">
+        <div class="account-card-title">Monthly Usage</div>
+        <div id="usage-stats">
+          <div class="usage-bar-wrap">
+            <div class="usage-bar-label"><span>Plan Generations</span><span id="usage-gen-count">0 / 1</span></div>
+            <div class="usage-bar"><div class="usage-bar-fill" id="usage-gen-bar" style="width:0%"></div></div>
+          </div>
+          <div class="usage-bar-wrap">
+            <div class="usage-bar-label"><span>Meal Swaps</span><span id="usage-swap-count">0 / 5</span></div>
+            <div class="usage-bar"><div class="usage-bar-fill" id="usage-swap-bar" style="width:0%"></div></div>
+          </div>
+          <div class="usage-bar-wrap">
+            <div class="usage-bar-label"><span>Plan Revisions</span><span id="usage-rev-count">0 / 3</span></div>
+            <div class="usage-bar"><div class="usage-bar-fill" id="usage-rev-bar" style="width:0%"></div></div>
+          </div>
+        </div>
       </div>
-      <div class="manage-sub-info">
-        <p>Subscriptions are managed through your device's app store. Use the links below to manage or cancel.</p>
-        <div class="manage-links">
-          <a href="https://apps.apple.com/account/subscriptions" target="_blank" rel="noopener" class="manage-link">
-            <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
-            Manage on iPhone / iPad
-          </a>
-          <a href="https://play.google.com/store/account/subscriptions" target="_blank" rel="noopener" class="manage-link">
-            <svg viewBox="0 0 24 24"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.144 1.24a1 1 0 0 1 0 1.732l-2.144 1.24-2.53-2.53 2.53-2.682zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>
-            Manage on Android
-          </a>
+
+      <!-- Current Plan Summary -->
+      <div class="overview-plan-summary" id="overview-plan-summary">
+        <h3>Current Meal Plan</h3>
+        <p id="overview-plan-text">No active meal plan. Generate one from the Meal Plan tab.</p>
+      </div>
+
+      <button class="btn-signout" onclick="signOutUser()">Sign Out</button>
+
+      <!-- Admin Access (hidden by default) -->
+      <button class="btn-admin-link" id="admin-link" style="display:none;" onclick="showPage('admin')">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+        Admin Dashboard
+      </button>
+    </div>
+
+    <!-- ===== MEAL PLAN TAB ===== -->
+    <div id="dash-mealplan" class="dash-tab-content">
+      <div id="mealplan-content">
+        <div class="no-plan-message" id="no-plan-msg">
+          <h3>No Meal Plan Yet</h3>
+          <p>Generate a personalized 7-day meal plan powered by AI. Make sure to set your preferences first!</p>
+          <button class="btn-dash btn-dash-primary" onclick="generateMealPlan()">Generate Meal Plan</button>
+        </div>
+        <div id="mealplan-view" style="display:none;">
+          <div class="meal-plan-header">
+            <h2 style="font-family:'DM Serif Display',serif; font-size:1.3rem; color:#2E2B26; margin:0;">Your Meal Plan</h2>
+            <div class="meal-plan-actions">
+              <button class="btn-dash btn-dash-primary" onclick="generateMealPlan()" id="btn-generate">New Plan</button>
+              <button class="btn-dash btn-dash-secondary" onclick="savePlan()">Save Plan</button>
+              <div class="saved-plans-dropdown">
+                <button class="btn-dash btn-dash-ghost" onclick="toggleSavedPlans()">Saved Plans</button>
+                <div class="saved-plans-menu" id="saved-plans-menu"></div>
+              </div>
+            </div>
+          </div>
+          <div class="day-selector" id="day-selector"></div>
+          <div class="daily-summary" id="daily-summary"></div>
+          <div class="meals-grid" id="meals-grid"></div>
         </div>
       </div>
     </div>
 
-    <button class="btn-signout" onclick="signOutUser()">Sign Out</button>
+    <!-- ===== GROCERY TAB ===== -->
+    <div id="dash-grocery" class="dash-tab-content">
+      <div class="grocery-header">
+        <h2 style="font-family:'DM Serif Display',serif; font-size:1.3rem; color:#2E2B26; margin:0;">Grocery List</h2>
+        <div style="display:flex; gap:8px;">
+          <button class="btn-dash btn-dash-secondary" onclick="regenerateGroceryList()">Regenerate</button>
+          <button class="btn-dash btn-dash-ghost" onclick="clearCheckedGrocery()">Clear Checked</button>
+        </div>
+      </div>
+      <div id="grocery-list-container">
+        <div class="no-grocery" id="no-grocery-msg">Generate a meal plan first to see your grocery list.</div>
+      </div>
+      <div class="grocery-add" id="grocery-add-form" style="display:none;">
+        <input type="text" id="grocery-add-input" placeholder="Add custom item..." onkeydown="if(event.key==='Enter')addGroceryItem()">
+        <button class="btn-dash btn-dash-secondary" onclick="addGroceryItem()">Add</button>
+      </div>
+    </div>
 
-    <!-- Admin Access (hidden by default) -->
-    <button class="btn-admin-link" id="admin-link" style="display:none;" onclick="showPage('admin')">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
-      Admin Dashboard
-    </button>
+    <!-- ===== PREFERENCES TAB ===== -->
+    <div id="dash-preferences" class="dash-tab-content">
+      <h2 style="font-family:'DM Serif Display',serif; font-size:1.3rem; color:#2E2B26; margin:0 0 24px;">Meal Preferences</h2>
+      <div id="pref-loading" style="text-align:center; padding:40px; color:#8A857C;">Loading preferences...</div>
+      <div id="pref-form" style="display:none;">
+        <div class="pref-section">
+          <div class="pref-section-title">Diet & Nutrition</div>
+          <div class="pref-row">
+            <div class="pref-field">
+              <label class="pref-label">Diet Type</label>
+              <select class="pref-select" id="pref-diet">
+                <option value="anything">Anything</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="pescatarian">Pescatarian</option>
+                <option value="keto">Keto</option>
+                <option value="paleo">Paleo</option>
+                <option value="mediterranean">Mediterranean</option>
+                <option value="diabetic">Diabetic-Friendly</option>
+                <option value="hearthealthy">Heart Healthy</option>
+                <option value="lowsodium">Low Sodium</option>
+                <option value="glutenfree">Gluten-Free</option>
+                <option value="dairyfree">Dairy-Free</option>
+                <option value="halal">Halal</option>
+                <option value="kosher">Kosher</option>
+              </select>
+            </div>
+            <div class="pref-field">
+              <label class="pref-label">Daily Calorie Goal</label>
+              <input type="number" class="pref-input" id="pref-calories" placeholder="2000" min="800" max="6000">
+            </div>
+          </div>
+          <div class="pref-row">
+            <div class="pref-field">
+              <label class="pref-label">Weekly Budget ($)</label>
+              <input type="number" class="pref-input" id="pref-budget" placeholder="100" min="20" max="500">
+            </div>
+            <div class="pref-field">
+              <label class="pref-label">Servings Per Meal</label>
+              <input type="number" class="pref-input" id="pref-servings" placeholder="2" min="1" max="12">
+            </div>
+          </div>
+          <div class="pref-field">
+            <label class="pref-label">Goal</label>
+            <select class="pref-select" id="pref-goal">
+              <option value="general">General / Balanced</option>
+              <option value="fitness">Fitness / High Protein</option>
+              <option value="weightloss">Weight Loss</option>
+              <option value="cooking">Improve Cooking Skills</option>
+              <option value="budget">Budget-Friendly</option>
+              <option value="family">Family-Friendly</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pref-section">
+          <div class="pref-section-title">Cuisines</div>
+          <div class="pref-chips" id="pref-cuisines">
+            <span class="pref-chip" data-val="American">American</span>
+            <span class="pref-chip" data-val="Mexican">Mexican</span>
+            <span class="pref-chip" data-val="Italian">Italian</span>
+            <span class="pref-chip" data-val="Chinese">Chinese</span>
+            <span class="pref-chip" data-val="Japanese">Japanese</span>
+            <span class="pref-chip" data-val="Korean">Korean</span>
+            <span class="pref-chip" data-val="Thai">Thai</span>
+            <span class="pref-chip" data-val="Indian">Indian</span>
+            <span class="pref-chip" data-val="Mediterranean">Mediterranean</span>
+            <span class="pref-chip" data-val="Middle Eastern">Middle Eastern</span>
+            <span class="pref-chip" data-val="French">French</span>
+            <span class="pref-chip" data-val="Greek">Greek</span>
+            <span class="pref-chip" data-val="Vietnamese">Vietnamese</span>
+            <span class="pref-chip" data-val="Caribbean">Caribbean</span>
+            <span class="pref-chip" data-val="African">African</span>
+            <span class="pref-chip" data-val="Brazilian">Brazilian</span>
+          </div>
+        </div>
+
+        <div class="pref-section">
+          <div class="pref-section-title">Allergens</div>
+          <div class="pref-chips" id="pref-allergens">
+            <span class="pref-chip" data-val="Dairy">Dairy</span>
+            <span class="pref-chip" data-val="Eggs">Eggs</span>
+            <span class="pref-chip" data-val="Fish">Fish</span>
+            <span class="pref-chip" data-val="Shellfish">Shellfish</span>
+            <span class="pref-chip" data-val="Tree Nuts">Tree Nuts</span>
+            <span class="pref-chip" data-val="Peanuts">Peanuts</span>
+            <span class="pref-chip" data-val="Wheat">Wheat</span>
+            <span class="pref-chip" data-val="Soy">Soy</span>
+            <span class="pref-chip" data-val="Sesame">Sesame</span>
+            <span class="pref-chip" data-val="Gluten">Gluten</span>
+          </div>
+        </div>
+
+        <div class="pref-section">
+          <div class="pref-section-title">Cooking Style</div>
+          <div class="pref-row">
+            <div class="pref-field">
+              <label class="pref-label">Skill Level</label>
+              <select class="pref-select" id="pref-skill">
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </select>
+            </div>
+            <div class="pref-field">
+              <label class="pref-label">Prep Speed</label>
+              <select class="pref-select" id="pref-speed">
+                <option value="quick">Quick (&lt;15 min)</option>
+                <option value="medium">Medium (15-45 min)</option>
+                <option value="elaborate">Elaborate (45+ min)</option>
+              </select>
+            </div>
+          </div>
+          <div class="pref-row">
+            <div class="pref-field">
+              <label class="pref-label">Spice Tolerance</label>
+              <select class="pref-select" id="pref-spice">
+                <option value="mild">Mild</option>
+                <option value="medium">Medium</option>
+                <option value="spicy">Spicy</option>
+                <option value="extra">Extra Spicy</option>
+              </select>
+            </div>
+            <div class="pref-field">
+              <label class="pref-label">Adventurousness</label>
+              <select class="pref-select" id="pref-adventure">
+                <option value="comfort">Comfort Classics</option>
+                <option value="balanced">Balanced</option>
+                <option value="adventurous">Adventurous</option>
+              </select>
+            </div>
+          </div>
+          <div class="pref-row">
+            <div class="pref-field">
+              <label class="pref-label">Breakfast Style</label>
+              <select class="pref-select" id="pref-breakfast">
+                <option value="both">Sweet & Savory</option>
+                <option value="sweet">Sweet</option>
+                <option value="savory">Savory</option>
+              </select>
+            </div>
+            <div class="pref-field">
+              <label class="pref-label">Meal Prep Style</label>
+              <select class="pref-select" id="pref-prepstyle">
+                <option value="mix">Mix</option>
+                <option value="fresh">Fresh Daily</option>
+                <option value="batch">Batch Cook</option>
+              </select>
+            </div>
+          </div>
+          <div class="pref-row">
+            <div class="pref-field">
+              <label class="pref-label">Leftover Preference</label>
+              <select class="pref-select" id="pref-leftovers">
+                <option value="variety">Variety</option>
+                <option value="love">Love Leftovers</option>
+                <option value="none">No Leftovers</option>
+              </select>
+            </div>
+            <div class="pref-field">
+              <label class="pref-label">Ingredient Complexity</label>
+              <select class="pref-select" id="pref-complexity">
+                <option value="simple">Simple (5 or fewer)</option>
+                <option value="moderate">Moderate</option>
+                <option value="complex">Complex (10+)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="pref-section">
+          <div class="pref-section-title">Equipment</div>
+          <div class="pref-chips" id="pref-equipment">
+            <span class="pref-chip" data-val="Oven">Oven</span>
+            <span class="pref-chip" data-val="Stovetop">Stovetop</span>
+            <span class="pref-chip" data-val="Microwave">Microwave</span>
+            <span class="pref-chip" data-val="Air Fryer">Air Fryer</span>
+            <span class="pref-chip" data-val="Instant Pot">Instant Pot</span>
+            <span class="pref-chip" data-val="Slow Cooker">Slow Cooker</span>
+            <span class="pref-chip" data-val="Grill">Grill</span>
+            <span class="pref-chip" data-val="Blender">Blender</span>
+            <span class="pref-chip" data-val="Food Processor">Food Processor</span>
+            <span class="pref-chip" data-val="Cast Iron">Cast Iron</span>
+            <span class="pref-chip" data-val="Wok">Wok</span>
+          </div>
+        </div>
+
+        <div class="pref-section">
+          <div class="pref-section-title">Foods to Avoid</div>
+          <div style="display:flex; gap:8px; margin-bottom:8px;">
+            <input type="text" class="pref-input" id="pref-avoid-input" placeholder="Type a food and press Enter" onkeydown="if(event.key==='Enter'){addPrefTag('avoid');event.preventDefault();}">
+            <button class="btn-dash btn-dash-secondary" onclick="addPrefTag('avoid')">Add</button>
+          </div>
+          <div class="pref-tags" id="pref-avoid-tags"></div>
+        </div>
+
+        <div class="pref-section">
+          <div class="pref-section-title">Favorite Ingredients</div>
+          <div style="display:flex; gap:8px; margin-bottom:8px;">
+            <input type="text" class="pref-input" id="pref-fav-input" placeholder="Type an ingredient and press Enter" onkeydown="if(event.key==='Enter'){addPrefTag('fav');event.preventDefault();}">
+            <button class="btn-dash btn-dash-secondary" onclick="addPrefTag('fav')">Add</button>
+          </div>
+          <div class="pref-tags" id="pref-fav-tags"></div>
+        </div>
+
+        <div class="pref-section">
+          <div class="pref-section-title">Macro Targets (%)</div>
+          <div class="pref-row" style="grid-template-columns:1fr 1fr 1fr;">
+            <div class="pref-field">
+              <label class="pref-label">Protein %</label>
+              <input type="number" class="pref-input" id="pref-macro-protein" placeholder="30" min="5" max="60">
+            </div>
+            <div class="pref-field">
+              <label class="pref-label">Carbs %</label>
+              <input type="number" class="pref-input" id="pref-macro-carbs" placeholder="40" min="5" max="70">
+            </div>
+            <div class="pref-field">
+              <label class="pref-label">Fat %</label>
+              <input type="number" class="pref-input" id="pref-macro-fat" placeholder="30" min="5" max="60">
+            </div>
+          </div>
+        </div>
+
+        <div class="pref-save-bar">
+          <button class="btn-dash btn-dash-primary" onclick="savePreferences()" style="flex:1;">Save Preferences</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANTRY TAB ===== -->
+    <div id="dash-pantry" class="dash-tab-content">
+      <h2 style="font-family:'DM Serif Display',serif; font-size:1.3rem; color:#2E2B26; margin:0 0 20px;">Your Pantry</h2>
+      <p style="font-size:0.85rem; color:#8A857C; margin-bottom:20px;">Items in your pantry will be prioritized when generating meal plans.</p>
+      <div class="pantry-add">
+        <input type="text" id="pantry-add-input" placeholder="Add pantry item..." onkeydown="if(event.key==='Enter')addPantryItem()">
+        <button class="btn-dash btn-dash-primary" onclick="addPantryItem()">Add</button>
+      </div>
+      <div id="pantry-list" class="pantry-list">
+        <div class="no-pantry" id="no-pantry-msg">No items in your pantry yet.</div>
+      </div>
+    </div>
+
   </div>
+
+  <!-- AI Loading Overlay -->
+  <div class="dash-loading-overlay" id="dash-loading" style="display:none;">
+    <div class="spinner"></div>
+    <p id="dash-loading-text">Generating your meal plan...</p>
+    <p class="loading-sub" id="dash-loading-sub">This usually takes 15-30 seconds</p>
+  </div>
+
+  <!-- Toast -->
+  <div class="dash-toast" id="dash-toast"></div>
 </div>
 
 <!-- ==================== ADMIN DASHBOARD ==================== -->
@@ -3751,7 +4568,7 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
 import { getAuth, signInWithPopup, GoogleAuthProvider, OAuthProvider, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
-import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, addDoc, collection, getDocs, collectionGroup, query, orderBy, limit, getCountFromServer, serverTimestamp, Timestamp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
+import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, addDoc, collection, getDocs, collectionGroup, query, orderBy, limit, getCountFromServer, serverTimestamp, Timestamp, onSnapshot } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
 
 // ========== FIREBASE SETUP ==========
 const firebaseConfig = {
@@ -3956,6 +4773,924 @@ async function loadSubscription(uid) {
   }
 }
 
+// ========== DASHBOARD STATE ==========
+let dashListeners = [];
+let currentPlan = null;
+let currentPrefs = null;
+let currentPantry = [];
+let currentFavorites = [];
+let currentRatings = {};
+let currentUsage = { generations: 0, swaps: 0, revisions: 0 };
+let currentTier = 'free';
+let selectedDay = 0;
+let groceryItems = [];
+let aiPromptOverrides = {};
+let prefScriptOverrides = {};
+
+const LIMITS = {
+  free: { generations: 1, swaps: 5, revisions: 3 },
+  premium: { generations: 10, swaps: 50, revisions: 20 },
+  access_code: { generations: 10, swaps: 50, revisions: 20 }
+};
+
+const MODELS = {
+  SONNET: 'claude-sonnet-4-20250514',
+  HAIKU: 'claude-haiku-4-5-20251001'
+};
+
+const AI_ENDPOINT = 'https://us-central1-mealmuse-f218b.cloudfunctions.net/callAI';
+
+function getMonthKey() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+}
+
+// ========== DASHBOARD TAB SWITCHING ==========
+function switchDashTab(tab) {
+  document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.dash-tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector('.dash-tab-content#dash-' + tab).classList.add('active');
+  const tabs = document.querySelectorAll('.dash-tab');
+  const tabNames = ['overview', 'mealplan', 'grocery', 'preferences', 'pantry'];
+  const idx = tabNames.indexOf(tab);
+  if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
+}
+window.switchDashTab = switchDashTab;
+
+// ========== TOAST ==========
+function showDashToast(msg, type = 'success') {
+  const t = document.getElementById('dash-toast');
+  t.textContent = msg;
+  t.className = 'dash-toast ' + type + ' show';
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ========== USAGE RENDERING ==========
+function renderUsage() {
+  const tier = LIMITS[currentTier] || LIMITS.free;
+  const genPct = Math.min(100, (currentUsage.generations / tier.generations) * 100);
+  const swapPct = Math.min(100, (currentUsage.swaps / tier.swaps) * 100);
+  const revPct = Math.min(100, (currentUsage.revisions / tier.revisions) * 100);
+
+  document.getElementById('usage-gen-count').textContent = currentUsage.generations + ' / ' + tier.generations;
+  document.getElementById('usage-swap-count').textContent = currentUsage.swaps + ' / ' + tier.swaps;
+  document.getElementById('usage-rev-count').textContent = currentUsage.revisions + ' / ' + tier.revisions;
+
+  const genBar = document.getElementById('usage-gen-bar');
+  const swapBar = document.getElementById('usage-swap-bar');
+  const revBar = document.getElementById('usage-rev-bar');
+  genBar.style.width = genPct + '%';
+  swapBar.style.width = swapPct + '%';
+  revBar.style.width = revPct + '%';
+  genBar.className = 'usage-bar-fill' + (genPct >= 100 ? ' warn' : '');
+  swapBar.className = 'usage-bar-fill' + (swapPct >= 100 ? ' warn' : '');
+  revBar.className = 'usage-bar-fill' + (revPct >= 100 ? ' warn' : '');
+}
+
+// ========== OVERVIEW PLAN SUMMARY ==========
+function renderOverviewSummary() {
+  const el = document.getElementById('overview-plan-text');
+  if (!currentPlan || !currentPlan.days) {
+    el.innerHTML = 'No active meal plan. Generate one from the Meal Plan tab.';
+    return;
+  }
+  const totalMeals = currentPlan.days.reduce((sum, d) => sum + (d.meals ? d.meals.length : 0), 0);
+  const totalCal = currentPlan.weeklyCalories || currentPlan.days.reduce((sum, d) =>
+    sum + (d.meals ? d.meals.reduce((s, m) => s + (m.calories || 0), 0) : 0), 0);
+  const cost = currentPlan.estimatedWeeklyCost || '—';
+  el.innerHTML = totalMeals + ' meals across 7 days' +
+    '<div class="plan-meta"><span>' + Math.round(totalCal / 7) + ' cal/day avg</span>' +
+    '<span>~$' + cost + '/week</span></div>';
+}
+
+// ========== MEAL PLAN RENDERING ==========
+function renderMealPlan() {
+  if (!currentPlan || !currentPlan.days || currentPlan.days.length === 0) {
+    document.getElementById('no-plan-msg').style.display = '';
+    document.getElementById('mealplan-view').style.display = 'none';
+    return;
+  }
+  document.getElementById('no-plan-msg').style.display = 'none';
+  document.getElementById('mealplan-view').style.display = '';
+
+  // Day selector
+  const daySelector = document.getElementById('day-selector');
+  daySelector.innerHTML = currentPlan.days.map((d, i) =>
+    '<button class="day-btn' + (i === selectedDay ? ' active' : '') + '" onclick="selectDay(' + i + ')">' +
+    (d.day || ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i]) + '</button>'
+  ).join('');
+
+  renderDayMeals();
+  renderOverviewSummary();
+}
+
+function selectDay(idx) {
+  selectedDay = idx;
+  document.querySelectorAll('.day-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  renderDayMeals();
+}
+window.selectDay = selectDay;
+window.renderMealPlan = renderMealPlan;
+window.renderUsage = renderUsage;
+window.renderPreferences = renderPreferences;
+window.renderPantry = renderPantry;
+window.generateGroceryFromPlan = generateGroceryFromPlan;
+window.renderGroceryList = renderGroceryList;
+
+function renderDayMeals() {
+  if (!currentPlan || !currentPlan.days[selectedDay]) return;
+  const day = currentPlan.days[selectedDay];
+  const meals = day.meals || [];
+
+  // Daily summary
+  const totalCal = meals.reduce((s, m) => s + (m.calories || 0), 0);
+  const totalProtein = meals.reduce((s, m) => s + (m.protein || 0), 0);
+  const totalCarbs = meals.reduce((s, m) => s + (m.carbs || 0), 0);
+  const totalFat = meals.reduce((s, m) => s + (m.fat || 0), 0);
+  document.getElementById('daily-summary').innerHTML =
+    '<div class="daily-summary-item"><div class="daily-summary-value">' + totalCal + '</div><div class="daily-summary-label">Calories</div></div>' +
+    '<div class="daily-summary-item"><div class="daily-summary-value">' + totalProtein + 'g</div><div class="daily-summary-label">Protein</div></div>' +
+    '<div class="daily-summary-item"><div class="daily-summary-value">' + totalCarbs + 'g</div><div class="daily-summary-label">Carbs</div></div>' +
+    '<div class="daily-summary-item"><div class="daily-summary-value">' + totalFat + 'g</div><div class="daily-summary-label">Fat</div></div>';
+
+  // Meal cards
+  const grid = document.getElementById('meals-grid');
+  grid.innerHTML = meals.map((meal, mi) => {
+    const isFav = currentFavorites.some(f => f.name === meal.name);
+    const rating = currentRatings[meal.name] || null;
+    return '<div class="meal-card" id="meal-' + selectedDay + '-' + mi + '" onclick="toggleMealExpand(' + selectedDay + ',' + mi + ')">' +
+      '<div class="meal-card-type">' + (meal.type || ['Breakfast','Lunch','Dinner'][mi] || 'Meal') + '</div>' +
+      '<div class="meal-card-name">' + escHtml(meal.name || 'Untitled') + '</div>' +
+      '<div class="meal-card-desc">' + escHtml(meal.description || '') + '</div>' +
+      '<div class="meal-card-meta">' +
+        '<span><strong>' + (meal.calories || 0) + '</strong> cal</span>' +
+        '<span><strong>' + (meal.totalTime || '—') + '</strong></span>' +
+        '<span><strong>$' + (meal.costPerServing || '—') + '</strong>/serving</span>' +
+      '</div>' +
+      (meal.tags && meal.tags.length ? '<div class="meal-card-tags">' + meal.tags.map(t => '<span class="meal-tag">' + escHtml(t) + '</span>').join('') + '</div>' : '') +
+      '<div class="meal-detail">' +
+        '<div class="meal-detail-section"><h4>Macros</h4><div class="macro-bar">' +
+          '<div class="macro-item"><div class="macro-value macro-color-protein">' + (meal.protein || 0) + 'g</div><div class="macro-label">Protein</div></div>' +
+          '<div class="macro-item"><div class="macro-value macro-color-carbs">' + (meal.carbs || 0) + 'g</div><div class="macro-label">Carbs</div></div>' +
+          '<div class="macro-item"><div class="macro-value macro-color-fat">' + (meal.fat || 0) + 'g</div><div class="macro-label">Fat</div></div>' +
+        '</div></div>' +
+        (meal.ingredients ? '<div class="meal-detail-section"><h4>Ingredients</h4><ul class="ingredient-list">' +
+          meal.ingredients.map(ing => '<li>' + escHtml(ing) + '</li>').join('') + '</ul></div>' : '') +
+        '<div class="meal-detail-section" id="steps-section-' + selectedDay + '-' + mi + '"><h4>Steps</h4>' +
+          (meal.steps && meal.steps.length ? '<ol class="steps-list">' + meal.steps.map(s => '<li>' + escHtml(s) + '</li>').join('') + '</ol>' :
+          '<button class="btn-meal-action" onclick="event.stopPropagation();loadSteps(' + selectedDay + ',' + mi + ')">Load Cooking Steps</button>') +
+        '</div>' +
+        '<div class="meal-card-actions">' +
+          '<button class="btn-meal-action swap" onclick="event.stopPropagation();swapMeal(' + selectedDay + ',' + mi + ')">Swap Meal</button>' +
+          '<button class="btn-meal-action fav' + (isFav ? ' active' : '') + '" onclick="event.stopPropagation();toggleFavorite(' + selectedDay + ',' + mi + ')">' + (isFav ? 'Favorited' : 'Favorite') + '</button>' +
+          '<button class="btn-meal-action" onclick="event.stopPropagation();rateMeal(\'' + escHtml(meal.name) + '\',\'up\')" style="' + (rating==='up'?'background:rgba(125,168,110,0.2);':'') + '">&#x1F44D;</button>' +
+          '<button class="btn-meal-action" onclick="event.stopPropagation();rateMeal(\'' + escHtml(meal.name) + '\',\'down\')" style="' + (rating==='down'?'background:rgba(200,80,80,0.15);':'') + '">&#x1F44E;</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function escHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function toggleMealExpand(dayIdx, mealIdx) {
+  const card = document.getElementById('meal-' + dayIdx + '-' + mealIdx);
+  if (card) card.classList.toggle('expanded');
+}
+window.toggleMealExpand = toggleMealExpand;
+
+// ========== AI API CALLS ==========
+async function callAI(content, tokens, model) {
+  const bodyObj = { model: model || MODELS.SONNET, max_tokens: tokens || 12000, messages: [{ role: 'user', content }] };
+  let authToken = '';
+  try {
+    if (auth.currentUser) authToken = await auth.currentUser.getIdToken();
+  } catch (e) {}
+  const hdrs = { 'Content-Type': 'application/json' };
+  if (authToken) hdrs['Authorization'] = 'Bearer ' + authToken;
+  const res = await fetch(AI_ENDPOINT, { method: 'POST', headers: hdrs, body: JSON.stringify(bodyObj) });
+  if (!res.ok) throw new Error('API error: ' + res.status);
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
+  if (!data.content) throw new Error('No content in response');
+  let txt = data.content.map(c => c.text || '').join('');
+  txt = txt.replace(/```json/g, '').replace(/```/g, '').trim();
+  txt = txt.replace(/,\s*([}\]])/g, '$1');
+  // Repair truncated JSON
+  const repair = (s) => {
+    s = s.replace(/,\s*"[^"]*$/, ''); s = s.replace(/,\s*"[^"]*":\s*"[^"]*$/, '');
+    s = s.replace(/,\s*"[^"]*":\s*$/, ''); s = s.replace(/,\s*$/, '');
+    let ob=0,cb=0,oa=0,ca=0;
+    for(const c of s){if(c==='{')ob++;if(c==='}')cb++;if(c==='[')oa++;if(c===']')ca++;}
+    while(ca<oa){s+=']';ca++;}while(cb<ob){s+='}';cb++;}
+    return s;
+  };
+  if (!txt.endsWith('}') && !txt.endsWith(']')) txt = repair(txt);
+  try { return JSON.parse(txt); } catch(e) {
+    const first=txt.indexOf('{'), last=txt.lastIndexOf('}');
+    if(first>=0&&last>first) try{return JSON.parse(repair(txt.substring(first,last+1)));}catch(e2){}
+    throw new Error('Could not parse AI response');
+  }
+}
+
+// ========== PREFERENCE SCRIPTS ==========
+const DEFAULT_PREF_SCRIPTS = {
+  speed_quick: 'All meals MUST be under 15 min total.',
+  speed_medium: 'Meals 15-45 min.',
+  speed_elaborate: 'Elaborate gourmet recipes 45+ min.',
+  allergen_rule: 'STRICTLY EXCLUDE these allergens — NO meals may contain: {allergens}. Double-check every ingredient.',
+  diet_diabetic: 'For diabetic-friendly: low glycemic index, limit added sugars, moderate carbs per meal (<45g).',
+  diet_hearthealthy: 'For heart healthy: low saturated fat, low sodium (<600mg/meal), high fiber, omega-3 rich.',
+  diet_lowsodium: 'Low sodium: each meal under 500mg sodium.',
+  skill_beginner: 'Use only basic techniques (boiling, sauteing, baking). No advanced skills like deboning, tempering, or making emulsions.',
+  skill_advanced: 'Use advanced techniques freely: braising, searing, making roux, tempering, sous vide, fermentation.',
+  complexity_simple: 'Each recipe MUST use 5 or fewer main ingredients.',
+  complexity_complex: 'Feel free to use 10+ ingredients per recipe.',
+  equipment_rule: 'ONLY suggest meals makeable with this equipment. Do NOT require equipment the user doesn\'t have.',
+  spice_mild: 'Keep all dishes mild — no chili peppers, hot sauce, or spicy seasonings.',
+  spice_spicy: 'User enjoys heat — include moderate spice in many dishes.',
+  spice_extra: 'User LOVES heat — include bold, fiery spice levels.',
+  adventure_comfort: 'Stick to familiar, comforting classics.',
+  adventure_adventurous: 'Push boundaries with exotic ingredients, unusual combinations.',
+  breakfast_sweet: 'All breakfasts should be sweet.',
+  breakfast_savory: 'All breakfasts should be savory.',
+  prepstyle_fresh: 'Each meal should be cooked fresh — no batch cooking.',
+  prepstyle_batch: 'Design meals for batch cooking.',
+  leftover_love: 'Intentionally plan for leftovers.',
+  leftover_hate: 'ZERO repeats across the entire week.',
+  avoid_rule: 'Do not include these ingredients in any recipe.',
+  fav_rule: 'Build meals around these when possible.',
+  goal_general: 'Balanced, flavorful meals for everyday eating.',
+  goal_fitness: 'High protein, nutrient-dense meals.',
+  goal_weightloss: 'Lower calorie meals that are HIGH in flavor.',
+  goal_cooking: 'Exciting, technique-driven recipes.',
+  goal_budget: 'Creative, flavorful meals that maximize every dollar.',
+  goal_family: 'Crowd-pleasing meals the whole family will love.'
+};
+
+function getPrefScript(key) {
+  return prefScriptOverrides[key] || DEFAULT_PREF_SCRIPTS[key] || '';
+}
+
+const DEFAULT_PROMPTS = {
+  generate: 'You are an elite personal chef and meal planner. Create a complete 7-day meal plan (Monday-Sunday, 3 meals per day: breakfast, lunch, dinner). Each meal must have a descriptive, appetizing name. Include vivid descriptions (2-3 sentences about flavors and textures). Use per-recipe cooking quantities for ingredients (exact amounts needed, NOT grocery purchase sizes). US customary units only. Return ONLY valid JSON matching this structure: {"days":[{"day":"Monday","meals":[{"type":"breakfast","name":"...","description":"...","calories":0,"protein":0,"carbs":0,"fat":0,"costPerServing":0,"totalTime":"...","allergens":[],"tags":[],"ingredients":[],"prepTime":"...","cookTime":"..."}]}],"weeklyCalories":0,"estimatedWeeklyCost":0,"sharedIngredients":[]}',
+  swap: 'Generate ONE creative, restaurant-quality replacement meal. This is replacing a meal the user doesn\'t want — make the replacement COMPLETELY DIFFERENT in style, cuisine, or technique. The meal name MUST be descriptive and appetizing. Use per-recipe cooking quantities for ingredients. US units only. Return ONLY valid JSON for a single meal object.',
+  steps: 'Generate detailed, chef-quality cooking instructions. Return ONLY a JSON array of 6-10 detailed steps. Each step MUST include exact action with specific technique, heat level and cookware, sensory cues, timing in parentheses, and pro tips where helpful. US customary units only.',
+  revise: 'You are an elite personal chef revising a 7-day meal plan. The user wants REAL, NOTICEABLE changes — not tiny tweaks. Make changes that are DRAMATICALLY different. Return COMPLETE revised plan JSON (all 7 days, 3 meals each). Only JSON.'
+};
+
+function getPrompt(type) {
+  return aiPromptOverrides[type + 'Prompt'] || DEFAULT_PROMPTS[type];
+}
+
+function buildPrefContext() {
+  if (!currentPrefs) return '';
+  const p = currentPrefs;
+  const diet = p.diet || 'anything';
+  const cuisines = p.cuisines || ['American'];
+  const people = p.servings || p.people || 2;
+  const calGoal = p.calories || p.calGoal || 2000;
+  const budget = p.budget || 100;
+  const userGoal = p.goal || p.userGoal || 'general';
+  const prepSpeed = p.speed || p.prepSpeed || 'medium';
+  const skillLevel = p.skill || p.skillLevel || 'intermediate';
+  const spiceTolerance = p.spice || p.spiceTolerance || 'medium';
+  const ingredientComplexity = p.complexity || p.ingredientComplexity || 'moderate';
+  const equipment = p.equipment || [];
+  const adventurousness = p.adventure || p.adventurousness || 'balanced';
+  const breakfastStyle = p.breakfast || p.breakfastStyle || 'both';
+  const mealPrepStyle = p.prepstyle || p.mealPrepStyle || 'mix';
+  const leftoverPref = p.leftovers || p.leftoverPref || 'variety';
+  const avoidFoods = p.avoid || p.avoidFoods || [];
+  const favIngredients = p.favorites || p.favIngredients || [];
+  const excludeAllergens = p.allergens || p.excludeAllergens || [];
+  const macroProtein = p.macroProtein || 30;
+  const macroCarbs = p.macroCarbs || 40;
+  const macroFat = p.macroFat || 30;
+
+  const ps = prepSpeed==='quick'?getPrefScript('speed_quick'):prepSpeed==='medium'?getPrefScript('speed_medium'):prepSpeed==='elaborate'?getPrefScript('speed_elaborate'):'';
+  const allergenRule = excludeAllergens.length>0?'\n4. '+getPrefScript('allergen_rule').replace('{allergens}',excludeAllergens.join(', ')):'';
+  const macroRule = '\n5. Target daily macro split: Protein '+macroProtein+'%, Carbs '+macroCarbs+'%, Fat '+macroFat+'% of total calories.';
+  const dietDisclaimer = diet==='diabetic'?'\n7. '+getPrefScript('diet_diabetic'):diet==='hearthealthy'?'\n7. '+getPrefScript('diet_hearthealthy'):diet==='lowsodium'?'\n7. '+getPrefScript('diet_lowsodium'):'';
+  const skillRule = skillLevel!=='intermediate'?'\nCOOKING SKILL: '+skillLevel+'. '+getPrefScript(skillLevel==='beginner'?'skill_beginner':'skill_advanced'):'';
+  const complexityRule = ingredientComplexity!=='moderate'?'\nINGREDIENT SIMPLICITY: '+getPrefScript(ingredientComplexity==='simple'?'complexity_simple':'complexity_complex'):'';
+  const equipmentRule = equipment.length>0?'\nAVAILABLE EQUIPMENT: '+equipment.join(', ')+'. '+getPrefScript('equipment_rule'):'';
+  const spiceRule = spiceTolerance!=='medium'?'\nSPICE TOLERANCE: '+getPrefScript(spiceTolerance==='mild'?'spice_mild':spiceTolerance==='spicy'?'spice_spicy':'spice_extra'):'';
+  const adventureRule = adventurousness!=='balanced'?'\nADVENTUROUSNESS: '+getPrefScript(adventurousness==='comfort'?'adventure_comfort':'adventure_adventurous'):'';
+  const breakfastRule = breakfastStyle!=='both'?'\nBREAKFAST STYLE: '+getPrefScript(breakfastStyle==='sweet'?'breakfast_sweet':'breakfast_savory'):'';
+  const prepStyleRule = mealPrepStyle!=='mix'?'\nMEAL PREP STYLE: '+getPrefScript(mealPrepStyle==='fresh'?'prepstyle_fresh':'prepstyle_batch'):'';
+  const leftoverRule = leftoverPref!=='variety'?'\nLEFTOVER TOLERANCE: '+getPrefScript(leftoverPref==='love'?'leftover_love':'leftover_hate'):'';
+  const avoidRule = avoidFoods.length>0?'\nFOODS TO AVOID: '+avoidFoods.join(', ')+'. '+getPrefScript('avoid_rule'):'';
+  const favRule = favIngredients.length>0?'\nFAVORITE INGREDIENTS: '+favIngredients.join(', ')+'. '+getPrefScript('fav_rule'):'';
+  const ratingCtx = Object.keys(currentRatings).length>0?'\n8. User feedback — LIKED: '+Object.entries(currentRatings).filter(([_,v])=>v==='up').map(([k])=>k).join(', ')+' DISLIKED: '+Object.entries(currentRatings).filter(([_,v])=>v==='down').map(([k])=>k).join(', ')+'. Generate more meals SIMILAR to liked ones and AVOID disliked styles.':'';
+  const pantryCtx = currentPantry.length>0?'\n9. User has these in pantry — PRIORITIZE using them: '+currentPantry.map(p=>typeof p==='string'?p:p.name).join(', ')+'.':'';
+  const goalCtx = getPrefScript('goal_'+userGoal) || getPrefScript('goal_general');
+
+  return '\n\nPreferences: Diet='+diet+', Cuisines='+cuisines.join(',')+', Servings='+people+', Daily cal='+calGoal+'kcal, Weekly budget=$'+budget+', Goal='+userGoal+'.'+(ps?'\nSpeed: '+ps:'')+'\n\nUSER GOAL CONTEXT: '+goalCtx+'\n3. Weekly grocery budget is $'+budget+'.'+allergenRule+macroRule+dietDisclaimer+skillRule+complexityRule+equipmentRule+spiceRule+adventureRule+breakfastRule+prepStyleRule+leftoverRule+avoidRule+favRule+ratingCtx+pantryCtx;
+}
+
+// ========== GENERATE MEAL PLAN ==========
+async function generateMealPlan() {
+  const uid = auth.currentUser?.uid;
+  if (!uid) return;
+  const tier = LIMITS[currentTier] || LIMITS.free;
+  if (currentUsage.generations >= tier.generations) {
+    showDashToast('Monthly generation limit reached (' + tier.generations + '). Resets next month.', 'error');
+    return;
+  }
+  const overlay = document.getElementById('dash-loading');
+  overlay.style.display = 'flex';
+  document.getElementById('dash-loading-text').textContent = 'Generating your meal plan...';
+  document.getElementById('dash-loading-sub').textContent = 'This usually takes 15-30 seconds';
+  try {
+    const prompt = getPrompt('generate') + buildPrefContext();
+    const plan = await callAI(prompt, 12000, MODELS.SONNET);
+    if (!plan || !plan.days) throw new Error('Invalid plan format');
+    currentPlan = plan;
+    await setDoc(doc(db, 'users', uid, 'data', 'currentPlan'), { plan, savedAt: serverTimestamp() });
+    // Increment usage
+    currentUsage.generations = (currentUsage.generations || 0) + 1;
+    await setDoc(doc(db, 'users', uid, 'usage', 'monthly'), { month: getMonthKey(), ...currentUsage });
+    renderMealPlan();
+    renderUsage();
+    generateGroceryFromPlan();
+    showDashToast('Meal plan generated!');
+    switchDashTab('mealplan');
+  } catch (err) {
+    console.error('Generate error:', err);
+    showDashToast('Failed to generate plan: ' + err.message, 'error');
+  } finally {
+    overlay.style.display = 'none';
+  }
+}
+window.generateMealPlan = generateMealPlan;
+
+// ========== SWAP MEAL ==========
+async function swapMeal(dayIdx, mealIdx) {
+  const uid = auth.currentUser?.uid;
+  if (!uid || !currentPlan) return;
+  const tier = LIMITS[currentTier] || LIMITS.free;
+  if (currentUsage.swaps >= tier.swaps) {
+    showDashToast('Monthly swap limit reached (' + tier.swaps + ').', 'error');
+    return;
+  }
+  const meal = currentPlan.days[dayIdx]?.meals[mealIdx];
+  if (!meal) return;
+  const overlay = document.getElementById('dash-loading');
+  overlay.style.display = 'flex';
+  document.getElementById('dash-loading-text').textContent = 'Finding a replacement...';
+  document.getElementById('dash-loading-sub').textContent = 'Just a moment';
+  try {
+    const ctx = '\n\nCurrent meal to replace: ' + meal.name + ' (' + meal.type + '). Diet: ' + (currentPrefs?.diet||'anything') +
+      '. Cuisines: ' + (currentPrefs?.cuisines||['Any']).join(',') + '. Budget: $' + (currentPrefs?.budget||100) +
+      '/week. Skill: ' + (currentPrefs?.skill||'intermediate') + '. Calorie target: ' + (currentPrefs?.calories||2000) + ' kcal/day.';
+    const prompt = getPrompt('swap') + ctx;
+    const newMeal = await callAI(prompt, 800, MODELS.HAIKU);
+    if (!newMeal || !newMeal.name) throw new Error('Invalid swap response');
+    newMeal.type = meal.type;
+    currentPlan.days[dayIdx].meals[mealIdx] = newMeal;
+    await setDoc(doc(db, 'users', uid, 'data', 'currentPlan'), { plan: currentPlan, savedAt: serverTimestamp() });
+    currentUsage.swaps = (currentUsage.swaps || 0) + 1;
+    await setDoc(doc(db, 'users', uid, 'usage', 'monthly'), { month: getMonthKey(), ...currentUsage });
+    renderDayMeals();
+    renderUsage();
+    generateGroceryFromPlan();
+    showDashToast('Meal swapped!');
+  } catch (err) {
+    console.error('Swap error:', err);
+    showDashToast('Swap failed: ' + err.message, 'error');
+  } finally {
+    overlay.style.display = 'none';
+  }
+}
+window.swapMeal = swapMeal;
+
+// ========== LOAD STEPS ==========
+async function loadSteps(dayIdx, mealIdx) {
+  const meal = currentPlan?.days[dayIdx]?.meals[mealIdx];
+  if (!meal) return;
+  const section = document.getElementById('steps-section-' + dayIdx + '-' + mealIdx);
+  section.innerHTML = '<h4>Steps</h4><p style="color:#8A857C;font-size:0.85rem;">Loading steps...</p>';
+  try {
+    const ctx = '\n\nMeal: ' + meal.name + '\nIngredients: ' + (meal.ingredients||[]).join(', ');
+    const prompt = getPrompt('steps') + ctx;
+    const steps = await callAI(prompt, 1500, MODELS.HAIKU);
+    const stepsArr = Array.isArray(steps) ? steps : (steps.steps || []);
+    meal.steps = stepsArr;
+    section.innerHTML = '<h4>Steps</h4><ol class="steps-list">' + stepsArr.map(s => '<li>' + escHtml(s) + '</li>').join('') + '</ol>';
+  } catch (err) {
+    console.error('Steps error:', err);
+    section.innerHTML = '<h4>Steps</h4><p style="color:#c05050;font-size:0.85rem;">Failed to load steps.</p>';
+  }
+}
+window.loadSteps = loadSteps;
+
+// ========== SAVE / LOAD PLANS ==========
+async function savePlan() {
+  const uid = auth.currentUser?.uid;
+  if (!uid || !currentPlan) return;
+  try {
+    const savedDoc = await getDoc(doc(db, 'users', uid, 'data', 'savedPlans'));
+    let plans = savedDoc.exists() ? (savedDoc.data().plans || []) : [];
+    plans.unshift({ plan: currentPlan, savedAt: new Date().toISOString() });
+    if (plans.length > 5) plans = plans.slice(0, 5);
+    await setDoc(doc(db, 'users', uid, 'data', 'savedPlans'), { plans });
+    showDashToast('Plan saved!');
+  } catch (err) {
+    console.error('Save plan error:', err);
+    showDashToast('Failed to save plan.', 'error');
+  }
+}
+window.savePlan = savePlan;
+
+function toggleSavedPlans() {
+  const menu = document.getElementById('saved-plans-menu');
+  menu.classList.toggle('open');
+}
+window.toggleSavedPlans = toggleSavedPlans;
+
+async function renderSavedPlans() {
+  const uid = auth.currentUser?.uid;
+  if (!uid) return;
+  const menu = document.getElementById('saved-plans-menu');
+  try {
+    const savedDoc = await getDoc(doc(db, 'users', uid, 'data', 'savedPlans'));
+    const plans = savedDoc.exists() ? (savedDoc.data().plans || []) : [];
+    if (plans.length === 0) {
+      menu.innerHTML = '<div class="saved-plan-item" style="color:#8A857C;">No saved plans yet</div>';
+      return;
+    }
+    menu.innerHTML = plans.map((p, i) => {
+      const date = p.savedAt ? new Date(p.savedAt.toDate ? p.savedAt.toDate() : p.savedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Unknown';
+      return '<div class="saved-plan-item" onclick="loadSavedPlan(' + i + ')">Plan from <span class="saved-plan-date">' + date + '</span></div>';
+    }).join('');
+  } catch (e) {
+    menu.innerHTML = '<div class="saved-plan-item" style="color:#c05050;">Error loading plans</div>';
+  }
+}
+
+async function loadSavedPlan(idx) {
+  const uid = auth.currentUser?.uid;
+  if (!uid) return;
+  try {
+    const savedDoc = await getDoc(doc(db, 'users', uid, 'data', 'savedPlans'));
+    const plans = savedDoc.exists() ? (savedDoc.data().plans || []) : [];
+    if (plans[idx] && plans[idx].plan) {
+      currentPlan = plans[idx].plan;
+      await setDoc(doc(db, 'users', uid, 'data', 'currentPlan'), { plan: currentPlan, savedAt: serverTimestamp() });
+      selectedDay = 0;
+      renderMealPlan();
+      generateGroceryFromPlan();
+      showDashToast('Saved plan loaded!');
+      document.getElementById('saved-plans-menu').classList.remove('open');
+    }
+  } catch (err) {
+    showDashToast('Failed to load plan.', 'error');
+  }
+}
+window.loadSavedPlan = loadSavedPlan;
+
+// ========== FAVORITES & RATINGS ==========
+async function toggleFavorite(dayIdx, mealIdx) {
+  const uid = auth.currentUser?.uid;
+  const meal = currentPlan?.days[dayIdx]?.meals[mealIdx];
+  if (!uid || !meal) return;
+  try {
+    const idx = currentFavorites.findIndex(f => f.name === meal.name);
+    if (idx >= 0) {
+      currentFavorites.splice(idx, 1);
+    } else {
+      currentFavorites.push({ name: meal.name, type: meal.type, calories: meal.calories, description: meal.description });
+    }
+    await setDoc(doc(db, 'users', uid, 'data', 'favorites'), { meals: currentFavorites });
+    renderDayMeals();
+  } catch (err) {
+    console.error('Favorite error:', err);
+  }
+}
+window.toggleFavorite = toggleFavorite;
+
+async function rateMeal(mealName, rating) {
+  const uid = auth.currentUser?.uid;
+  if (!uid) return;
+  try {
+    if (currentRatings[mealName] === rating) {
+      delete currentRatings[mealName];
+    } else {
+      currentRatings[mealName] = rating;
+    }
+    await setDoc(doc(db, 'users', uid, 'data', 'ratings'), currentRatings);
+    renderDayMeals();
+  } catch (err) {
+    console.error('Rating error:', err);
+  }
+}
+window.rateMeal = rateMeal;
+
+// ========== GROCERY LIST ==========
+const GROCERY_CATEGORIES = {
+  'Produce': ['lettuce','tomato','onion','garlic','pepper','mushroom','spinach','kale','broccoli','carrot','celery','cucumber','avocado','potato','sweet potato','zucchini','squash','corn','peas','beans','lemon','lime','orange','apple','banana','berries','strawberr','blueberr','mango','cilantro','basil','parsley','mint','ginger','jalapeno','scallion','shallot','cabbage','cauliflower','eggplant','beet','radish','arugula','chive','dill','rosemary','thyme','sage'],
+  'Protein': ['chicken','beef','pork','turkey','salmon','shrimp','fish','tuna','cod','tilapia','lamb','sausage','bacon','steak','tofu','tempeh','ground','thigh','breast','loin','fillet'],
+  'Dairy & Eggs': ['milk','cheese','yogurt','cream','butter','egg','sour cream','mozzarella','parmesan','cheddar','feta','ricotta','cream cheese','whipping cream','half-and-half'],
+  'Grains & Pasta': ['rice','pasta','bread','flour','oats','quinoa','noodle','tortilla','couscous','barley','farro','pita','bun','roll','cereal','granola','panko','breadcrumb','cornmeal','polenta'],
+  'Canned & Jarred': ['tomato sauce','tomato paste','diced tomato','broth','stock','coconut milk','beans','chickpea','lentil','salsa','peanut butter','jam','honey','maple syrup','soy sauce','fish sauce','hot sauce','vinegar','mustard','mayo','ketchup','worcestershire','hoisin','sriracha','tahini'],
+  'Pantry Staples': ['oil','olive oil','sesame oil','coconut oil','salt','pepper','sugar','brown sugar','cumin','paprika','cinnamon','chili powder','cayenne','oregano','garlic powder','onion powder','turmeric','curry','vanilla','baking','cornstarch','cocoa']
+};
+
+function categorizeIngredient(ingredient) {
+  const lower = ingredient.toLowerCase();
+  for (const [cat, keywords] of Object.entries(GROCERY_CATEGORIES)) {
+    if (keywords.some(kw => lower.includes(kw))) return cat;
+  }
+  return 'Other';
+}
+
+function generateGroceryFromPlan() {
+  if (!currentPlan || !currentPlan.days) {
+    groceryItems = [];
+    renderGroceryList();
+    return;
+  }
+  const allIngredients = [];
+  currentPlan.days.forEach(day => {
+    (day.meals || []).forEach(meal => {
+      (meal.ingredients || []).forEach(ing => {
+        allIngredients.push(ing);
+      });
+    });
+  });
+  // Deduplicate by rough matching
+  const seen = new Map();
+  allIngredients.forEach(ing => {
+    const key = ing.toLowerCase().replace(/[\d\s\/½¼¾⅓⅔]+/g, '').replace(/^(cup|tbsp|tsp|oz|lb|g|ml|kg|can|bunch|clove|head|slice|piece|package|pkg|bag)s?\b/i, '').trim();
+    if (!seen.has(key) || ing.length > seen.get(key).length) {
+      seen.set(key, ing);
+    }
+  });
+  const stored = JSON.parse(localStorage.getItem('mealmuse_grocery_checked') || '{}');
+  groceryItems = [...seen.values()].map(ing => ({
+    name: ing,
+    category: categorizeIngredient(ing),
+    checked: stored[ing] || false,
+    custom: false
+  }));
+  // Add any custom items from localStorage
+  const custom = JSON.parse(localStorage.getItem('mealmuse_grocery_custom') || '[]');
+  custom.forEach(c => {
+    if (!groceryItems.find(g => g.name === c.name)) {
+      groceryItems.push({ ...c, custom: true });
+    }
+  });
+  renderGroceryList();
+}
+
+function renderGroceryList() {
+  const container = document.getElementById('grocery-list-container');
+  const noMsg = document.getElementById('no-grocery-msg');
+  const addForm = document.getElementById('grocery-add-form');
+  if (groceryItems.length === 0) {
+    noMsg.style.display = '';
+    addForm.style.display = 'none';
+    container.innerHTML = '';
+    container.appendChild(noMsg);
+    return;
+  }
+  noMsg.style.display = 'none';
+  addForm.style.display = 'flex';
+  // Group by category
+  const grouped = {};
+  groceryItems.forEach((item, i) => {
+    if (!grouped[item.category]) grouped[item.category] = [];
+    grouped[item.category].push({ ...item, idx: i });
+  });
+  const order = ['Produce','Protein','Dairy & Eggs','Grains & Pasta','Canned & Jarred','Pantry Staples','Other'];
+  let html = '';
+  order.forEach(cat => {
+    if (!grouped[cat]) return;
+    html += '<div class="grocery-category"><div class="grocery-category-title">' + cat + '</div>';
+    grouped[cat].forEach(item => {
+      html += '<div class="grocery-item' + (item.checked ? ' checked' : '') + '">' +
+        '<input type="checkbox" ' + (item.checked ? 'checked' : '') + ' onchange="toggleGroceryCheck(' + item.idx + ')">' +
+        '<span>' + escHtml(item.name) + '</span></div>';
+    });
+    html += '</div>';
+  });
+  container.innerHTML = html;
+  container.appendChild(noMsg);
+}
+
+function toggleGroceryCheck(idx) {
+  if (groceryItems[idx]) {
+    groceryItems[idx].checked = !groceryItems[idx].checked;
+    const stored = {};
+    groceryItems.forEach(g => { if (g.checked) stored[g.name] = true; });
+    localStorage.setItem('mealmuse_grocery_checked', JSON.stringify(stored));
+    renderGroceryList();
+  }
+}
+window.toggleGroceryCheck = toggleGroceryCheck;
+
+function addGroceryItem() {
+  const input = document.getElementById('grocery-add-input');
+  const name = input.value.trim();
+  if (!name) return;
+  const item = { name, category: categorizeIngredient(name), checked: false, custom: true };
+  groceryItems.push(item);
+  const custom = JSON.parse(localStorage.getItem('mealmuse_grocery_custom') || '[]');
+  custom.push(item);
+  localStorage.setItem('mealmuse_grocery_custom', JSON.stringify(custom));
+  input.value = '';
+  renderGroceryList();
+}
+window.addGroceryItem = addGroceryItem;
+
+function clearCheckedGrocery() {
+  groceryItems = groceryItems.filter(g => !g.checked);
+  localStorage.setItem('mealmuse_grocery_checked', '{}');
+  const custom = groceryItems.filter(g => g.custom);
+  localStorage.setItem('mealmuse_grocery_custom', JSON.stringify(custom));
+  renderGroceryList();
+}
+window.clearCheckedGrocery = clearCheckedGrocery;
+
+function regenerateGroceryList() {
+  localStorage.removeItem('mealmuse_grocery_checked');
+  localStorage.removeItem('mealmuse_grocery_custom');
+  generateGroceryFromPlan();
+  showDashToast('Grocery list regenerated');
+}
+window.regenerateGroceryList = regenerateGroceryList;
+
+// ========== PREFERENCES ==========
+function renderPreferences() {
+  document.getElementById('pref-loading').style.display = 'none';
+  document.getElementById('pref-form').style.display = '';
+  if (!currentPrefs) return;
+  const p = currentPrefs;
+  // Dropdowns
+  const setVal = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined) el.value = val; };
+  setVal('pref-diet', p.diet);
+  setVal('pref-calories', p.calories || p.calGoal);
+  setVal('pref-budget', p.budget);
+  setVal('pref-servings', p.servings || p.people);
+  setVal('pref-goal', p.goal || p.userGoal);
+  setVal('pref-skill', p.skill || p.skillLevel);
+  setVal('pref-speed', p.speed || p.prepSpeed);
+  setVal('pref-spice', p.spice || p.spiceTolerance);
+  setVal('pref-adventure', p.adventure || p.adventurousness);
+  setVal('pref-breakfast', p.breakfast || p.breakfastStyle);
+  setVal('pref-prepstyle', p.prepstyle || p.mealPrepStyle);
+  setVal('pref-leftovers', p.leftovers || p.leftoverPref);
+  setVal('pref-complexity', p.complexity || p.ingredientComplexity);
+  setVal('pref-macro-protein', p.macroProtein);
+  setVal('pref-macro-carbs', p.macroCarbs);
+  setVal('pref-macro-fat', p.macroFat);
+  // Chips
+  const setChips = (containerId, vals) => {
+    if (!vals || !Array.isArray(vals)) return;
+    document.querySelectorAll('#' + containerId + ' .pref-chip').forEach(c => {
+      c.classList.toggle('active', vals.includes(c.dataset.val));
+    });
+  };
+  setChips('pref-cuisines', p.cuisines);
+  setChips('pref-allergens', p.allergens || p.excludeAllergens);
+  setChips('pref-equipment', p.equipment);
+  // Tags
+  renderPrefTags('avoid', p.avoid || p.avoidFoods || []);
+  renderPrefTags('fav', p.favorites || p.favIngredients || []);
+}
+
+function renderPrefTags(type, items) {
+  const container = document.getElementById('pref-' + type + '-tags');
+  container.innerHTML = items.map((item, i) =>
+    '<span class="pref-tag">' + escHtml(item) + '<span class="pref-tag-remove" onclick="removePrefTag(\'' + type + '\',' + i + ')"> &times;</span></span>'
+  ).join('');
+  container.dataset.items = JSON.stringify(items);
+}
+
+function addPrefTag(type) {
+  const input = document.getElementById('pref-' + type + '-input');
+  const val = input.value.trim();
+  if (!val) return;
+  const container = document.getElementById('pref-' + type + '-tags');
+  const items = JSON.parse(container.dataset.items || '[]');
+  if (!items.includes(val)) {
+    items.push(val);
+    renderPrefTags(type, items);
+  }
+  input.value = '';
+}
+window.addPrefTag = addPrefTag;
+
+function removePrefTag(type, idx) {
+  const container = document.getElementById('pref-' + type + '-tags');
+  const items = JSON.parse(container.dataset.items || '[]');
+  items.splice(idx, 1);
+  renderPrefTags(type, items);
+}
+window.removePrefTag = removePrefTag;
+
+// Setup chip click handlers
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('pref-chip')) {
+    e.target.classList.toggle('active');
+  }
+  // Close saved plans dropdown when clicking outside
+  if (!e.target.closest('.saved-plans-dropdown')) {
+    const menu = document.getElementById('saved-plans-menu');
+    if (menu) menu.classList.remove('open');
+  }
+});
+
+async function savePreferences() {
+  const uid = auth.currentUser?.uid;
+  if (!uid) return;
+  const getVal = (id) => document.getElementById(id)?.value || '';
+  const getNum = (id) => parseInt(document.getElementById(id)?.value) || 0;
+  const getChips = (containerId) => {
+    return Array.from(document.querySelectorAll('#' + containerId + ' .pref-chip.active')).map(c => c.dataset.val);
+  };
+  const getTags = (type) => {
+    const container = document.getElementById('pref-' + type + '-tags');
+    return JSON.parse(container?.dataset.items || '[]');
+  };
+  const prefs = {
+    diet: getVal('pref-diet'),
+    calories: getNum('pref-calories') || 2000,
+    budget: getNum('pref-budget') || 100,
+    servings: getNum('pref-servings') || 2,
+    goal: getVal('pref-goal'),
+    skill: getVal('pref-skill'),
+    speed: getVal('pref-speed'),
+    spice: getVal('pref-spice'),
+    adventure: getVal('pref-adventure'),
+    breakfast: getVal('pref-breakfast'),
+    prepstyle: getVal('pref-prepstyle'),
+    leftovers: getVal('pref-leftovers'),
+    complexity: getVal('pref-complexity'),
+    cuisines: getChips('pref-cuisines'),
+    allergens: getChips('pref-allergens'),
+    equipment: getChips('pref-equipment'),
+    avoid: getTags('avoid'),
+    favorites: getTags('fav'),
+    macroProtein: getNum('pref-macro-protein') || 30,
+    macroCarbs: getNum('pref-macro-carbs') || 40,
+    macroFat: getNum('pref-macro-fat') || 30
+  };
+  try {
+    await setDoc(doc(db, 'users', uid, 'data', 'preferences'), prefs);
+    currentPrefs = prefs;
+    showDashToast('Preferences saved!');
+  } catch (err) {
+    console.error('Save preferences error:', err);
+    showDashToast('Failed to save preferences.', 'error');
+  }
+}
+window.savePreferences = savePreferences;
+
+// ========== PANTRY ==========
+function renderPantry() {
+  const list = document.getElementById('pantry-list');
+  const noMsg = document.getElementById('no-pantry-msg');
+  if (currentPantry.length === 0) {
+    list.innerHTML = '';
+    list.appendChild(noMsg);
+    noMsg.style.display = '';
+    return;
+  }
+  noMsg.style.display = 'none';
+  list.innerHTML = currentPantry.map((item, i) => {
+    const name = typeof item === 'string' ? item : item.name;
+    return '<div class="pantry-item"><span>' + escHtml(name) + '</span>' +
+      '<button class="pantry-item-remove" onclick="removePantryItem(' + i + ')">&times;</button></div>';
+  }).join('');
+}
+
+async function addPantryItem() {
+  const uid = auth.currentUser?.uid;
+  const input = document.getElementById('pantry-add-input');
+  const name = input.value.trim();
+  if (!uid || !name) return;
+  try {
+    currentPantry.push({ name });
+    await setDoc(doc(db, 'users', uid, 'data', 'pantry'), { items: currentPantry });
+    input.value = '';
+    renderPantry();
+  } catch (err) {
+    console.error('Add pantry error:', err);
+    showDashToast('Failed to add item.', 'error');
+  }
+}
+window.addPantryItem = addPantryItem;
+
+async function removePantryItem(idx) {
+  const uid = auth.currentUser?.uid;
+  if (!uid) return;
+  try {
+    currentPantry.splice(idx, 1);
+    await setDoc(doc(db, 'users', uid, 'data', 'pantry'), { items: currentPantry });
+    renderPantry();
+  } catch (err) {
+    console.error('Remove pantry error:', err);
+    showDashToast('Failed to remove item.', 'error');
+  }
+}
+window.removePantryItem = removePantryItem;
+
+// ========== REAL-TIME LISTENERS ==========
+function setupDashListeners(uid) {
+  // Clean up previous listeners
+  dashListeners.forEach(unsub => unsub());
+  dashListeners = [];
+
+  // Current plan
+  dashListeners.push(onSnapshot(doc(db, 'users', uid, 'data', 'currentPlan'), (snap) => {
+    if (snap.exists()) {
+      const data = snap.data();
+      currentPlan = data.plan || null;
+    } else {
+      currentPlan = null;
+    }
+    renderMealPlan();
+    generateGroceryFromPlan();
+    renderOverviewSummary();
+  }));
+
+  // Preferences
+  dashListeners.push(onSnapshot(doc(db, 'users', uid, 'data', 'preferences'), (snap) => {
+    currentPrefs = snap.exists() ? snap.data() : null;
+    renderPreferences();
+  }));
+
+  // Favorites
+  dashListeners.push(onSnapshot(doc(db, 'users', uid, 'data', 'favorites'), (snap) => {
+    currentFavorites = snap.exists() ? (snap.data().meals || []) : [];
+  }));
+
+  // Pantry
+  dashListeners.push(onSnapshot(doc(db, 'users', uid, 'data', 'pantry'), (snap) => {
+    currentPantry = snap.exists() ? (snap.data().items || []) : [];
+    renderPantry();
+  }));
+
+  // Ratings
+  dashListeners.push(onSnapshot(doc(db, 'users', uid, 'data', 'ratings'), (snap) => {
+    currentRatings = snap.exists() ? snap.data() : {};
+  }));
+
+  // Usage
+  dashListeners.push(onSnapshot(doc(db, 'users', uid, 'usage', 'monthly'), (snap) => {
+    if (snap.exists()) {
+      const data = snap.data();
+      if (data.month === getMonthKey()) {
+        currentUsage = { generations: data.generations || 0, swaps: data.swaps || 0, revisions: data.revisions || 0 };
+      } else {
+        currentUsage = { generations: 0, swaps: 0, revisions: 0 };
+      }
+    } else {
+      currentUsage = { generations: 0, swaps: 0, revisions: 0 };
+    }
+    renderUsage();
+  }));
+
+  // Subscription (real-time)
+  dashListeners.push(onSnapshot(doc(db, 'users', uid, 'subscription', 'status'), (snap) => {
+    if (snap.exists()) {
+      const data = snap.data();
+      currentTier = data.tier || 'free';
+    } else {
+      currentTier = 'free';
+    }
+    renderUsage();
+  }));
+
+  // Load AI prompt overrides
+  getDoc(doc(db, 'config', 'aiPrompts')).then(snap => {
+    aiPromptOverrides = snap.exists() ? snap.data() : {};
+  }).catch(() => {});
+  getDoc(doc(db, 'config', 'aiPrefScripts')).then(snap => {
+    prefScriptOverrides = snap.exists() ? snap.data() : {};
+  }).catch(() => {});
+}
+
+function cleanupDashListeners() {
+  dashListeners.forEach(unsub => unsub());
+  dashListeners = [];
+  currentPlan = null;
+  currentPrefs = null;
+  currentPantry = [];
+  currentFavorites = [];
+  currentRatings = {};
+  currentUsage = { generations: 0, swaps: 0, revisions: 0 };
+  currentTier = 'free';
+  selectedDay = 0;
+  groceryItems = [];
+}
+
 // Listen for auth state changes
 onAuthStateChanged(auth, (user) => {
   const signinView = document.getElementById('account-signin');
@@ -3978,13 +5713,23 @@ onAuthStateChanged(auth, (user) => {
       avatarEl.innerHTML = '<img src="' + user.photoURL + '" alt="Profile">';
     }
 
-    // Load subscription data
+    // Load subscription data (for the badge display)
     loadSubscription(user.uid);
+
+    // Setup real-time listeners for dashboard
+    setupDashListeners(user.uid);
+
+    // Render saved plans dropdown
+    renderSavedPlans();
 
     // Show admin link if user is admin
     adminLink.style.display = isAdmin(user) ? 'flex' : 'none';
+
+    // Reset to overview tab
+    switchDashTab('overview');
   } else {
-    // User is signed out — show sign-in
+    // User is signed out — clean up and show sign-in
+    cleanupDashListeners();
     signinView.style.display = '';
     loadingView.style.display = 'none';
     dashboardView.classList.remove('active');
