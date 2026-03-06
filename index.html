@@ -2118,6 +2118,395 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
   .admin-chart-container { width: 200px; height: 200px; }
   .admin-toolbar { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
+
+/* ========== ADMIN TABS ========== */
+.admin-tabs {
+  display: flex;
+  gap: 4px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 14px;
+  padding: 4px;
+  margin-bottom: 28px;
+}
+.admin-tab {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  background: none;
+  color: #8A857C;
+  border: none;
+  transition: all 0.2s;
+}
+.admin-tab.active {
+  background: #2E2B26;
+  color: #F8F6F1;
+}
+.admin-tab:hover:not(.active) { background: rgba(0,0,0,0.03); }
+.admin-tab-content { display: none; }
+.admin-tab-content.active { display: block; }
+
+/* ========== ADMIN FORMS ========== */
+.admin-input, .admin-textarea, .admin-select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: #2E2B26;
+  background: #FFFFFF;
+  transition: border-color 0.2s;
+  outline: none;
+}
+.admin-input:focus, .admin-textarea:focus, .admin-select:focus {
+  border-color: #B8885C;
+}
+.admin-textarea { min-height: 80px; resize: vertical; }
+.admin-select { cursor: pointer; }
+.admin-form-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+.admin-form-row > * { flex: 1; }
+.admin-form-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #8A857C;
+  margin-bottom: 6px;
+  display: block;
+}
+.admin-form-group { margin-bottom: 16px; }
+
+/* Admin Buttons */
+.admin-btn {
+  padding: 9px 18px;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.admin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.admin-btn-primary { background: #2E2B26; color: #F8F6F1; }
+.admin-btn-primary:hover:not(:disabled) { background: #1a1815; }
+.admin-btn-accent { background: #B8885C; color: #FFF; }
+.admin-btn-accent:hover:not(:disabled) { background: #a67848; }
+.admin-btn-outline { background: none; border: 1.5px solid rgba(0,0,0,0.1); color: #2E2B26; }
+.admin-btn-outline:hover:not(:disabled) { border-color: rgba(0,0,0,0.25); }
+.admin-btn-danger { background: #D94F4F; color: #FFF; }
+.admin-btn-danger:hover:not(:disabled) { background: #c03030; }
+.admin-btn-sm { padding: 6px 12px; font-size: 0.75rem; }
+.admin-btn-block { width: 100%; justify-content: center; }
+
+/* ========== SEARCH & FILTER BAR ========== */
+.admin-search-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.admin-search-bar .admin-input { flex: 1; }
+.admin-search-bar .admin-select { flex: 0 0 140px; }
+
+/* ========== USER LIST ========== */
+.admin-user-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.admin-user-row:hover { background: rgba(184,136,92,0.04); }
+.admin-user-row.selected { background: rgba(184,136,92,0.08); }
+.admin-user-check { flex: 0 0 20px; }
+.admin-user-check input[type="checkbox"] {
+  width: 16px; height: 16px; cursor: pointer; accent-color: #B8885C;
+}
+.admin-user-info { flex: 1; min-width: 0; }
+.admin-user-name { font-weight: 600; font-size: 0.88rem; color: #2E2B26; }
+.admin-user-email { font-size: 0.78rem; color: #8A857C; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.admin-user-meta { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; }
+.admin-user-date { font-size: 0.75rem; color: #B0AAA0; white-space: nowrap; }
+
+/* ========== USER DETAIL PANEL ========== */
+.admin-user-detail {
+  background: #FFFFFF;
+  border: 1.5px solid rgba(184,136,92,0.2);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 8px 0 16px;
+  animation: slideDown 0.2s ease;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.admin-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+.admin-detail-uid {
+  font-size: 0.7rem;
+  color: #B0AAA0;
+  font-family: monospace;
+  cursor: pointer;
+  padding: 2px 6px;
+  background: rgba(0,0,0,0.03);
+  border-radius: 4px;
+}
+.admin-detail-uid:hover { background: rgba(0,0,0,0.06); }
+.admin-detail-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.admin-detail-section h4 {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #B0AAA0;
+  margin-bottom: 10px;
+}
+.admin-detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(0,0,0,0.03);
+}
+.admin-detail-item span:first-child { color: #8A857C; }
+.admin-detail-item span:last-child { color: #2E2B26; font-weight: 500; }
+.admin-detail-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+.admin-notes-list {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 8px;
+}
+.admin-note-item {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.03);
+  font-size: 0.82rem;
+}
+.admin-note-meta { font-size: 0.7rem; color: #B0AAA0; margin-top: 2px; }
+
+/* ========== BULK ACTION BAR ========== */
+.admin-bulk-bar {
+  display: none;
+  position: sticky;
+  bottom: 0;
+  background: #2E2B26;
+  color: #F8F6F1;
+  padding: 12px 20px;
+  border-radius: 14px;
+  margin-top: 16px;
+  align-items: center;
+  gap: 12px;
+  animation: slideUp 0.2s ease;
+}
+.admin-bulk-bar.active { display: flex; }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.admin-bulk-count { font-size: 0.85rem; font-weight: 600; margin-right: auto; }
+.admin-bulk-bar .admin-btn { background: rgba(255,255,255,0.15); color: #F8F6F1; }
+.admin-bulk-bar .admin-btn:hover { background: rgba(255,255,255,0.25); }
+
+/* ========== TOGGLE SWITCH ========== */
+.admin-toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.admin-toggle input { opacity: 0; width: 0; height: 0; }
+.admin-toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: #D4CFC7;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.admin-toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FFF;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.2s;
+}
+.admin-toggle input:checked + .admin-toggle-slider { background: #B8885C; }
+.admin-toggle input:checked + .admin-toggle-slider::before { transform: translateX(20px); }
+
+.admin-flag-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.admin-flag-name { font-size: 0.88rem; font-weight: 500; color: #2E2B26; }
+.admin-flag-key { font-size: 0.7rem; color: #B0AAA0; font-family: monospace; }
+
+/* ========== MESSAGES ========== */
+.admin-msg-type-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.admin-msg-type {
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1.5px solid rgba(0,0,0,0.08);
+  background: none;
+  color: #8A857C;
+  transition: all 0.2s;
+}
+.admin-msg-type.active { background: #2E2B26; color: #F8F6F1; border-color: #2E2B26; }
+.admin-msg-history-item {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.admin-msg-history-title { font-weight: 600; font-size: 0.88rem; color: #2E2B26; }
+.admin-msg-history-body { font-size: 0.82rem; color: #8A857C; margin-top: 2px; }
+.admin-msg-history-meta { font-size: 0.72rem; color: #B0AAA0; margin-top: 4px; display: flex; gap: 12px; }
+
+/* ========== TOAST ========== */
+.admin-toast {
+  position: fixed;
+  top: 84px;
+  right: 24px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: 'Instrument Sans', sans-serif;
+  z-index: 10000;
+  transform: translateX(120%);
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  max-width: 360px;
+}
+.admin-toast.show { transform: translateX(0); }
+.admin-toast-success { background: #2E2B26; color: #F8F6F1; }
+.admin-toast-error { background: #D94F4F; color: #FFF; }
+
+/* ========== CONFIRM MODAL ========== */
+.admin-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.admin-modal-overlay.active { display: flex; }
+.admin-modal {
+  background: #F8F6F1;
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+}
+.admin-modal h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+.admin-modal p {
+  font-size: 0.88rem;
+  color: #8A857C;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+.admin-modal-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* ========== SETTINGS CARDS ========== */
+.admin-setting-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.admin-setting-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.admin-setting-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2E2B26;
+}
+
+/* ========== ADMIN RESPONSIVE ADDITIONS ========== */
+@media (max-width: 768px) {
+  .admin-tabs { flex-wrap: wrap; }
+  .admin-tab { font-size: 0.75rem; padding: 8px 10px; }
+  .admin-search-bar { flex-direction: column; }
+  .admin-search-bar .admin-select { flex: 1; }
+  .admin-detail-sections { grid-template-columns: 1fr; }
+  .admin-bulk-bar { flex-wrap: wrap; }
+  .admin-form-row { flex-direction: column; }
+}
+
+/* ========== ADDITIONAL ADMIN STYLES ========== */
+.admin-sortable { cursor: pointer; user-select: none; }
+.admin-sortable:hover { color: var(--accent); }
+.admin-sort-icon { font-size: 0.7rem; opacity: 0.5; margin-left: 4px; }
+.admin-user-count { font-size: 0.8rem; color: #B0AAA0; font-weight: 400; margin-left: 8px; }
+.admin-uid-copy { cursor: pointer; font-family: monospace; font-size: 0.75rem; color: var(--accent); word-break: break-all; }
+.admin-uid-copy:hover { text-decoration: underline; }
+.admin-note-time { font-size: 0.7rem; color: #B0AAA0; display: block; margin-bottom: 2px; }
+.admin-notes-list { max-height: 200px; overflow-y: auto; margin-bottom: 8px; }
+.admin-audit-entry { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.04); font-size: 0.82rem; align-items: baseline; }
+.admin-audit-time { font-size: 0.72rem; color: #B0AAA0; white-space: nowrap; min-width: 140px; }
+.admin-audit-action { font-weight: 600; color: #2E2B26; }
+.admin-audit-detail { color: #8A857C; font-size: 0.78rem; }
+.admin-user-row:hover { background: rgba(184,136,92,0.04); }
+.admin-toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.admin-btn-warning { background: #e67e22; color: #fff; }
+.admin-btn-warning:hover { background: #d35400; }
 </style>
 </head>
 <body>
@@ -2658,8 +3047,32 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
   <a href="#" class="back-link" onclick="showPage('account'); return false;">&#8592; Back to account</a>
 
   <div class="admin-header">
-    <h1>Admin <span class="accent">Dashboard</span></h1>
-    <p class="admin-subtitle">MealMuse analytics and user insights</p>
+    <h1>Admin <span class="accent">Panel</span></h1>
+    <p class="admin-subtitle">MealMuse management and analytics</p>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="admin-tabs">
+    <button class="admin-tab active" data-tab="dashboard" onclick="switchAdminTab('dashboard')">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+      Dashboard
+    </button>
+    <button class="admin-tab" data-tab="users" onclick="switchAdminTab('users')">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Users
+    </button>
+    <button class="admin-tab" data-tab="messages" onclick="switchAdminTab('messages')">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Messages
+    </button>
+    <button class="admin-tab" data-tab="settings" onclick="switchAdminTab('settings')">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Settings
+    </button>
+  </div>
+
+  <!-- ===== TAB: DASHBOARD ===== -->
+  <div id="admin-tab-dashboard" class="admin-tab-content active">
     <div class="admin-toolbar">
       <button class="btn-admin-refresh" id="admin-refresh-btn" onclick="loadAdminData()">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
@@ -2667,108 +3080,355 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
       </button>
       <span class="admin-last-updated" id="admin-last-updated"></span>
     </div>
+
+    <div id="admin-loading" class="admin-loading" style="display:none;">
+      <div class="spinner"></div>
+      Loading analytics...
+    </div>
+
+    <div id="admin-content" style="display:none;">
+      <div class="admin-kpi-grid">
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-label">Total Users</div>
+          <div class="admin-kpi-value" id="kpi-total-users">--</div>
+        </div>
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-label">Premium Users</div>
+          <div class="admin-kpi-value" id="kpi-premium-users">--</div>
+          <div class="admin-kpi-sub" id="kpi-premium-pct"></div>
+        </div>
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-label">Free Users</div>
+          <div class="admin-kpi-value" id="kpi-free-users">--</div>
+        </div>
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-label">With Subscription Data</div>
+          <div class="admin-kpi-value" id="kpi-expired-users">--</div>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-title">Subscription Breakdown</div>
+        <div class="admin-chart-row">
+          <div class="admin-chart-container">
+            <canvas id="chart-platform" width="250" height="250"></canvas>
+          </div>
+          <div class="admin-platform-legend" id="platform-legend"></div>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-title">User Signups Over Time</div>
+        <div class="admin-chart-container-wide">
+          <canvas id="chart-signups" height="280"></canvas>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-title">Usage Metrics (Current Month)</div>
+        <div class="admin-kpi-grid admin-kpi-grid-3">
+          <div class="admin-kpi-card">
+            <div class="admin-kpi-label">Plan Generations</div>
+            <div class="admin-kpi-value" id="kpi-plan-gens">--</div>
+          </div>
+          <div class="admin-kpi-card">
+            <div class="admin-kpi-label">Meal Swaps</div>
+            <div class="admin-kpi-value" id="kpi-swaps">--</div>
+          </div>
+          <div class="admin-kpi-card">
+            <div class="admin-kpi-label">Revisions</div>
+            <div class="admin-kpi-value" id="kpi-revisions">--</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-title">Usage Trends (Last 6 Months)</div>
+        <div class="admin-chart-container-wide">
+          <canvas id="chart-usage" height="280"></canvas>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-title">Upcoming Expirations (Next 30 Days)</div>
+        <div class="admin-expiry-list" id="admin-expiry-list">
+          <p class="admin-empty-state">No upcoming expirations</p>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-title">Recent Users</div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Joined</th>
+              </tr>
+            </thead>
+            <tbody id="admin-users-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div id="admin-loading" class="admin-loading" style="display:none;">
-    <div class="spinner"></div>
-    Loading analytics...
-  </div>
-
-  <div id="admin-content" style="display:none;">
-
-    <!-- KPI Cards -->
-    <div class="admin-kpi-grid">
-      <div class="admin-kpi-card">
-        <div class="admin-kpi-label">Total Users</div>
-        <div class="admin-kpi-value" id="kpi-total-users">--</div>
-      </div>
-      <div class="admin-kpi-card">
-        <div class="admin-kpi-label">Premium Users</div>
-        <div class="admin-kpi-value" id="kpi-premium-users">--</div>
-        <div class="admin-kpi-sub" id="kpi-premium-pct"></div>
-      </div>
-      <div class="admin-kpi-card">
-        <div class="admin-kpi-label">Free Users</div>
-        <div class="admin-kpi-value" id="kpi-free-users">--</div>
-      </div>
-      <div class="admin-kpi-card">
-        <div class="admin-kpi-label">With Subscription Data</div>
-        <div class="admin-kpi-value" id="kpi-expired-users">--</div>
-      </div>
+  <!-- ===== TAB: USERS ===== -->
+  <div id="admin-tab-users" class="admin-tab-content">
+    <div class="admin-search-bar">
+      <input type="text" class="admin-input" id="admin-user-search" placeholder="Search by name or email..." oninput="filterAdminUsers()">
+      <select class="admin-select" id="admin-user-filter" onchange="filterAdminUsers()">
+        <option value="all">All Users</option>
+        <option value="premium">Premium Only</option>
+        <option value="free">Free Only</option>
+      </select>
+      <button class="admin-btn admin-btn-secondary" onclick="exportUsersCSV()">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export CSV
+      </button>
     </div>
 
-    <!-- Subscription Breakdown -->
     <div class="admin-card">
-      <div class="admin-card-title">Subscription Breakdown</div>
-      <div class="admin-chart-row">
-        <div class="admin-chart-container">
-          <canvas id="chart-platform" width="250" height="250"></canvas>
-        </div>
-        <div class="admin-platform-legend" id="platform-legend"></div>
+      <div class="admin-card-title">
+        All Users
+        <span class="admin-user-count" id="admin-user-count"></span>
       </div>
-    </div>
-
-    <!-- Signups Over Time -->
-    <div class="admin-card">
-      <div class="admin-card-title">User Signups Over Time</div>
-      <div class="admin-chart-container-wide">
-        <canvas id="chart-signups" height="280"></canvas>
-      </div>
-    </div>
-
-    <!-- Usage Metrics -->
-    <div class="admin-card">
-      <div class="admin-card-title">Usage Metrics (Current Month)</div>
-      <div class="admin-kpi-grid admin-kpi-grid-3">
-        <div class="admin-kpi-card">
-          <div class="admin-kpi-label">Plan Generations</div>
-          <div class="admin-kpi-value" id="kpi-plan-gens">--</div>
-        </div>
-        <div class="admin-kpi-card">
-          <div class="admin-kpi-label">Meal Swaps</div>
-          <div class="admin-kpi-value" id="kpi-swaps">--</div>
-        </div>
-        <div class="admin-kpi-card">
-          <div class="admin-kpi-label">Revisions</div>
-          <div class="admin-kpi-value" id="kpi-revisions">--</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Usage Trends -->
-    <div class="admin-card">
-      <div class="admin-card-title">Usage Trends (Last 6 Months)</div>
-      <div class="admin-chart-container-wide">
-        <canvas id="chart-usage" height="280"></canvas>
-      </div>
-    </div>
-
-    <!-- Upcoming Expirations -->
-    <div class="admin-card">
-      <div class="admin-card-title">Upcoming Expirations (Next 30 Days)</div>
-      <div class="admin-expiry-list" id="admin-expiry-list">
-        <p class="admin-empty-state">No upcoming expirations</p>
-      </div>
-    </div>
-
-    <!-- Recent Users Table -->
-    <div class="admin-card">
-      <div class="admin-card-title">Recent Users</div>
       <div class="admin-table-wrap">
-        <table class="admin-table">
+        <table class="admin-table" id="admin-users-table">
           <thead>
             <tr>
-              <th>User</th>
-              <th>Email</th>
-              <th>Status</th>
-              <th>Joined</th>
+              <th style="width:40px;"><input type="checkbox" id="admin-select-all" onchange="toggleSelectAllUsers(this)"></th>
+              <th class="admin-sortable" onclick="sortAdminUsers('name')">Name <span class="admin-sort-icon">&#8597;</span></th>
+              <th class="admin-sortable" onclick="sortAdminUsers('email')">Email <span class="admin-sort-icon">&#8597;</span></th>
+              <th class="admin-sortable" onclick="sortAdminUsers('tier')">Tier <span class="admin-sort-icon">&#8597;</span></th>
+              <th class="admin-sortable" onclick="sortAdminUsers('joined')">Joined <span class="admin-sort-icon">&#8597;</span></th>
+              <th style="width:60px;">Actions</th>
             </tr>
           </thead>
-          <tbody id="admin-users-tbody"></tbody>
+          <tbody id="admin-users-list"></tbody>
         </table>
       </div>
     </div>
 
+    <!-- Bulk Action Bar -->
+    <div class="admin-bulk-bar" id="admin-bulk-bar" style="display:none;">
+      <span id="admin-bulk-count">0 selected</span>
+      <button class="admin-btn admin-btn-primary" onclick="bulkChangeTier()">Change Tier</button>
+      <button class="admin-btn admin-btn-primary" onclick="bulkSendMessage()">Send Message</button>
+      <button class="admin-btn admin-btn-secondary" onclick="clearUserSelection()">Clear Selection</button>
+    </div>
+
+    <!-- User Detail Panel (shown when a user row is clicked) -->
+    <div class="admin-user-detail" id="admin-user-detail" style="display:none;">
+      <div class="admin-user-detail-header">
+        <div>
+          <h3 id="detail-user-name">User Name</h3>
+          <p id="detail-user-email" style="color:var(--secondary);margin:2px 0;">email@example.com</p>
+        </div>
+        <button class="admin-btn admin-btn-secondary" onclick="closeUserDetail()" style="padding:6px 12px;">✕ Close</button>
+      </div>
+      <div class="admin-detail-sections">
+        <div class="admin-detail-section">
+          <h4>Profile Info</h4>
+          <div class="admin-detail-row"><span>UID</span><span id="detail-uid" class="admin-uid-copy" onclick="copyUID(this)" title="Click to copy">--</span></div>
+          <div class="admin-detail-row"><span>Display Name</span><span id="detail-display-name">--</span></div>
+          <div class="admin-detail-row"><span>Email</span><span id="detail-email">--</span></div>
+          <div class="admin-detail-row"><span>Joined</span><span id="detail-joined">--</span></div>
+        </div>
+        <div class="admin-detail-section">
+          <h4>Subscription</h4>
+          <div class="admin-detail-row"><span>Current Tier</span><span id="detail-tier">--</span></div>
+          <div class="admin-detail-row">
+            <span>Change Tier</span>
+            <select class="admin-select" id="detail-tier-select" style="width:auto;min-width:120px;">
+              <option value="free">Free</option>
+              <option value="premium">Premium</option>
+            </select>
+          </div>
+          <button class="admin-btn admin-btn-primary" onclick="changeUserTier()" style="margin-top:8px;">Save Tier</button>
+        </div>
+        <div class="admin-detail-section">
+          <h4>Usage (Current Month)</h4>
+          <div class="admin-detail-row"><span>Plan Generations</span><span id="detail-plan-gens">0</span></div>
+          <div class="admin-detail-row"><span>Meal Swaps</span><span id="detail-swaps">0</span></div>
+          <div class="admin-detail-row"><span>Revisions</span><span id="detail-revisions">0</span></div>
+          <button class="admin-btn admin-btn-warning" onclick="resetUserUsage()" style="margin-top:8px;">Reset Usage</button>
+        </div>
+        <div class="admin-detail-section">
+          <h4>Send Message</h4>
+          <input type="text" class="admin-input" id="detail-msg-title" placeholder="Message title">
+          <textarea class="admin-textarea" id="detail-msg-body" placeholder="Message body..." rows="3"></textarea>
+          <select class="admin-select" id="detail-msg-type" style="margin-bottom:8px;">
+            <option value="info">Info</option>
+            <option value="warning">Warning</option>
+            <option value="promo">Promo</option>
+          </select>
+          <button class="admin-btn admin-btn-primary" onclick="sendMessageToUser()">Send Message</button>
+        </div>
+        <div class="admin-detail-section">
+          <h4>Admin Notes</h4>
+          <div id="detail-notes-list" class="admin-notes-list"><p class="admin-empty-state">No notes yet</p></div>
+          <textarea class="admin-textarea" id="detail-note-input" placeholder="Add a note..." rows="2"></textarea>
+          <button class="admin-btn admin-btn-secondary" onclick="addAdminNote()" style="margin-top:6px;">Add Note</button>
+        </div>
+        <div class="admin-detail-section">
+          <h4>Danger Zone</h4>
+          <button class="admin-btn admin-btn-danger" onclick="deleteUserData()">Delete User Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: MESSAGES ===== -->
+  <div id="admin-tab-messages" class="admin-tab-content">
+    <div class="admin-card">
+      <div class="admin-card-title">Compose Message</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <input type="text" class="admin-input" id="msg-title" placeholder="Message title">
+        <textarea class="admin-textarea" id="msg-body" placeholder="Message body..." rows="4"></textarea>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:150px;">
+            <label style="font-size:13px;color:var(--secondary);margin-bottom:4px;display:block;">Type</label>
+            <div class="admin-msg-type-selector">
+              <label class="admin-msg-type active"><input type="radio" name="msg-type" value="info" checked onchange="this.closest('.admin-msg-type-selector').querySelectorAll('.admin-msg-type').forEach(t=>t.classList.remove('active'));this.closest('.admin-msg-type').classList.add('active');">Info</label>
+              <label class="admin-msg-type"><input type="radio" name="msg-type" value="warning" onchange="this.closest('.admin-msg-type-selector').querySelectorAll('.admin-msg-type').forEach(t=>t.classList.remove('active'));this.closest('.admin-msg-type').classList.add('active');">Warning</label>
+              <label class="admin-msg-type"><input type="radio" name="msg-type" value="promo" onchange="this.closest('.admin-msg-type-selector').querySelectorAll('.admin-msg-type').forEach(t=>t.classList.remove('active'));this.closest('.admin-msg-type').classList.add('active');">Promo</label>
+            </div>
+          </div>
+          <div style="flex:1;min-width:150px;">
+            <label style="font-size:13px;color:var(--secondary);margin-bottom:4px;display:block;">Recipients</label>
+            <select class="admin-select" id="msg-recipients">
+              <option value="all">All Users</option>
+              <option value="premium">Premium Only</option>
+              <option value="free">Free Only</option>
+            </select>
+          </div>
+        </div>
+        <input type="text" class="admin-input" id="msg-url" placeholder="Optional link URL (e.g., https://...)">
+        <div style="display:flex;gap:12px;align-items:center;">
+          <button class="admin-btn admin-btn-primary" onclick="sendBroadcast()">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Message
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title">Message History</div>
+      <div id="admin-msg-history">
+        <p class="admin-empty-state">No messages sent yet</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: SETTINGS ===== -->
+  <div id="admin-tab-settings" class="admin-tab-content">
+    <!-- Feature Flags -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header">
+        <h3>Feature Flags</h3>
+        <button class="admin-btn admin-btn-secondary" onclick="addFeatureFlag()" style="padding:6px 14px;">+ Add Flag</button>
+      </div>
+      <p style="color:var(--secondary);font-size:13px;margin-bottom:16px;">Toggle app features remotely. Changes are read by the app on launch.</p>
+      <div id="admin-flags-list">
+        <p class="admin-empty-state">Loading flags...</p>
+      </div>
+      <button class="admin-btn admin-btn-primary" onclick="saveFeatureFlags()" style="margin-top:12px;">Save Flags</button>
+    </div>
+
+    <!-- Maintenance Mode -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header">
+        <h3>Maintenance Mode</h3>
+        <label class="admin-toggle">
+          <input type="checkbox" id="maintenance-toggle" onchange="toggleMaintenance(this.checked)">
+          <span class="admin-toggle-slider"></span>
+        </label>
+      </div>
+      <p style="color:var(--secondary);font-size:13px;margin-bottom:12px;">When enabled, users see a maintenance message instead of the app.</p>
+      <input type="text" class="admin-input" id="maintenance-message" placeholder="Maintenance message (e.g., We'll be back shortly!)">
+      <button class="admin-btn admin-btn-primary" onclick="saveMaintenance()" style="margin-top:8px;">Save</button>
+    </div>
+
+    <!-- Force Update -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header">
+        <h3>Force Update</h3>
+        <label class="admin-toggle">
+          <input type="checkbox" id="force-update-toggle">
+          <span class="admin-toggle-slider"></span>
+        </label>
+      </div>
+      <p style="color:var(--secondary);font-size:13px;margin-bottom:12px;">Require users on older app versions to update before continuing.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <input type="text" class="admin-input" id="force-update-version" placeholder="Minimum version (e.g., 2.1.0)" style="flex:1;min-width:150px;">
+        <input type="text" class="admin-input" id="force-update-message" placeholder="Update message" style="flex:2;min-width:200px;">
+      </div>
+      <button class="admin-btn admin-btn-primary" onclick="saveForceUpdate()" style="margin-top:8px;">Save</button>
+    </div>
+
+    <!-- Global Announcements -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header">
+        <h3>Global Announcement</h3>
+        <label class="admin-toggle">
+          <input type="checkbox" id="announcement-toggle">
+          <span class="admin-toggle-slider"></span>
+        </label>
+      </div>
+      <p style="color:var(--secondary);font-size:13px;margin-bottom:12px;">Show a banner to all users on app open.</p>
+      <textarea class="admin-textarea" id="announcement-text" placeholder="Announcement text..." rows="3"></textarea>
+      <button class="admin-btn admin-btn-primary" onclick="saveAnnouncement()" style="margin-top:8px;">Save</button>
+    </div>
+
+    <!-- Rate Limiting -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header">
+        <h3>Rate Limiting</h3>
+      </div>
+      <p style="color:var(--secondary);font-size:13px;margin-bottom:12px;">Set max daily API calls per user.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:150px;">
+          <label style="font-size:12px;color:var(--secondary);">Free tier limit</label>
+          <input type="number" class="admin-input" id="rate-limit-free" placeholder="e.g., 10">
+        </div>
+        <div style="flex:1;min-width:150px;">
+          <label style="font-size:12px;color:var(--secondary);">Premium tier limit</label>
+          <input type="number" class="admin-input" id="rate-limit-premium" placeholder="e.g., 100">
+        </div>
+      </div>
+      <button class="admin-btn admin-btn-primary" onclick="saveRateLimits()" style="margin-top:8px;">Save</button>
+    </div>
+
+    <!-- Audit Log -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header">
+        <h3>Audit Log</h3>
+        <button class="admin-btn admin-btn-secondary" onclick="loadAuditLog()" style="padding:6px 14px;">Refresh</button>
+      </div>
+      <p style="color:var(--secondary);font-size:13px;margin-bottom:12px;">Recent admin actions.</p>
+      <div id="admin-audit-log">
+        <p class="admin-empty-state">No actions logged yet</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="admin-toast-container" style="position:fixed;top:20px;right:20px;z-index:10000;display:flex;flex-direction:column;gap:8px;"></div>
+
+  <!-- Confirmation Modal -->
+  <div class="admin-modal-overlay" id="admin-modal" style="display:none;">
+    <div class="admin-modal">
+      <h3 id="admin-modal-title">Confirm Action</h3>
+      <p id="admin-modal-message">Are you sure?</p>
+      <div class="admin-modal-actions">
+        <button class="admin-btn admin-btn-secondary" onclick="closeAdminModal()">Cancel</button>
+        <button class="admin-btn admin-btn-danger" id="admin-modal-confirm" onclick="confirmAdminModal()">Confirm</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2805,7 +3465,7 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
 import { getAuth, signInWithPopup, GoogleAuthProvider, OAuthProvider, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
-import { getFirestore, doc, getDoc, collection, getDocs, collectionGroup, query, orderBy, limit, getCountFromServer } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
+import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, addDoc, collection, getDocs, collectionGroup, query, orderBy, limit, getCountFromServer, serverTimestamp, Timestamp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
 
 // ========== FIREBASE SETUP ==========
 const firebaseConfig = {
@@ -3439,6 +4099,634 @@ function renderRecentUsersTable(recentUsers, subscriptions) {
     '</tr>';
   }).join('');
 }
+
+// ========== ADMIN TAB SWITCHING ==========
+function switchAdminTab(tabName) {
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector(`.admin-tab[data-tab="${tabName}"]`).classList.add('active');
+  document.getElementById(`admin-tab-${tabName}`).classList.add('active');
+
+  if (tabName === 'users' && !adminUsersLoaded) loadUsersTab();
+  if (tabName === 'messages') loadMessagesTab();
+  if (tabName === 'settings') loadSettingsTab();
+}
+
+// ========== TOAST & MODAL UTILITIES ==========
+function showToast(message, type = 'success') {
+  const container = document.getElementById('admin-toast-container');
+  const toast = document.createElement('div');
+  toast.className = `admin-toast admin-toast-${type}`;
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => toast.classList.add('show'), 10);
+  setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3500);
+}
+
+let modalConfirmCallback = null;
+function showConfirm(title, message, onConfirm) {
+  document.getElementById('admin-modal-title').textContent = title;
+  document.getElementById('admin-modal-message').textContent = message;
+  document.getElementById('admin-modal').style.display = 'flex';
+  modalConfirmCallback = onConfirm;
+}
+function confirmAdminModal() {
+  closeAdminModal();
+  if (modalConfirmCallback) modalConfirmCallback();
+}
+function closeAdminModal() {
+  document.getElementById('admin-modal').style.display = 'none';
+  modalConfirmCallback = null;
+}
+
+// ========== AUDIT LOG ==========
+async function logAdminAction(action, details = '') {
+  try {
+    const logRef = collection(db, 'config', 'auditLog', 'entries');
+    await addDoc(logRef, { action, details, timestamp: serverTimestamp(), adminUid: auth.currentUser.uid });
+  } catch (e) { console.warn('Audit log write failed:', e); }
+}
+
+async function loadAuditLog() {
+  try {
+    const logRef = collection(db, 'config', 'auditLog', 'entries');
+    const q = query(logRef, orderBy('timestamp', 'desc'), limit(50));
+    const snap = await getDocs(q);
+    const container = document.getElementById('admin-audit-log');
+    if (snap.empty) { container.innerHTML = '<p class="admin-empty-state">No actions logged yet</p>'; return; }
+    container.innerHTML = snap.docs.map(d => {
+      const data = d.data();
+      const time = data.timestamp ? data.timestamp.toDate().toLocaleString() : '—';
+      return `<div class="admin-audit-entry"><span class="admin-audit-time">${time}</span><span class="admin-audit-action">${data.action}</span><span class="admin-audit-detail">${data.details || ''}</span></div>`;
+    }).join('');
+  } catch (e) { console.warn('Audit log read failed:', e); }
+}
+
+// ========== USERS TAB ==========
+let adminUsersLoaded = false;
+let adminUsersList = [];
+let adminSubsMap = {};
+let adminSelectedUsers = new Set();
+let adminSortField = 'joined';
+let adminSortDir = 'desc';
+let selectedUserUid = null;
+
+async function loadUsersTab() {
+  if (!adminDataCache) { showToast('Load Dashboard first to fetch user data', 'error'); return; }
+  adminUsersList = adminDataCache.users || [];
+  adminSubsMap = {};
+  (adminDataCache.subscriptions || []).forEach(s => { adminSubsMap[s.uid] = s; });
+  adminUsersLoaded = true;
+  renderAdminUsersList();
+}
+
+function renderAdminUsersList() {
+  const searchTerm = (document.getElementById('admin-user-search')?.value || '').toLowerCase();
+  const filterTier = document.getElementById('admin-user-filter')?.value || 'all';
+
+  let filtered = adminUsersList.filter(u => {
+    const name = (u.displayName || '').toLowerCase();
+    const email = (u.email || '').toLowerCase();
+    const matchesSearch = !searchTerm || name.includes(searchTerm) || email.includes(searchTerm);
+    const sub = adminSubsMap[u.uid];
+    const tier = sub ? sub.tier : 'free';
+    const matchesTier = filterTier === 'all' || tier === filterTier;
+    return matchesSearch && matchesTier;
+  });
+
+  // Sort
+  filtered.sort((a, b) => {
+    let valA, valB;
+    if (adminSortField === 'name') { valA = (a.displayName || '').toLowerCase(); valB = (b.displayName || '').toLowerCase(); }
+    else if (adminSortField === 'email') { valA = (a.email || '').toLowerCase(); valB = (b.email || '').toLowerCase(); }
+    else if (adminSortField === 'tier') { valA = (adminSubsMap[a.uid]?.tier || 'free'); valB = (adminSubsMap[b.uid]?.tier || 'free'); }
+    else { // joined
+      const dA = a.createdAt ? (a.createdAt.toDate ? a.createdAt.toDate() : new Date(a.createdAt)) : new Date(0);
+      const dB = b.createdAt ? (b.createdAt.toDate ? b.createdAt.toDate() : new Date(b.createdAt)) : new Date(0);
+      valA = dA.getTime(); valB = dB.getTime();
+    }
+    if (valA < valB) return adminSortDir === 'asc' ? -1 : 1;
+    if (valA > valB) return adminSortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  document.getElementById('admin-user-count').textContent = `(${filtered.length})`;
+  const tbody = document.getElementById('admin-users-list');
+  tbody.innerHTML = filtered.map(user => {
+    const sub = adminSubsMap[user.uid];
+    const tier = sub ? sub.tier : 'free';
+    const badge = tier === 'premium' ? '<span class="sub-badge active">Premium</span>' : '<span class="sub-badge free">Free</span>';
+    let joinDate = '—';
+    if (user.createdAt) {
+      const d = user.createdAt.toDate ? user.createdAt.toDate() : new Date(user.createdAt);
+      joinDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+    const checked = adminSelectedUsers.has(user.uid) ? 'checked' : '';
+    return `<tr class="admin-user-row" data-uid="${user.uid}">
+      <td><input type="checkbox" class="admin-user-check" ${checked} onchange="toggleUserSelect('${user.uid}', this.checked)" onclick="event.stopPropagation()"></td>
+      <td onclick="expandUserDetail('${user.uid}')" style="cursor:pointer;">${user.displayName || '—'}</td>
+      <td onclick="expandUserDetail('${user.uid}')" style="cursor:pointer;" class="email-cell">${user.email || '—'}</td>
+      <td>${badge}</td>
+      <td>${joinDate}</td>
+      <td><button class="admin-btn admin-btn-secondary" style="padding:4px 10px;font-size:12px;" onclick="expandUserDetail('${user.uid}')">View</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function filterAdminUsers() { renderAdminUsersList(); }
+
+function sortAdminUsers(field) {
+  if (adminSortField === field) { adminSortDir = adminSortDir === 'asc' ? 'desc' : 'asc'; }
+  else { adminSortField = field; adminSortDir = 'asc'; }
+  renderAdminUsersList();
+}
+
+function toggleUserSelect(uid, checked) {
+  if (checked) adminSelectedUsers.add(uid); else adminSelectedUsers.delete(uid);
+  updateBulkBar();
+}
+
+function toggleSelectAllUsers(checkbox) {
+  const checkboxes = document.querySelectorAll('.admin-user-check');
+  checkboxes.forEach(cb => { cb.checked = checkbox.checked; });
+  if (checkbox.checked) {
+    adminUsersList.forEach(u => adminSelectedUsers.add(u.uid));
+  } else {
+    adminSelectedUsers.clear();
+  }
+  updateBulkBar();
+}
+
+function clearUserSelection() {
+  adminSelectedUsers.clear();
+  document.querySelectorAll('.admin-user-check').forEach(cb => cb.checked = false);
+  document.getElementById('admin-select-all').checked = false;
+  updateBulkBar();
+}
+
+function updateBulkBar() {
+  const bar = document.getElementById('admin-bulk-bar');
+  const count = adminSelectedUsers.size;
+  if (count > 0) {
+    bar.style.display = 'flex';
+    document.getElementById('admin-bulk-count').textContent = `${count} selected`;
+  } else {
+    bar.style.display = 'none';
+  }
+}
+
+// ========== USER DETAIL PANEL ==========
+async function expandUserDetail(uid) {
+  selectedUserUid = uid;
+  const user = adminUsersList.find(u => u.uid === uid);
+  const sub = adminSubsMap[uid];
+  if (!user) return;
+
+  document.getElementById('detail-user-name').textContent = user.displayName || 'Unknown';
+  document.getElementById('detail-user-email').textContent = user.email || '—';
+  document.getElementById('detail-uid').textContent = uid;
+  document.getElementById('detail-display-name').textContent = user.displayName || '—';
+  document.getElementById('detail-email').textContent = user.email || '—';
+  const joinDate = user.createdAt ? (user.createdAt.toDate ? user.createdAt.toDate() : new Date(user.createdAt)).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '—';
+  document.getElementById('detail-joined').textContent = joinDate;
+  const tier = sub ? sub.tier : 'free';
+  document.getElementById('detail-tier').textContent = tier.charAt(0).toUpperCase() + tier.slice(1);
+  document.getElementById('detail-tier-select').value = tier;
+
+  // Load usage
+  try {
+    const usageRef = collection(db, 'users', uid, 'usage');
+    const usageSnap = await getDocs(usageRef);
+    let planGens = 0, swaps = 0, revisions = 0;
+    usageSnap.forEach(d => {
+      const data = d.data();
+      planGens += data.planGenerations || data.plan_generations || 0;
+      swaps += data.mealSwaps || data.meal_swaps || 0;
+      revisions += data.revisions || 0;
+    });
+    document.getElementById('detail-plan-gens').textContent = planGens;
+    document.getElementById('detail-swaps').textContent = swaps;
+    document.getElementById('detail-revisions').textContent = revisions;
+  } catch (e) { console.warn('Failed to load user usage:', e); }
+
+  // Load admin notes
+  await loadAdminNotes(uid);
+
+  document.getElementById('admin-user-detail').style.display = 'block';
+  document.getElementById('admin-user-detail').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeUserDetail() {
+  document.getElementById('admin-user-detail').style.display = 'none';
+  selectedUserUid = null;
+}
+
+function copyUID(el) {
+  navigator.clipboard.writeText(el.textContent).then(() => showToast('UID copied to clipboard'));
+}
+
+async function changeUserTier() {
+  if (!selectedUserUid) return;
+  const newTier = document.getElementById('detail-tier-select').value;
+  showConfirm('Change Tier', `Change this user's tier to "${newTier}"?`, async () => {
+    try {
+      const subRef = doc(db, 'users', selectedUserUid, 'subscription', 'status');
+      await updateDoc(subRef, { tier: newTier, updatedAt: serverTimestamp() });
+      adminSubsMap[selectedUserUid] = { ...adminSubsMap[selectedUserUid], tier: newTier, uid: selectedUserUid };
+      document.getElementById('detail-tier').textContent = newTier.charAt(0).toUpperCase() + newTier.slice(1);
+      renderAdminUsersList();
+      showToast(`Tier changed to ${newTier}`);
+      logAdminAction('changeTier', `${selectedUserUid} → ${newTier}`);
+    } catch (e) { showToast('Failed to change tier: ' + e.message, 'error'); }
+  });
+}
+
+async function sendMessageToUser() {
+  if (!selectedUserUid) return;
+  const title = document.getElementById('detail-msg-title').value.trim();
+  const body = document.getElementById('detail-msg-body').value.trim();
+  const type = document.getElementById('detail-msg-type').value;
+  if (!title || !body) { showToast('Title and body are required', 'error'); return; }
+  try {
+    const msgRef = collection(db, 'users', selectedUserUid, 'messages');
+    await addDoc(msgRef, { title, body, type, sentAt: serverTimestamp(), read: false });
+    document.getElementById('detail-msg-title').value = '';
+    document.getElementById('detail-msg-body').value = '';
+    showToast('Message sent');
+    logAdminAction('sendMessage', `to ${selectedUserUid}: ${title}`);
+  } catch (e) { showToast('Failed to send message: ' + e.message, 'error'); }
+}
+
+async function addAdminNote() {
+  if (!selectedUserUid) return;
+  const note = document.getElementById('detail-note-input').value.trim();
+  if (!note) return;
+  try {
+    const notesRef = collection(db, 'users', selectedUserUid, 'adminNotes');
+    await addDoc(notesRef, { text: note, createdAt: serverTimestamp() });
+    document.getElementById('detail-note-input').value = '';
+    await loadAdminNotes(selectedUserUid);
+    showToast('Note added');
+    logAdminAction('addNote', `on ${selectedUserUid}`);
+  } catch (e) { showToast('Failed to add note: ' + e.message, 'error'); }
+}
+
+async function loadAdminNotes(uid) {
+  const container = document.getElementById('detail-notes-list');
+  try {
+    const notesRef = collection(db, 'users', uid, 'adminNotes');
+    const q = query(notesRef, orderBy('createdAt', 'desc'), limit(20));
+    const snap = await getDocs(q);
+    if (snap.empty) { container.innerHTML = '<p class="admin-empty-state">No notes yet</p>'; return; }
+    container.innerHTML = snap.docs.map(d => {
+      const data = d.data();
+      const time = data.createdAt ? data.createdAt.toDate().toLocaleString() : '—';
+      return `<div class="admin-note-item"><span class="admin-note-time">${time}</span><span>${data.text}</span></div>`;
+    }).join('');
+  } catch (e) { container.innerHTML = '<p class="admin-empty-state">Could not load notes</p>'; }
+}
+
+async function resetUserUsage() {
+  if (!selectedUserUid) return;
+  showConfirm('Reset Usage', 'Reset all usage counters for this user to zero?', async () => {
+    try {
+      const usageRef = collection(db, 'users', selectedUserUid, 'usage');
+      const snap = await getDocs(usageRef);
+      const promises = snap.docs.map(d => updateDoc(d.ref, { planGenerations: 0, plan_generations: 0, mealSwaps: 0, meal_swaps: 0, revisions: 0 }));
+      await Promise.all(promises);
+      document.getElementById('detail-plan-gens').textContent = '0';
+      document.getElementById('detail-swaps').textContent = '0';
+      document.getElementById('detail-revisions').textContent = '0';
+      showToast('Usage reset');
+      logAdminAction('resetUsage', selectedUserUid);
+    } catch (e) { showToast('Failed to reset usage: ' + e.message, 'error'); }
+  });
+}
+
+async function deleteUserData() {
+  if (!selectedUserUid) return;
+  showConfirm('Delete User Data', 'This will permanently delete all subcollection data for this user. This cannot be undone!', async () => {
+    try {
+      const subcollections = ['messages', 'adminNotes'];
+      for (const sub of subcollections) {
+        const ref = collection(db, 'users', selectedUserUid, sub);
+        const snap = await getDocs(ref);
+        const deletes = snap.docs.map(d => deleteDoc(d.ref));
+        await Promise.all(deletes);
+      }
+      showToast('User data deleted');
+      logAdminAction('deleteUserData', selectedUserUid);
+      closeUserDetail();
+    } catch (e) { showToast('Failed to delete data: ' + e.message, 'error'); }
+  });
+}
+
+function exportUsersCSV() {
+  const rows = [['Name', 'Email', 'UID', 'Tier', 'Joined']];
+  adminUsersList.forEach(u => {
+    const sub = adminSubsMap[u.uid];
+    const tier = sub ? sub.tier : 'free';
+    let joinDate = '';
+    if (u.createdAt) {
+      const d = u.createdAt.toDate ? u.createdAt.toDate() : new Date(u.createdAt);
+      joinDate = d.toISOString().split('T')[0];
+    }
+    rows.push([u.displayName || '', u.email || '', u.uid, tier, joinDate]);
+  });
+  const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `mealmuse-users-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast('CSV exported');
+  logAdminAction('exportCSV', `${adminUsersList.length} users`);
+}
+
+async function bulkChangeTier() {
+  if (adminSelectedUsers.size === 0) return;
+  const newTier = prompt('Enter new tier (free or premium):');
+  if (!newTier || !['free', 'premium'].includes(newTier)) { showToast('Invalid tier', 'error'); return; }
+  showConfirm('Bulk Change Tier', `Change ${adminSelectedUsers.size} users to "${newTier}"?`, async () => {
+    try {
+      const promises = [...adminSelectedUsers].map(uid => {
+        const ref = doc(db, 'users', uid, 'subscription', 'status');
+        return updateDoc(ref, { tier: newTier, updatedAt: serverTimestamp() });
+      });
+      await Promise.all(promises);
+      adminSelectedUsers.forEach(uid => {
+        adminSubsMap[uid] = { ...adminSubsMap[uid], tier: newTier, uid };
+      });
+      renderAdminUsersList();
+      clearUserSelection();
+      showToast(`${promises.length} users changed to ${newTier}`);
+      logAdminAction('bulkChangeTier', `${promises.length} users → ${newTier}`);
+    } catch (e) { showToast('Bulk tier change failed: ' + e.message, 'error'); }
+  });
+}
+
+async function bulkSendMessage() {
+  if (adminSelectedUsers.size === 0) return;
+  const title = prompt('Message title:');
+  if (!title) return;
+  const body = prompt('Message body:');
+  if (!body) return;
+  showConfirm('Bulk Send Message', `Send message to ${adminSelectedUsers.size} users?`, async () => {
+    try {
+      const promises = [...adminSelectedUsers].map(uid => {
+        const ref = collection(db, 'users', uid, 'messages');
+        return addDoc(ref, { title, body, type: 'info', sentAt: serverTimestamp(), read: false });
+      });
+      await Promise.all(promises);
+      clearUserSelection();
+      showToast(`Message sent to ${promises.length} users`);
+      logAdminAction('bulkSendMessage', `${promises.length} users: ${title}`);
+    } catch (e) { showToast('Bulk message failed: ' + e.message, 'error'); }
+  });
+}
+
+// ========== MESSAGES TAB ==========
+async function loadMessagesTab() {
+  await loadMessageHistory();
+}
+
+async function sendBroadcast() {
+  const title = document.getElementById('msg-title').value.trim();
+  const body = document.getElementById('msg-body').value.trim();
+  const type = document.querySelector('input[name="msg-type"]:checked').value;
+  const recipients = document.getElementById('msg-recipients').value;
+  const url = document.getElementById('msg-url').value.trim();
+  if (!title || !body) { showToast('Title and body are required', 'error'); return; }
+
+  const targetUsers = adminUsersList.filter(u => {
+    if (recipients === 'all') return true;
+    const sub = adminSubsMap[u.uid];
+    const tier = sub ? sub.tier : 'free';
+    return tier === recipients;
+  });
+
+  if (targetUsers.length === 0) { showToast('No users match the filter', 'error'); return; }
+
+  showConfirm('Send Broadcast', `Send "${title}" to ${targetUsers.length} ${recipients} users?`, async () => {
+    try {
+      const msgData = { title, body, type, sentAt: serverTimestamp(), read: false };
+      if (url) msgData.url = url;
+      const promises = targetUsers.map(u => addDoc(collection(db, 'users', u.uid, 'messages'), msgData));
+      await Promise.all(promises);
+
+      // Log to message history
+      try {
+        await addDoc(collection(db, 'config', 'messageHistory', 'entries'), {
+          title, body, type, url: url || '', recipients, recipientCount: targetUsers.length, sentAt: serverTimestamp()
+        });
+      } catch (e) { console.warn('Message history log failed:', e); }
+
+      document.getElementById('msg-title').value = '';
+      document.getElementById('msg-body').value = '';
+      document.getElementById('msg-url').value = '';
+      showToast(`Broadcast sent to ${targetUsers.length} users`);
+      logAdminAction('sendBroadcast', `"${title}" to ${targetUsers.length} ${recipients} users`);
+      await loadMessageHistory();
+    } catch (e) { showToast('Broadcast failed: ' + e.message, 'error'); }
+  });
+}
+
+async function loadMessageHistory() {
+  const container = document.getElementById('admin-msg-history');
+  try {
+    const histRef = collection(db, 'config', 'messageHistory', 'entries');
+    const q = query(histRef, orderBy('sentAt', 'desc'), limit(30));
+    const snap = await getDocs(q);
+    if (snap.empty) { container.innerHTML = '<p class="admin-empty-state">No messages sent yet</p>'; return; }
+    container.innerHTML = snap.docs.map(d => {
+      const data = d.data();
+      const time = data.sentAt ? data.sentAt.toDate().toLocaleString() : '—';
+      const typeClass = data.type === 'warning' ? 'color:#e67e22' : data.type === 'promo' ? 'color:#8e44ad' : 'color:var(--accent)';
+      return `<div class="admin-msg-history-item">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <strong>${data.title}</strong>
+          <span style="font-size:12px;color:var(--secondary);">${time}</span>
+        </div>
+        <p style="margin:4px 0;font-size:13px;color:var(--text);">${data.body}</p>
+        <div style="display:flex;gap:12px;font-size:12px;color:var(--secondary);">
+          <span style="${typeClass};">${data.type}</span>
+          <span>${data.recipientCount || 0} recipients (${data.recipients || 'all'})</span>
+        </div>
+      </div>`;
+    }).join('');
+  } catch (e) { container.innerHTML = '<p class="admin-empty-state">Could not load message history</p>'; }
+}
+
+// ========== SETTINGS TAB ==========
+let currentFlags = {};
+
+async function loadSettingsTab() {
+  await Promise.all([loadFeatureFlags(), loadMaintenanceConfig(), loadForceUpdateConfig(), loadAnnouncementConfig(), loadRateLimits(), loadAuditLog()]);
+}
+
+async function loadFeatureFlags() {
+  try {
+    const flagDoc = await getDoc(doc(db, 'config', 'flags'));
+    currentFlags = flagDoc.exists() ? flagDoc.data() : {};
+    renderFeatureFlags();
+  } catch (e) {
+    document.getElementById('admin-flags-list').innerHTML = '<p class="admin-empty-state">Could not load flags</p>';
+  }
+}
+
+function renderFeatureFlags() {
+  const container = document.getElementById('admin-flags-list');
+  const keys = Object.keys(currentFlags).filter(k => k !== '__exists');
+  if (keys.length === 0) { container.innerHTML = '<p class="admin-empty-state">No flags configured</p>'; return; }
+  container.innerHTML = keys.map(key => `
+    <div class="admin-flag-row">
+      <span class="admin-flag-name">${key}</span>
+      <label class="admin-toggle">
+        <input type="checkbox" data-flag="${key}" ${currentFlags[key] ? 'checked' : ''} onchange="currentFlags['${key}']=this.checked">
+        <span class="admin-toggle-slider"></span>
+      </label>
+      <button class="admin-btn admin-btn-secondary" style="padding:4px 10px;font-size:12px;" onclick="removeFlag('${key}')">Remove</button>
+    </div>
+  `).join('');
+}
+
+function addFeatureFlag() {
+  const name = prompt('Flag name (camelCase, e.g. barcodeScannerEnabled):');
+  if (!name) return;
+  currentFlags[name] = false;
+  renderFeatureFlags();
+}
+
+function removeFlag(name) {
+  delete currentFlags[name];
+  renderFeatureFlags();
+}
+
+async function saveFeatureFlags() {
+  try {
+    await setDoc(doc(db, 'config', 'flags'), currentFlags);
+    showToast('Feature flags saved');
+    logAdminAction('saveFeatureFlags', JSON.stringify(currentFlags));
+  } catch (e) { showToast('Failed to save flags: ' + e.message, 'error'); }
+}
+
+async function loadMaintenanceConfig() {
+  try {
+    const d = await getDoc(doc(db, 'config', 'maintenance'));
+    if (d.exists()) {
+      document.getElementById('maintenance-toggle').checked = d.data().enabled || false;
+      document.getElementById('maintenance-message').value = d.data().message || '';
+    }
+  } catch (e) { console.warn('Failed to load maintenance config:', e); }
+}
+
+function toggleMaintenance(enabled) {
+  // Just updates the toggle UI, save on button click
+}
+
+async function saveMaintenance() {
+  try {
+    const enabled = document.getElementById('maintenance-toggle').checked;
+    const message = document.getElementById('maintenance-message').value.trim();
+    await setDoc(doc(db, 'config', 'maintenance'), { enabled, message, updatedAt: serverTimestamp() });
+    showToast('Maintenance settings saved');
+    logAdminAction('saveMaintenance', `enabled: ${enabled}`);
+  } catch (e) { showToast('Failed to save: ' + e.message, 'error'); }
+}
+
+async function loadForceUpdateConfig() {
+  try {
+    const d = await getDoc(doc(db, 'config', 'forceUpdate'));
+    if (d.exists()) {
+      document.getElementById('force-update-toggle').checked = d.data().enabled || false;
+      document.getElementById('force-update-version').value = d.data().minVersion || '';
+      document.getElementById('force-update-message').value = d.data().message || '';
+    }
+  } catch (e) { console.warn('Failed to load force update config:', e); }
+}
+
+async function saveForceUpdate() {
+  try {
+    const enabled = document.getElementById('force-update-toggle').checked;
+    const minVersion = document.getElementById('force-update-version').value.trim();
+    const message = document.getElementById('force-update-message').value.trim();
+    await setDoc(doc(db, 'config', 'forceUpdate'), { enabled, minVersion, message, updatedAt: serverTimestamp() });
+    showToast('Force update settings saved');
+    logAdminAction('saveForceUpdate', `v${minVersion}, enabled: ${enabled}`);
+  } catch (e) { showToast('Failed to save: ' + e.message, 'error'); }
+}
+
+async function loadAnnouncementConfig() {
+  try {
+    const d = await getDoc(doc(db, 'config', 'announcements'));
+    if (d.exists()) {
+      document.getElementById('announcement-toggle').checked = d.data().enabled || false;
+      document.getElementById('announcement-text').value = d.data().text || '';
+    }
+  } catch (e) { console.warn('Failed to load announcement config:', e); }
+}
+
+async function saveAnnouncement() {
+  try {
+    const enabled = document.getElementById('announcement-toggle').checked;
+    const text = document.getElementById('announcement-text').value.trim();
+    await setDoc(doc(db, 'config', 'announcements'), { enabled, text, updatedAt: serverTimestamp() });
+    showToast('Announcement saved');
+    logAdminAction('saveAnnouncement', `enabled: ${enabled}`);
+  } catch (e) { showToast('Failed to save: ' + e.message, 'error'); }
+}
+
+async function loadRateLimits() {
+  try {
+    const d = await getDoc(doc(db, 'config', 'rateLimits'));
+    if (d.exists()) {
+      document.getElementById('rate-limit-free').value = d.data().freeLimit || '';
+      document.getElementById('rate-limit-premium').value = d.data().premiumLimit || '';
+    }
+  } catch (e) { console.warn('Failed to load rate limits:', e); }
+}
+
+async function saveRateLimits() {
+  try {
+    const freeLimit = parseInt(document.getElementById('rate-limit-free').value) || 0;
+    const premiumLimit = parseInt(document.getElementById('rate-limit-premium').value) || 0;
+    await setDoc(doc(db, 'config', 'rateLimits'), { freeLimit, premiumLimit, updatedAt: serverTimestamp() });
+    showToast('Rate limits saved');
+    logAdminAction('saveRateLimits', `free: ${freeLimit}, premium: ${premiumLimit}`);
+  } catch (e) { showToast('Failed to save: ' + e.message, 'error'); }
+}
+
+// ========== ADMIN WINDOW BINDINGS ==========
+window.switchAdminTab = switchAdminTab;
+window.filterAdminUsers = filterAdminUsers;
+window.sortAdminUsers = sortAdminUsers;
+window.toggleSelectAllUsers = toggleSelectAllUsers;
+window.toggleUserSelect = toggleUserSelect;
+window.clearUserSelection = clearUserSelection;
+window.expandUserDetail = expandUserDetail;
+window.closeUserDetail = closeUserDetail;
+window.copyUID = copyUID;
+window.changeUserTier = changeUserTier;
+window.sendMessageToUser = sendMessageToUser;
+window.addAdminNote = addAdminNote;
+window.resetUserUsage = resetUserUsage;
+window.deleteUserData = deleteUserData;
+window.exportUsersCSV = exportUsersCSV;
+window.bulkChangeTier = bulkChangeTier;
+window.bulkSendMessage = bulkSendMessage;
+window.sendBroadcast = sendBroadcast;
+window.addFeatureFlag = addFeatureFlag;
+window.removeFlag = removeFlag;
+window.saveFeatureFlags = saveFeatureFlags;
+window.toggleMaintenance = toggleMaintenance;
+window.saveMaintenance = saveMaintenance;
+window.saveForceUpdate = saveForceUpdate;
+window.saveAnnouncement = saveAnnouncement;
+window.saveRateLimits = saveRateLimits;
+window.loadAuditLog = loadAuditLog;
+window.closeAdminModal = closeAdminModal;
+window.confirmAdminModal = confirmAdminModal;
+window.showToast = showToast;
 
 // ========== SCROLL ANIMATIONS ==========
 const observer = new IntersectionObserver((entries) => {
