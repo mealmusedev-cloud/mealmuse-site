@@ -3077,36 +3077,36 @@ async function loadAdminData() {
   refreshBtn.disabled = true;
 
   try {
-    // Use collection group queries (matches Firestore security rules)
-    // Fetch all profiles, subscriptions, and usage in parallel
-    const [profilesSnap, subscriptionsSnap, usageSnap] = await Promise.all([
-      getDocs(collectionGroup(db, 'profile')),
-      getDocs(collectionGroup(db, 'subscription')),
-      getDocs(collectionGroup(db, 'usage')),
-    ]);
-
-    // Build user profiles map (uid -> profile data)
+    // Step 1: Get all user profiles via collection group query
+    const profilesSnap = await getDocs(collectionGroup(db, 'profile'));
     const users = [];
     const userMap = {};
     profilesSnap.forEach(docSnap => {
-      // Path: users/{uid}/profile/{docId} — extract uid from parent
       const pathParts = docSnap.ref.path.split('/');
       const uid = pathParts[1];
       const data = { uid, ...docSnap.data() };
       users.push(data);
       userMap[uid] = data;
     });
+    console.log('[Admin] Loaded ' + users.length + ' user profiles');
 
-    // Build subscriptions list
+    // Step 2: Fetch subscription for each user individually
     const subscriptions = [];
-    subscriptionsSnap.forEach(docSnap => {
-      const pathParts = docSnap.ref.path.split('/');
-      const uid = pathParts[1];
-      const profile = userMap[uid] || {};
-      subscriptions.push({ uid, email: profile.email, displayName: profile.displayName, ...docSnap.data() });
-    });
+    await Promise.all(users.map(async (user) => {
+      try {
+        const subDoc = await getDoc(doc(db, 'users', user.uid, 'subscription', 'status'));
+        if (subDoc.exists()) {
+          const data = subDoc.data();
+          console.log('[Admin] Sub for ' + user.uid + ':', JSON.stringify(data));
+          subscriptions.push({ uid: user.uid, email: user.email, displayName: user.displayName, ...data });
+        }
+      } catch (e) {
+        console.warn('[Admin] Failed to read subscription for ' + user.uid, e.message);
+      }
+    }));
+    console.log('[Admin] Loaded ' + subscriptions.length + ' subscriptions');
 
-    // Build usage map (monthKey -> aggregated totals)
+    // Step 3: Fetch usage for each user (current month + last 6 months)
     const now = new Date();
     const currentMonthKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
     let totalPlanGens = 0, totalSwaps = 0, totalRevisions = 0;
@@ -3120,24 +3120,25 @@ async function loadAdminData() {
       usageByMonth[key] = { planGenerations: 0, swaps: 0, revisions: 0 };
     }
 
-    usageSnap.forEach(docSnap => {
-      const monthKey = docSnap.id; // doc ID is the month key e.g. "2026-03"
-      const d = docSnap.data();
-
-      // Current month totals
-      if (monthKey === currentMonthKey) {
-        totalPlanGens += d.planGenerations || 0;
-        totalSwaps += d.swaps || 0;
-        totalRevisions += d.revisions || 0;
+    await Promise.all(users.map(async (user) => {
+      for (const monthKey of last6Months) {
+        try {
+          const usageDoc = await getDoc(doc(db, 'users', user.uid, 'usage', monthKey));
+          if (usageDoc.exists()) {
+            const d = usageDoc.data();
+            usageByMonth[monthKey].planGenerations += d.planGenerations || 0;
+            usageByMonth[monthKey].swaps += d.swaps || 0;
+            usageByMonth[monthKey].revisions += d.revisions || 0;
+            if (monthKey === currentMonthKey) {
+              totalPlanGens += d.planGenerations || 0;
+              totalSwaps += d.swaps || 0;
+              totalRevisions += d.revisions || 0;
+            }
+          }
+        } catch (e) { /* skip */ }
       }
-
-      // 6-month trend
-      if (usageByMonth[monthKey]) {
-        usageByMonth[monthKey].planGenerations += d.planGenerations || 0;
-        usageByMonth[monthKey].swaps += d.swaps || 0;
-        usageByMonth[monthKey].revisions += d.revisions || 0;
-      }
-    });
+    }));
+    console.log('[Admin] Usage this month — gens:', totalPlanGens, 'swaps:', totalSwaps, 'revisions:', totalRevisions);
 
     // Aggregate data
     const totalUsers = users.length;
@@ -3146,6 +3147,7 @@ async function loadAdminData() {
     const premiumCount = activeSubs.length;
     const expiredCount = expiredSubs.length;
     const freeCount = totalUsers - premiumCount - expiredCount;
+    console.log('[Admin] Premium:', premiumCount, 'Expired:', expiredCount, 'Free:', freeCount);
 
     // Platform breakdown
     const iosCount = activeSubs.filter(s => s.platform === 'ios').length;
