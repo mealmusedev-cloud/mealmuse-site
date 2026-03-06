@@ -2697,9 +2697,9 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
       </div>
     </div>
 
-    <!-- Platform Breakdown -->
+    <!-- Subscription Breakdown -->
     <div class="admin-card">
-      <div class="admin-card-title">Platform Breakdown</div>
+      <div class="admin-card-title">Subscription Breakdown</div>
       <div class="admin-chart-row">
         <div class="admin-chart-container">
           <canvas id="chart-platform" width="250" height="250"></canvas>
@@ -2761,7 +2761,6 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
               <th>User</th>
               <th>Email</th>
               <th>Status</th>
-              <th>Platform</th>
               <th>Joined</th>
             </tr>
           </thead>
@@ -3106,8 +3105,38 @@ async function loadAdminData() {
     }));
     console.log('[Admin] Loaded ' + subscriptions.length + ' subscriptions');
 
-    // Step 3: Fetch usage for each user (current month + last 6 months)
+    // Step 3: Discover usage data structure then fetch
     const now = new Date();
+
+    // Debug: list all usage docs for first 3 users that have any
+    let usageDebugCount = 0;
+    for (const user of users) {
+      if (usageDebugCount >= 3) break;
+      try {
+        const usageColl = await getDocs(collection(db, 'users', user.uid, 'usage'));
+        if (!usageColl.empty) {
+          usageDebugCount++;
+          usageColl.forEach(d => {
+            console.log('[Admin] Usage doc for ' + user.uid + ' id="' + d.id + '":', JSON.stringify(d.data()));
+          });
+        }
+      } catch (e) { /* skip */ }
+    }
+    if (usageDebugCount === 0) console.log('[Admin] No usage docs found for any user');
+
+    // Fetch all usage docs for all users
+    const allUsageDocs = [];
+    await Promise.all(users.map(async (user) => {
+      try {
+        const usageColl = await getDocs(collection(db, 'users', user.uid, 'usage'));
+        usageColl.forEach(d => {
+          allUsageDocs.push({ uid: user.uid, docId: d.id, ...d.data() });
+        });
+      } catch (e) { /* skip */ }
+    }));
+    console.log('[Admin] Total usage docs found:', allUsageDocs.length);
+
+    // Build monthly aggregation from whatever field names exist
     const currentMonthKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
     let totalPlanGens = 0, totalSwaps = 0, totalRevisions = 0;
 
@@ -3120,24 +3149,23 @@ async function loadAdminData() {
       usageByMonth[key] = { planGenerations: 0, swaps: 0, revisions: 0 };
     }
 
-    await Promise.all(users.map(async (user) => {
-      for (const monthKey of last6Months) {
-        try {
-          const usageDoc = await getDoc(doc(db, 'users', user.uid, 'usage', monthKey));
-          if (usageDoc.exists()) {
-            const d = usageDoc.data();
-            usageByMonth[monthKey].planGenerations += d.planGenerations || 0;
-            usageByMonth[monthKey].swaps += d.swaps || 0;
-            usageByMonth[monthKey].revisions += d.revisions || 0;
-            if (monthKey === currentMonthKey) {
-              totalPlanGens += d.planGenerations || 0;
-              totalSwaps += d.swaps || 0;
-              totalRevisions += d.revisions || 0;
-            }
-          }
-        } catch (e) { /* skip */ }
+    allUsageDocs.forEach(d => {
+      const monthKey = d.docId;
+      const gens = d.planGenerations || d.generations || d.plans || 0;
+      const swaps = d.swaps || d.mealSwaps || 0;
+      const revisions = d.revisions || d.edits || 0;
+
+      if (monthKey === currentMonthKey) {
+        totalPlanGens += gens;
+        totalSwaps += swaps;
+        totalRevisions += revisions;
       }
-    }));
+      if (usageByMonth[monthKey]) {
+        usageByMonth[monthKey].planGenerations += gens;
+        usageByMonth[monthKey].swaps += swaps;
+        usageByMonth[monthKey].revisions += revisions;
+      }
+    });
     console.log('[Admin] Usage this month — gens:', totalPlanGens, 'swaps:', totalSwaps, 'revisions:', totalRevisions);
 
     // Aggregate data — subscription uses "tier" field: "premium" or "free"
@@ -3148,11 +3176,6 @@ async function loadAdminData() {
     const expiredCount = 0;
     const freeCount = totalUsers - premiumCount;
     console.log('[Admin] Premium:', premiumCount, 'Expired:', expiredCount, 'Free:', freeCount);
-
-    // Platform breakdown
-    const iosCount = activeSubs.filter(s => s.platform === 'ios').length;
-    const androidCount = activeSubs.filter(s => s.platform === 'android').length;
-    const unknownPlatform = activeSubs.length - iosCount - androidCount;
 
     // Signups over time
     const signupsByMonth = {};
@@ -3200,7 +3223,7 @@ async function loadAdminData() {
 
     // Render everything
     renderAdminKPIs(totalUsers, premiumCount, freeCount, subscriptions.length);
-    renderPlatformChart(iosCount, androidCount, unknownPlatform);
+    renderPlatformChart(premiumCount, freeCount, 0);
     renderSignupsChart(signupLabels, signupValues);
     renderUsageKPIs(totalPlanGens, totalSwaps, totalRevisions);
     renderUsageChart(last6Months, usageByMonth);
@@ -3236,18 +3259,13 @@ function renderUsageKPIs(gens, swaps, revisions) {
   document.getElementById('kpi-revisions').textContent = revisions.toLocaleString();
 }
 
-function renderPlatformChart(ios, android, unknown) {
+function renderPlatformChart(premium, free, unused) {
   const ctx = document.getElementById('chart-platform').getContext('2d');
   if (chartPlatform) chartPlatform.destroy();
 
-  const data = [ios, android];
-  const labels = ['iOS', 'Android'];
-  const colors = ['#2E2B26', '#B8885C'];
-  if (unknown > 0) {
-    data.push(unknown);
-    labels.push('Unknown');
-    colors.push('#D4CFC7');
-  }
+  const data = [premium, free];
+  const labels = ['Premium', 'Free'];
+  const colors = ['#B8885C', '#D4CFC7'];
 
   chartPlatform = new Chart(ctx, {
     type: 'doughnut',
@@ -3408,7 +3426,6 @@ function renderRecentUsersTable(recentUsers, subscriptions) {
     } else {
       statusBadge = '<span class="sub-badge free">Free</span>';
     }
-    const platform = sub ? (sub.platform === 'ios' ? 'iOS' : sub.platform === 'android' ? 'Android' : '\u2014') : '\u2014';
     let joinDate = '\u2014';
     if (user.createdAt) {
       const d = user.createdAt.toDate ? user.createdAt.toDate() : new Date(user.createdAt);
@@ -3418,7 +3435,6 @@ function renderRecentUsersTable(recentUsers, subscriptions) {
       '<td>' + (user.displayName || '\u2014') + '</td>' +
       '<td class="email-cell">' + (user.email || '\u2014') + '</td>' +
       '<td>' + statusBadge + '</td>' +
-      '<td>' + platform + '</td>' +
       '<td>' + joinDate + '</td>' +
     '</tr>';
   }).join('');
