@@ -3890,7 +3890,7 @@ async function loadAdminData() {
     renderExpiryList(upcomingExpirations);
     renderRecentUsersTable(recentUsers, subscriptions);
 
-    adminDataCache = { timestamp: Date.now() };
+    adminDataCache = { timestamp: Date.now(), users, subscriptions };
     loadingEl.style.display = 'none';
     contentEl.style.display = 'block';
     document.getElementById('admin-last-updated').textContent =
@@ -4172,12 +4172,47 @@ let adminSortDir = 'desc';
 let selectedUserUid = null;
 
 async function loadUsersTab() {
-  if (!adminDataCache) { showToast('Load Dashboard first to fetch user data', 'error'); return; }
-  adminUsersList = adminDataCache.users || [];
-  adminSubsMap = {};
-  (adminDataCache.subscriptions || []).forEach(s => { adminSubsMap[s.uid] = s; });
-  adminUsersLoaded = true;
-  renderAdminUsersList();
+  // Use cache if available, otherwise fetch directly
+  if (adminDataCache && adminDataCache.users) {
+    adminUsersList = adminDataCache.users;
+    adminSubsMap = {};
+    (adminDataCache.subscriptions || []).forEach(s => { adminSubsMap[s.uid] = s; });
+    adminUsersLoaded = true;
+    renderAdminUsersList();
+    return;
+  }
+
+  // Fetch users and subscriptions directly
+  try {
+    showToast('Loading users...', 'success');
+    const profilesSnap = await getDocs(collectionGroup(db, 'profile'));
+    const users = [];
+    profilesSnap.forEach(docSnap => {
+      const pathParts = docSnap.ref.path.split('/');
+      const uid = pathParts[1];
+      users.push({ uid, ...docSnap.data() });
+    });
+
+    const subscriptions = [];
+    await Promise.all(users.map(async (user) => {
+      try {
+        const subDoc = await getDoc(doc(db, 'users', user.uid, 'subscription', 'status'));
+        if (subDoc.exists()) {
+          subscriptions.push({ uid: user.uid, email: user.email, displayName: user.displayName, ...subDoc.data() });
+        }
+      } catch (e) { /* skip */ }
+    }));
+
+    adminUsersList = users;
+    adminSubsMap = {};
+    subscriptions.forEach(s => { adminSubsMap[s.uid] = s; });
+    adminDataCache = { timestamp: Date.now(), users, subscriptions };
+    adminUsersLoaded = true;
+    renderAdminUsersList();
+    showToast(`Loaded ${users.length} users`);
+  } catch (e) {
+    showToast('Failed to load users: ' + e.message, 'error');
+  }
 }
 
 function renderAdminUsersList() {
