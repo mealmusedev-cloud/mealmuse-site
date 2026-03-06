@@ -1877,6 +1877,247 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
 .marquee-section:hover .marquee-track {
   animation-play-state: paused;
 }
+
+/* ========== ADMIN DASHBOARD ========== */
+.admin-page {
+  display: none;
+  padding: 120px 24px 80px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.admin-page.active { display: block; }
+.admin-header { margin-bottom: 32px; }
+.admin-header h1 {
+  font-size: 2.2rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.admin-subtitle {
+  font-size: 0.95rem;
+  color: #8A857C;
+  margin-bottom: 20px;
+}
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.btn-admin-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  background: #2E2B26;
+  color: #F8F6F1;
+  border: none;
+  transition: background 0.25s, transform 0.25s;
+}
+.btn-admin-refresh:hover {
+  background: #1a1815;
+  transform: translateY(-1px);
+}
+.btn-admin-refresh svg { stroke: #F8F6F1; }
+.admin-last-updated {
+  font-size: 0.8rem;
+  color: #B0AAA0;
+}
+.admin-loading {
+  text-align: center;
+  padding: 60px 0;
+  color: #B0AAA0;
+  font-size: 0.9rem;
+}
+
+/* Admin KPI Cards */
+.admin-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.admin-kpi-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.admin-kpi-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+.admin-kpi-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #B0AAA0;
+  margin-bottom: 8px;
+}
+.admin-kpi-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2rem;
+  color: #2E2B26;
+  letter-spacing: -0.02em;
+}
+.admin-kpi-sub {
+  font-size: 0.8rem;
+  color: #B8885C;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* Admin Cards */
+.admin-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+.admin-card-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #B0AAA0;
+  margin-bottom: 20px;
+}
+
+/* Chart containers */
+.admin-chart-row {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.admin-chart-container {
+  width: 250px;
+  height: 250px;
+  flex-shrink: 0;
+}
+.admin-chart-container-wide {
+  width: 100%;
+  position: relative;
+}
+.admin-platform-legend { flex: 1; }
+.admin-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  color: #2E2B26;
+}
+.admin-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.admin-legend-value {
+  margin-left: auto;
+  font-weight: 700;
+  color: #2E2B26;
+}
+
+/* Expiry List */
+.admin-expiry-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.admin-expiry-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  font-size: 0.88rem;
+}
+.admin-expiry-item:last-child { border-bottom: none; }
+.admin-expiry-email { color: #2E2B26; font-weight: 500; }
+.admin-expiry-date { color: #8A857C; }
+.admin-empty-state {
+  color: #B0AAA0;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 24px 0;
+}
+
+/* Users Table */
+.admin-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.admin-table th {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #B0AAA0;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  white-space: nowrap;
+}
+.admin-table td {
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  color: #2E2B26;
+  white-space: nowrap;
+}
+.admin-table .email-cell {
+  color: #8A857C;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Admin Link Button */
+.btn-admin-link {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  background: rgba(184,136,92,0.08);
+  color: #B8885C;
+  border: 1.5px solid rgba(184,136,92,0.2);
+  transition: background 0.2s, border-color 0.2s;
+  margin-top: 8px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-admin-link:hover {
+  background: rgba(184,136,92,0.14);
+  border-color: rgba(184,136,92,0.35);
+}
+
+/* Admin Responsive */
+@media (max-width: 1024px) {
+  .admin-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .admin-kpi-grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .admin-page { padding: 80px 20px 48px; }
+  .admin-header h1 { font-size: 1.6rem; }
+  .admin-kpi-grid { grid-template-columns: 1fr 1fr; }
+  .admin-kpi-grid-3 { grid-template-columns: 1fr; }
+  .admin-kpi-value { font-size: 1.6rem; }
+  .admin-chart-row { flex-direction: column; }
+  .admin-chart-container { width: 200px; height: 200px; }
+  .admin-toolbar { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
 </style>
 </head>
 <body>
@@ -2403,6 +2644,132 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
     </div>
 
     <button class="btn-signout" onclick="signOutUser()">Sign Out</button>
+
+    <!-- Admin Access (hidden by default) -->
+    <button class="btn-admin-link" id="admin-link" style="display:none;" onclick="showPage('admin')">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+      Admin Dashboard
+    </button>
+  </div>
+</div>
+
+<!-- ==================== ADMIN DASHBOARD ==================== -->
+<div id="admin-page" class="admin-page">
+  <a href="#" class="back-link" onclick="showPage('account'); return false;">&#8592; Back to account</a>
+
+  <div class="admin-header">
+    <h1>Admin <span class="accent">Dashboard</span></h1>
+    <p class="admin-subtitle">MealMuse analytics and user insights</p>
+    <div class="admin-toolbar">
+      <button class="btn-admin-refresh" id="admin-refresh-btn" onclick="loadAdminData()">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        Refresh Data
+      </button>
+      <span class="admin-last-updated" id="admin-last-updated"></span>
+    </div>
+  </div>
+
+  <div id="admin-loading" class="admin-loading" style="display:none;">
+    <div class="spinner"></div>
+    Loading analytics...
+  </div>
+
+  <div id="admin-content" style="display:none;">
+
+    <!-- KPI Cards -->
+    <div class="admin-kpi-grid">
+      <div class="admin-kpi-card">
+        <div class="admin-kpi-label">Total Users</div>
+        <div class="admin-kpi-value" id="kpi-total-users">--</div>
+      </div>
+      <div class="admin-kpi-card">
+        <div class="admin-kpi-label">Premium Users</div>
+        <div class="admin-kpi-value" id="kpi-premium-users">--</div>
+        <div class="admin-kpi-sub" id="kpi-premium-pct"></div>
+      </div>
+      <div class="admin-kpi-card">
+        <div class="admin-kpi-label">Free Users</div>
+        <div class="admin-kpi-value" id="kpi-free-users">--</div>
+      </div>
+      <div class="admin-kpi-card">
+        <div class="admin-kpi-label">Expired Subs</div>
+        <div class="admin-kpi-value" id="kpi-expired-users">--</div>
+      </div>
+    </div>
+
+    <!-- Platform Breakdown -->
+    <div class="admin-card">
+      <div class="admin-card-title">Platform Breakdown</div>
+      <div class="admin-chart-row">
+        <div class="admin-chart-container">
+          <canvas id="chart-platform" width="250" height="250"></canvas>
+        </div>
+        <div class="admin-platform-legend" id="platform-legend"></div>
+      </div>
+    </div>
+
+    <!-- Signups Over Time -->
+    <div class="admin-card">
+      <div class="admin-card-title">User Signups Over Time</div>
+      <div class="admin-chart-container-wide">
+        <canvas id="chart-signups" height="280"></canvas>
+      </div>
+    </div>
+
+    <!-- Usage Metrics -->
+    <div class="admin-card">
+      <div class="admin-card-title">Usage Metrics (Current Month)</div>
+      <div class="admin-kpi-grid admin-kpi-grid-3">
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-label">Plan Generations</div>
+          <div class="admin-kpi-value" id="kpi-plan-gens">--</div>
+        </div>
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-label">Meal Swaps</div>
+          <div class="admin-kpi-value" id="kpi-swaps">--</div>
+        </div>
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-label">Revisions</div>
+          <div class="admin-kpi-value" id="kpi-revisions">--</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Usage Trends -->
+    <div class="admin-card">
+      <div class="admin-card-title">Usage Trends (Last 6 Months)</div>
+      <div class="admin-chart-container-wide">
+        <canvas id="chart-usage" height="280"></canvas>
+      </div>
+    </div>
+
+    <!-- Upcoming Expirations -->
+    <div class="admin-card">
+      <div class="admin-card-title">Upcoming Expirations (Next 30 Days)</div>
+      <div class="admin-expiry-list" id="admin-expiry-list">
+        <p class="admin-empty-state">No upcoming expirations</p>
+      </div>
+    </div>
+
+    <!-- Recent Users Table -->
+    <div class="admin-card">
+      <div class="admin-card-title">Recent Users</div>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Platform</th>
+              <th>Joined</th>
+            </tr>
+          </thead>
+          <tbody id="admin-users-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -2435,10 +2802,11 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
 import { getAuth, signInWithPopup, GoogleAuthProvider, OAuthProvider, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
-import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
+import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, limit, getCountFromServer } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
 
 // ========== FIREBASE SETUP ==========
 const firebaseConfig = {
@@ -2454,6 +2822,12 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// ========== ADMIN CONFIG ==========
+const ADMIN_UID = 's3LL3GH13XO94Fxkgih77KtQ03K2';
+function isAdmin(user) {
+  return user && user.uid === ADMIN_UID;
+}
+
 // ========== PAGE ROUTING ==========
 function showPage(page) {
   const landing = document.getElementById('landing-page');
@@ -2461,6 +2835,7 @@ function showPage(page) {
   const privacy = document.getElementById('privacy-page');
   const terms = document.getElementById('terms-page');
   const account = document.getElementById('account-page');
+  const admin = document.getElementById('admin-page');
 
   // Hide all
   landing.style.display = 'none';
@@ -2468,6 +2843,7 @@ function showPage(page) {
   privacy.classList.remove('active');
   terms.classList.remove('active');
   account.classList.remove('active');
+  admin.classList.remove('active');
 
   // Show requested
   switch (page) {
@@ -2485,6 +2861,15 @@ function showPage(page) {
       break;
     case 'account':
       account.classList.add('active');
+      break;
+    case 'admin':
+      if (auth.currentUser && isAdmin(auth.currentUser)) {
+        admin.classList.add('active');
+        loadAdminData();
+      } else {
+        showPage('account');
+        return;
+      }
       break;
   }
 
@@ -2631,6 +3016,7 @@ onAuthStateChanged(auth, (user) => {
   const signinView = document.getElementById('account-signin');
   const loadingView = document.getElementById('account-loading');
   const dashboardView = document.getElementById('account-dashboard');
+  const adminLink = document.getElementById('admin-link');
 
   if (user) {
     // User is signed in — show dashboard
@@ -2649,13 +3035,391 @@ onAuthStateChanged(auth, (user) => {
 
     // Load subscription data
     loadSubscription(user.uid);
+
+    // Show admin link if user is admin
+    adminLink.style.display = isAdmin(user) ? 'flex' : 'none';
   } else {
     // User is signed out — show sign-in
     signinView.style.display = '';
     loadingView.style.display = 'none';
     dashboardView.classList.remove('active');
+    adminLink.style.display = 'none';
+
+    // Redirect away from admin page if signed out
+    if (document.getElementById('admin-page').classList.contains('active')) {
+      showPage('account');
+    }
   }
 });
+
+// ========== ADMIN DASHBOARD LOGIC ==========
+let adminDataCache = null;
+let chartPlatform = null;
+let chartSignups = null;
+let chartUsage = null;
+
+async function loadAdminData() {
+  if (!auth.currentUser || !isAdmin(auth.currentUser)) return;
+
+  // Use cache if less than 5 minutes old
+  if (adminDataCache && (Date.now() - adminDataCache.timestamp < 5 * 60 * 1000)) {
+    document.getElementById('admin-loading').style.display = 'none';
+    document.getElementById('admin-content').style.display = 'block';
+    return;
+  }
+
+  const loadingEl = document.getElementById('admin-loading');
+  const contentEl = document.getElementById('admin-content');
+  const refreshBtn = document.getElementById('admin-refresh-btn');
+
+  loadingEl.style.display = 'block';
+  contentEl.style.display = 'none';
+  refreshBtn.disabled = true;
+
+  try {
+    // Fetch all user documents
+    const usersSnap = await getDocs(collection(db, 'users'));
+    const users = [];
+    usersSnap.forEach(docSnap => {
+      users.push({ uid: docSnap.id, ...docSnap.data() });
+    });
+
+    // Fetch subscription status for each user
+    const subscriptions = [];
+    await Promise.all(users.map(async (user) => {
+      try {
+        const subDoc = await getDoc(doc(db, 'users', user.uid, 'subscription', 'status'));
+        if (subDoc.exists()) {
+          subscriptions.push({ uid: user.uid, email: user.email, displayName: user.displayName, ...subDoc.data() });
+        }
+      } catch (e) { /* skip */ }
+    }));
+
+    // Aggregate data
+    const totalUsers = users.length;
+    const activeSubs = subscriptions.filter(s => s.isActive === true || s.status === 'active');
+    const expiredSubs = subscriptions.filter(s => s.isActive === false || (s.status && s.status !== 'active'));
+    const premiumCount = activeSubs.length;
+    const expiredCount = expiredSubs.length;
+    const freeCount = totalUsers - premiumCount - expiredCount;
+
+    // Platform breakdown
+    const iosCount = activeSubs.filter(s => s.platform === 'ios').length;
+    const androidCount = activeSubs.filter(s => s.platform === 'android').length;
+    const unknownPlatform = activeSubs.length - iosCount - androidCount;
+
+    // Signups over time
+    const signupsByMonth = {};
+    users.forEach(u => {
+      let date = u.createdAt;
+      if (date && date.toDate) date = date.toDate();
+      else if (typeof date === 'string') date = new Date(date);
+      else date = null;
+      if (date && !isNaN(date)) {
+        const key = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
+        signupsByMonth[key] = (signupsByMonth[key] || 0) + 1;
+      }
+    });
+    const sortedMonths = Object.keys(signupsByMonth).sort();
+    const signupLabels = sortedMonths.map(m => {
+      const [y, mo] = m.split('-');
+      return new Date(y, mo - 1).toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+    });
+    const signupValues = sortedMonths.map(m => signupsByMonth[m]);
+
+    // Upcoming expirations (next 30 days)
+    const now = new Date();
+    const thirtyDaysOut = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+    const upcomingExpirations = subscriptions
+      .filter(s => {
+        const exp = s.expiresAt || s.expirationDate;
+        if (!exp) return false;
+        const expDate = exp.toDate ? exp.toDate() : new Date(exp);
+        return expDate >= now && expDate <= thirtyDaysOut;
+      })
+      .map(s => {
+        const exp = s.expiresAt || s.expirationDate;
+        return { email: s.email || 'Unknown', date: exp.toDate ? exp.toDate() : new Date(exp) };
+      })
+      .sort((a, b) => a.date - b.date);
+
+    // Usage metrics — current month
+    const currentMonthKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+    let totalPlanGens = 0, totalSwaps = 0, totalRevisions = 0;
+    await Promise.all(users.map(async (user) => {
+      try {
+        const usageDoc = await getDoc(doc(db, 'users', user.uid, 'usage', currentMonthKey));
+        if (usageDoc.exists()) {
+          const d = usageDoc.data();
+          totalPlanGens += d.planGenerations || 0;
+          totalSwaps += d.swaps || 0;
+          totalRevisions += d.revisions || 0;
+        }
+      } catch (e) { /* skip */ }
+    }));
+
+    // Usage trends — last 6 months
+    const last6Months = [];
+    const usageByMonth = {};
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+      last6Months.push(key);
+      usageByMonth[key] = { planGenerations: 0, swaps: 0, revisions: 0 };
+    }
+    await Promise.all(users.map(async (user) => {
+      for (const monthKey of last6Months) {
+        try {
+          const usageDoc = await getDoc(doc(db, 'users', user.uid, 'usage', monthKey));
+          if (usageDoc.exists()) {
+            const d = usageDoc.data();
+            usageByMonth[monthKey].planGenerations += d.planGenerations || 0;
+            usageByMonth[monthKey].swaps += d.swaps || 0;
+            usageByMonth[monthKey].revisions += d.revisions || 0;
+          }
+        } catch (e) { /* skip */ }
+      }
+    }));
+
+    // Recent users (last 20)
+    const recentUsers = users
+      .filter(u => u.createdAt)
+      .sort((a, b) => {
+        const dateA = a.createdAt.toDate ? a.createdAt.toDate() : new Date(a.createdAt);
+        const dateB = b.createdAt.toDate ? b.createdAt.toDate() : new Date(b.createdAt);
+        return dateB - dateA;
+      })
+      .slice(0, 20);
+
+    // Render everything
+    renderAdminKPIs(totalUsers, premiumCount, freeCount, expiredCount);
+    renderPlatformChart(iosCount, androidCount, unknownPlatform);
+    renderSignupsChart(signupLabels, signupValues);
+    renderUsageKPIs(totalPlanGens, totalSwaps, totalRevisions);
+    renderUsageChart(last6Months, usageByMonth);
+    renderExpiryList(upcomingExpirations);
+    renderRecentUsersTable(recentUsers, subscriptions);
+
+    adminDataCache = { timestamp: Date.now() };
+    loadingEl.style.display = 'none';
+    contentEl.style.display = 'block';
+    document.getElementById('admin-last-updated').textContent =
+      'Updated: ' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  } catch (error) {
+    console.error('Admin data load error:', error);
+    loadingEl.innerHTML = '<p style="color:#c05050;">Failed to load data. Check console for details.</p>';
+  } finally {
+    refreshBtn.disabled = false;
+  }
+}
+window.loadAdminData = loadAdminData;
+
+function renderAdminKPIs(total, premium, free, expired) {
+  document.getElementById('kpi-total-users').textContent = total.toLocaleString();
+  document.getElementById('kpi-premium-users').textContent = premium.toLocaleString();
+  document.getElementById('kpi-premium-pct').textContent =
+    total > 0 ? ((premium / total) * 100).toFixed(1) + '% conversion' : '';
+  document.getElementById('kpi-free-users').textContent = free.toLocaleString();
+  document.getElementById('kpi-expired-users').textContent = expired.toLocaleString();
+}
+
+function renderUsageKPIs(gens, swaps, revisions) {
+  document.getElementById('kpi-plan-gens').textContent = gens.toLocaleString();
+  document.getElementById('kpi-swaps').textContent = swaps.toLocaleString();
+  document.getElementById('kpi-revisions').textContent = revisions.toLocaleString();
+}
+
+function renderPlatformChart(ios, android, unknown) {
+  const ctx = document.getElementById('chart-platform').getContext('2d');
+  if (chartPlatform) chartPlatform.destroy();
+
+  const data = [ios, android];
+  const labels = ['iOS', 'Android'];
+  const colors = ['#2E2B26', '#B8885C'];
+  if (unknown > 0) {
+    data.push(unknown);
+    labels.push('Unknown');
+    colors.push('#D4CFC7');
+  }
+
+  chartPlatform = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: labels,
+      datasets: [{ data: data, backgroundColor: colors, borderWidth: 0, hoverOffset: 4 }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      cutout: '65%',
+      plugins: { legend: { display: false } },
+    }
+  });
+
+  document.getElementById('platform-legend').innerHTML = labels.map((label, i) =>
+    '<div class="admin-legend-item">' +
+      '<span class="admin-legend-dot" style="background:' + colors[i] + '"></span>' +
+      '<span>' + label + '</span>' +
+      '<span class="admin-legend-value">' + data[i] + '</span>' +
+    '</div>'
+  ).join('');
+}
+
+function renderSignupsChart(labels, values) {
+  const ctx = document.getElementById('chart-signups').getContext('2d');
+  if (chartSignups) chartSignups.destroy();
+
+  chartSignups = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'New Users',
+        data: values,
+        borderColor: '#B8885C',
+        backgroundColor: 'rgba(184,136,92,0.08)',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 4,
+        pointBackgroundColor: '#B8885C',
+        pointBorderColor: '#FFFFFF',
+        pointBorderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { font: { family: 'Instrument Sans', size: 11 }, color: '#B0AAA0' },
+        },
+        y: {
+          beginAtZero: true,
+          grid: { color: 'rgba(0,0,0,0.04)' },
+          ticks: { font: { family: 'Instrument Sans', size: 11 }, color: '#B0AAA0', precision: 0 },
+        },
+      },
+    }
+  });
+}
+
+function renderUsageChart(months, usageByMonth) {
+  const ctx = document.getElementById('chart-usage').getContext('2d');
+  if (chartUsage) chartUsage.destroy();
+
+  const labels = months.map(m => {
+    const [y, mo] = m.split('-');
+    return new Date(y, mo - 1).toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+  });
+
+  chartUsage = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Generations',
+          data: months.map(m => usageByMonth[m].planGenerations),
+          backgroundColor: '#2E2B26',
+          borderRadius: 6,
+          barPercentage: 0.7,
+        },
+        {
+          label: 'Swaps',
+          data: months.map(m => usageByMonth[m].swaps),
+          backgroundColor: '#B8885C',
+          borderRadius: 6,
+          barPercentage: 0.7,
+        },
+        {
+          label: 'Revisions',
+          data: months.map(m => usageByMonth[m].revisions),
+          backgroundColor: '#D4CFC7',
+          borderRadius: 6,
+          barPercentage: 0.7,
+        },
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            font: { family: 'Instrument Sans', size: 12 },
+            color: '#8A857C',
+            usePointStyle: true,
+            pointStyle: 'circle',
+            padding: 16,
+          },
+        },
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { font: { family: 'Instrument Sans', size: 11 }, color: '#B0AAA0' },
+        },
+        y: {
+          beginAtZero: true,
+          grid: { color: 'rgba(0,0,0,0.04)' },
+          ticks: { font: { family: 'Instrument Sans', size: 11 }, color: '#B0AAA0', precision: 0 },
+        },
+      },
+    }
+  });
+}
+
+function renderExpiryList(expirations) {
+  const el = document.getElementById('admin-expiry-list');
+  if (expirations.length === 0) {
+    el.innerHTML = '<p class="admin-empty-state">No upcoming expirations in the next 30 days</p>';
+    return;
+  }
+  el.innerHTML = expirations.map(exp =>
+    '<div class="admin-expiry-item">' +
+      '<span class="admin-expiry-email">' + exp.email + '</span>' +
+      '<span class="admin-expiry-date">' +
+        exp.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
+      '</span>' +
+    '</div>'
+  ).join('');
+}
+
+function renderRecentUsersTable(recentUsers, subscriptions) {
+  const tbody = document.getElementById('admin-users-tbody');
+  const subMap = {};
+  subscriptions.forEach(s => { subMap[s.uid] = s; });
+
+  tbody.innerHTML = recentUsers.map(user => {
+    const sub = subMap[user.uid];
+    const isActive = sub && (sub.isActive === true || sub.status === 'active');
+    const isExpired = sub && (sub.isActive === false || (sub.status && sub.status !== 'active'));
+    let statusBadge;
+    if (isActive) {
+      statusBadge = '<span class="sub-badge active">Premium</span>';
+    } else if (isExpired) {
+      statusBadge = '<span class="sub-badge expired">Expired</span>';
+    } else {
+      statusBadge = '<span class="sub-badge free">Free</span>';
+    }
+    const platform = sub ? (sub.platform === 'ios' ? 'iOS' : sub.platform === 'android' ? 'Android' : '\u2014') : '\u2014';
+    let joinDate = '\u2014';
+    if (user.createdAt) {
+      const d = user.createdAt.toDate ? user.createdAt.toDate() : new Date(user.createdAt);
+      joinDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+    return '<tr>' +
+      '<td>' + (user.displayName || '\u2014') + '</td>' +
+      '<td class="email-cell">' + (user.email || '\u2014') + '</td>' +
+      '<td>' + statusBadge + '</td>' +
+      '<td>' + platform + '</td>' +
+      '<td>' + joinDate + '</td>' +
+    '</tr>';
+  }).join('');
+}
 
 // ========== SCROLL ANIMATIONS ==========
 const observer = new IntersectionObserver((entries) => {
