@@ -2806,7 +2806,7 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js';
 import { getAuth, signInWithPopup, GoogleAuthProvider, OAuthProvider, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
-import { getFirestore, doc, getDoc, collection, getDocs, query, orderBy, limit, getCountFromServer } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
+import { getFirestore, doc, getDoc, collection, getDocs, collectionGroup, query, orderBy, limit, getCountFromServer } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
 
 // ========== FIREBASE SETUP ==========
 const firebaseConfig = {
@@ -3077,23 +3077,67 @@ async function loadAdminData() {
   refreshBtn.disabled = true;
 
   try {
-    // Fetch all user documents
-    const usersSnap = await getDocs(collection(db, 'users'));
+    // Use collection group queries (matches Firestore security rules)
+    // Fetch all profiles, subscriptions, and usage in parallel
+    const [profilesSnap, subscriptionsSnap, usageSnap] = await Promise.all([
+      getDocs(collectionGroup(db, 'profile')),
+      getDocs(collectionGroup(db, 'subscription')),
+      getDocs(collectionGroup(db, 'usage')),
+    ]);
+
+    // Build user profiles map (uid -> profile data)
     const users = [];
-    usersSnap.forEach(docSnap => {
-      users.push({ uid: docSnap.id, ...docSnap.data() });
+    const userMap = {};
+    profilesSnap.forEach(docSnap => {
+      // Path: users/{uid}/profile/{docId} — extract uid from parent
+      const pathParts = docSnap.ref.path.split('/');
+      const uid = pathParts[1];
+      const data = { uid, ...docSnap.data() };
+      users.push(data);
+      userMap[uid] = data;
     });
 
-    // Fetch subscription status for each user
+    // Build subscriptions list
     const subscriptions = [];
-    await Promise.all(users.map(async (user) => {
-      try {
-        const subDoc = await getDoc(doc(db, 'users', user.uid, 'subscription', 'status'));
-        if (subDoc.exists()) {
-          subscriptions.push({ uid: user.uid, email: user.email, displayName: user.displayName, ...subDoc.data() });
-        }
-      } catch (e) { /* skip */ }
-    }));
+    subscriptionsSnap.forEach(docSnap => {
+      const pathParts = docSnap.ref.path.split('/');
+      const uid = pathParts[1];
+      const profile = userMap[uid] || {};
+      subscriptions.push({ uid, email: profile.email, displayName: profile.displayName, ...docSnap.data() });
+    });
+
+    // Build usage map (monthKey -> aggregated totals)
+    const now = new Date();
+    const currentMonthKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+    let totalPlanGens = 0, totalSwaps = 0, totalRevisions = 0;
+
+    const last6Months = [];
+    const usageByMonth = {};
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+      last6Months.push(key);
+      usageByMonth[key] = { planGenerations: 0, swaps: 0, revisions: 0 };
+    }
+
+    usageSnap.forEach(docSnap => {
+      const monthKey = docSnap.id; // doc ID is the month key e.g. "2026-03"
+      const d = docSnap.data();
+
+      // Current month totals
+      if (monthKey === currentMonthKey) {
+        totalPlanGens += d.planGenerations || 0;
+        totalSwaps += d.swaps || 0;
+        totalRevisions += d.revisions || 0;
+      }
+
+      // 6-month trend
+      if (usageByMonth[monthKey]) {
+        usageByMonth[monthKey].planGenerations += d.planGenerations || 0;
+        usageByMonth[monthKey].swaps += d.swaps || 0;
+        usageByMonth[monthKey].revisions += d.revisions || 0;
+      }
+    });
 
     // Aggregate data
     const totalUsers = users.length;
@@ -3128,7 +3172,6 @@ async function loadAdminData() {
     const signupValues = sortedMonths.map(m => signupsByMonth[m]);
 
     // Upcoming expirations (next 30 days)
-    const now = new Date();
     const thirtyDaysOut = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
     const upcomingExpirations = subscriptions
       .filter(s => {
@@ -3142,44 +3185,6 @@ async function loadAdminData() {
         return { email: s.email || 'Unknown', date: exp.toDate ? exp.toDate() : new Date(exp) };
       })
       .sort((a, b) => a.date - b.date);
-
-    // Usage metrics — current month
-    const currentMonthKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
-    let totalPlanGens = 0, totalSwaps = 0, totalRevisions = 0;
-    await Promise.all(users.map(async (user) => {
-      try {
-        const usageDoc = await getDoc(doc(db, 'users', user.uid, 'usage', currentMonthKey));
-        if (usageDoc.exists()) {
-          const d = usageDoc.data();
-          totalPlanGens += d.planGenerations || 0;
-          totalSwaps += d.swaps || 0;
-          totalRevisions += d.revisions || 0;
-        }
-      } catch (e) { /* skip */ }
-    }));
-
-    // Usage trends — last 6 months
-    const last6Months = [];
-    const usageByMonth = {};
-    for (let i = 5; i >= 0; i--) {
-      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
-      last6Months.push(key);
-      usageByMonth[key] = { planGenerations: 0, swaps: 0, revisions: 0 };
-    }
-    await Promise.all(users.map(async (user) => {
-      for (const monthKey of last6Months) {
-        try {
-          const usageDoc = await getDoc(doc(db, 'users', user.uid, 'usage', monthKey));
-          if (usageDoc.exists()) {
-            const d = usageDoc.data();
-            usageByMonth[monthKey].planGenerations += d.planGenerations || 0;
-            usageByMonth[monthKey].swaps += d.swaps || 0;
-            usageByMonth[monthKey].revisions += d.revisions || 0;
-          }
-        } catch (e) { /* skip */ }
-      }
-    }));
 
     // Recent users (last 20)
     const recentUsers = users
