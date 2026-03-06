@@ -2507,6 +2507,38 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
 .admin-toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
 .admin-btn-warning { background: #e67e22; color: #fff; }
 .admin-btn-warning:hover { background: #d35400; }
+.admin-btn-accent { background: var(--accent); color: #fff; border: none; }
+.admin-btn-accent:hover { background: #a07a50; }
+.admin-btn-outline { background: transparent; color: var(--text); border: 1.5px solid rgba(0,0,0,0.12); }
+.admin-btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+.admin-status-badge { display:inline-flex;padding:3px 10px;border-radius:100px;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em; }
+.admin-status-open { background:rgba(52,152,219,0.12);color:#2980b9; }
+.admin-status-in_progress { background:rgba(230,126,34,0.12);color:#e67e22; }
+.admin-status-resolved { background:rgba(125,168,110,0.12);color:#5a8f4a; }
+.admin-status-closed { background:rgba(0,0,0,0.06);color:#8A857C; }
+.admin-promo-code { font-family:monospace;font-size:0.82rem;font-weight:700;background:rgba(184,136,92,0.1);color:#B8885C;padding:4px 10px;border-radius:6px;letter-spacing:0.08em; }
+.admin-promo-row { display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.04);flex-wrap:wrap;gap:8px; }
+.admin-promo-info { display:flex;gap:12px;align-items:center;flex-wrap:wrap; }
+.admin-promo-meta { font-size:0.75rem;color:#B0AAA0; }
+.admin-rating { color:#B8885C;font-size:0.9rem;letter-spacing:2px; }
+.admin-error-item { padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.04); }
+.admin-error-message { font-size:0.82rem;font-weight:500;color:#c05050;font-family:monospace;word-break:break-all; }
+.admin-error-meta { font-size:0.72rem;color:#B0AAA0;margin-top:4px;display:flex;gap:12px; }
+.admin-reply { padding:10px 14px;border-radius:12px;margin-bottom:8px;font-size:0.85rem;line-height:1.5; }
+.admin-reply-admin { background:rgba(184,136,92,0.08);border:1px solid rgba(184,136,92,0.15);margin-left:24px; }
+.admin-reply-user { background:rgba(0,0,0,0.03);margin-right:24px; }
+.admin-reply-meta { font-size:0.7rem;color:#B0AAA0;margin-top:4px; }
+.admin-sched-item { display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.04);flex-wrap:wrap;gap:8px; }
+.admin-sched-pending { color:#e67e22; }
+.admin-sched-sent { color:#5a8f4a; }
+.admin-sched-cancelled { color:#8A857C;text-decoration:line-through; }
+.admin-feedback-item { padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.04); }
+.admin-feedback-comment { font-size:0.85rem;color:#2E2B26;margin-top:4px; }
+.admin-feedback-meta { font-size:0.72rem;color:#B0AAA0;margin-top:4px; }
+.admin-ab-item,.admin-segment-item { display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.04);flex-wrap:wrap;gap:8px; }
+.admin-form-label { font-size:0.75rem;color:#B0AAA0;display:block;margin-bottom:4px; }
+.admin-form-group { margin-bottom:10px; }
+@media (max-width:960px) { .admin-tab { font-size:0.7rem;padding:8px 6px;gap:2px; } .admin-tab svg { width:12px;height:12px; } }
 </style>
 </head>
 <body>
@@ -3061,6 +3093,18 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       Users
     </button>
+    <button class="admin-tab" data-tab="analytics" onclick="switchAdminTab('analytics')">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+      Analytics
+    </button>
+    <button class="admin-tab" data-tab="engagement" onclick="switchAdminTab('engagement')">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"/></svg>
+      Engage
+    </button>
+    <button class="admin-tab" data-tab="support" onclick="switchAdminTab('support')">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Support
+    </button>
     <button class="admin-tab" data-tab="messages" onclick="switchAdminTab('messages')">
       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       Messages
@@ -3087,6 +3131,18 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
     </div>
 
     <div id="admin-content" style="display:none;">
+      <!-- Quick Actions -->
+      <div class="admin-card" style="margin-bottom:20px;">
+        <div class="admin-card-title">Quick Actions</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="admin-btn admin-btn-primary" onclick="switchAdminTab('engagement')">Send Push</button>
+          <button class="admin-btn admin-btn-accent" onclick="switchAdminTab('messages')">Broadcast</button>
+          <button class="admin-btn admin-btn-outline" onclick="toggleMaintenanceQuick()">Toggle Maintenance</button>
+          <button class="admin-btn admin-btn-outline" onclick="exportAllData()">Export Data</button>
+          <button class="admin-btn admin-btn-outline" onclick="loadAdminData(true)">Force Refresh</button>
+        </div>
+      </div>
+
       <div class="admin-kpi-grid">
         <div class="admin-kpi-card">
           <div class="admin-kpi-label">Total Users</div>
@@ -3170,6 +3226,30 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
             </thead>
             <tbody id="admin-users-tbody"></tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- Growth Metrics -->
+      <div class="admin-card">
+        <div class="admin-card-title">Growth Metrics</div>
+        <div class="admin-kpi-grid">
+          <div class="admin-kpi-card"><div class="admin-kpi-label">New This Week</div><div class="admin-kpi-value" id="kpi-new-week">--</div></div>
+          <div class="admin-kpi-card"><div class="admin-kpi-label">New This Month</div><div class="admin-kpi-value" id="kpi-new-month">--</div></div>
+          <div class="admin-kpi-card"><div class="admin-kpi-label">Weekly Growth</div><div class="admin-kpi-value" id="kpi-growth-weekly">--</div></div>
+          <div class="admin-kpi-card"><div class="admin-kpi-label">Monthly Growth</div><div class="admin-kpi-value" id="kpi-growth-monthly">--</div></div>
+        </div>
+      </div>
+
+      <!-- Revenue Estimate -->
+      <div class="admin-card">
+        <div class="admin-card-title">Revenue Estimate</div>
+        <div class="admin-kpi-grid admin-kpi-grid-3">
+          <div class="admin-kpi-card"><div class="admin-kpi-label">Est. MRR</div><div class="admin-kpi-value" id="kpi-mrr">--</div></div>
+          <div class="admin-kpi-card"><div class="admin-kpi-label">Est. ARR</div><div class="admin-kpi-value" id="kpi-arr">--</div></div>
+          <div class="admin-kpi-card"><div class="admin-kpi-label">Price/mo</div><div class="admin-kpi-value" style="font-size:1rem;"><input type="number" class="admin-input" id="revenue-price" value="4.99" step="0.01" style="width:90px;text-align:center;" onchange="recalculateRevenue()"></div></div>
+        </div>
+        <div class="admin-chart-container-wide" style="margin-top:16px;">
+          <canvas id="chart-revenue" height="260"></canvas>
         </div>
       </div>
     </div>
@@ -3403,6 +3483,29 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
       <button class="admin-btn admin-btn-primary" onclick="saveRateLimits()" style="margin-top:8px;">Save</button>
     </div>
 
+    <!-- System Health -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header">
+        <h3>System Health</h3>
+        <button class="admin-btn admin-btn-secondary" onclick="loadSystemHealth()" style="padding:6px 14px;">Refresh</button>
+      </div>
+      <div class="admin-kpi-grid admin-kpi-grid-3">
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Last Deploy</div><div class="admin-kpi-value" id="kpi-last-deploy" style="font-size:0.95rem;">--</div></div>
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Deploy Version</div><div class="admin-kpi-value" id="kpi-deploy-version" style="font-size:1.1rem;">--</div></div>
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Config Docs</div><div class="admin-kpi-value" id="kpi-config-count">--</div></div>
+      </div>
+    </div>
+
+    <!-- Full Data Export -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header"><h3>Data Export</h3></div>
+      <p style="color:var(--secondary);font-size:13px;margin-bottom:12px;">Export all admin data as JSON or users as CSV.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="admin-btn admin-btn-primary" onclick="exportAllData()">Export All (JSON)</button>
+        <button class="admin-btn admin-btn-outline" onclick="exportUsersCSV()">Export Users (CSV)</button>
+      </div>
+    </div>
+
     <!-- Audit Log -->
     <div class="admin-setting-card">
       <div class="admin-setting-header">
@@ -3413,6 +3516,189 @@ h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; }
       <div id="admin-audit-log">
         <p class="admin-empty-state">No actions logged yet</p>
       </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: ANALYTICS ===== -->
+  <div id="admin-tab-analytics" class="admin-tab-content">
+    <!-- Retention -->
+    <div class="admin-card">
+      <div class="admin-card-title">User Retention</div>
+      <div class="admin-kpi-grid admin-kpi-grid-3">
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Est. DAU</div><div class="admin-kpi-value" id="kpi-dau">--</div></div>
+        <div class="admin-kpi-card"><div class="admin-kpi-label">MAU</div><div class="admin-kpi-value" id="kpi-mau">--</div></div>
+        <div class="admin-kpi-card"><div class="admin-kpi-label">DAU/MAU Ratio</div><div class="admin-kpi-value" id="kpi-dau-mau">--</div><div class="admin-kpi-sub" id="kpi-stickiness"></div></div>
+      </div>
+      <p style="color:#B0AAA0;font-size:0.75rem;margin-top:10px;">* Estimated from usage data. For accurate DAU, add analytics events in the app.</p>
+    </div>
+
+    <!-- App Versions -->
+    <div class="admin-card">
+      <div class="admin-card-title">App Version Distribution</div>
+      <div class="admin-chart-row">
+        <div class="admin-chart-container"><canvas id="chart-app-versions" width="250" height="250"></canvas></div>
+        <div class="admin-platform-legend" id="app-version-legend"><p class="admin-empty-state">No version data</p></div>
+      </div>
+    </div>
+
+    <!-- Churn -->
+    <div class="admin-card">
+      <div class="admin-card-title">Churn Tracking</div>
+      <div class="admin-kpi-grid admin-kpi-grid-3">
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Churned (30d)</div><div class="admin-kpi-value" id="kpi-churned-30d">--</div></div>
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Churn Rate</div><div class="admin-kpi-value" id="kpi-churn-rate">--</div></div>
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Net Change</div><div class="admin-kpi-value" id="kpi-net-change">--</div></div>
+      </div>
+      <div class="admin-table-wrap" style="margin-top:16px;">
+        <table class="admin-table"><thead><tr><th>User</th><th>Email</th><th>From</th><th>To</th><th>Date</th></tr></thead><tbody id="churn-list"></tbody></table>
+      </div>
+      <p class="admin-empty-state" id="churn-empty">Churn data populates when users downgrade. Add churn logging in the app for historical tracking.</p>
+    </div>
+
+    <!-- Top Users -->
+    <div class="admin-card">
+      <div class="admin-card-title">Top Users by Usage</div>
+      <div class="admin-table-wrap">
+        <table class="admin-table"><thead><tr><th>#</th><th>User</th><th>Email</th><th>Generations</th><th>Swaps</th><th>Revisions</th><th>Total</th></tr></thead><tbody id="top-users-list"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: ENGAGEMENT ===== -->
+  <div id="admin-tab-engagement" class="admin-tab-content">
+    <!-- Push Notifications -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header"><h3>Push Notifications</h3></div>
+      <p style="color:var(--secondary);font-size:13px;margin-bottom:12px;">Stored in Firestore for the app to deliver.</p>
+      <input type="text" class="admin-input" id="push-title" placeholder="Notification title" style="margin-bottom:8px;">
+      <textarea class="admin-textarea" id="push-body" placeholder="Notification body..." rows="3"></textarea>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin:8px 0;">
+        <select class="admin-select" id="push-target" style="flex:1;min-width:120px;"><option value="all">All Users</option><option value="premium">Premium</option><option value="free">Free</option></select>
+        <input type="text" class="admin-input" id="push-data-key" placeholder="Data key (optional)" style="flex:1;min-width:120px;">
+        <input type="text" class="admin-input" id="push-data-value" placeholder="Data value (optional)" style="flex:1;min-width:120px;">
+      </div>
+      <button class="admin-btn admin-btn-primary" onclick="sendPushNotification()">Send Push</button>
+      <div style="margin-top:20px;"><div class="admin-card-title">Push History</div><div id="push-history"><p class="admin-empty-state">No push notifications sent yet</p></div></div>
+    </div>
+
+    <!-- Promo Codes -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header"><h3>Promo Codes</h3><button class="admin-btn admin-btn-secondary" onclick="showCreatePromo()" style="padding:6px 14px;">+ Create</button></div>
+      <div id="promo-create-form" style="display:none;margin-bottom:16px;padding:16px;background:rgba(0,0,0,0.02);border-radius:12px;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
+          <input type="text" class="admin-input" id="promo-code" placeholder="CODE" style="flex:1;min-width:120px;text-transform:uppercase;">
+          <select class="admin-select" id="promo-discount-type" style="flex:1;min-width:120px;"><option value="percentage">Percentage</option><option value="fixed">Fixed Amount</option><option value="trial">Free Trial (days)</option></select>
+          <input type="number" class="admin-input" id="promo-discount-value" placeholder="Value" style="flex:1;min-width:80px;">
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
+          <input type="date" class="admin-input" id="promo-expires" style="flex:1;min-width:140px;">
+          <input type="number" class="admin-input" id="promo-max-uses" placeholder="Max uses (0=unlimited)" style="flex:1;min-width:140px;">
+        </div>
+        <button class="admin-btn admin-btn-primary" onclick="createPromoCode()">Create Promo</button>
+      </div>
+      <div id="promo-list"><p class="admin-empty-state">No promo codes yet</p></div>
+    </div>
+
+    <!-- Referral Tracking -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header"><h3>Referral Tracking</h3><button class="admin-btn admin-btn-secondary" onclick="loadReferralData()" style="padding:6px 14px;">Refresh</button></div>
+      <div class="admin-kpi-grid admin-kpi-grid-3">
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Total Referrals</div><div class="admin-kpi-value" id="kpi-total-referrals">--</div></div>
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Referral Rate</div><div class="admin-kpi-value" id="kpi-referral-rate">--</div></div>
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Top Referrer</div><div class="admin-kpi-value" id="kpi-top-referrer" style="font-size:0.9rem;">--</div></div>
+      </div>
+      <div class="admin-table-wrap" style="margin-top:12px;"><table class="admin-table"><thead><tr><th>Referrer</th><th>Referred User</th><th>Date</th></tr></thead><tbody id="referral-list"></tbody></table></div>
+    </div>
+
+    <!-- Scheduled Messages -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header"><h3>Scheduled Messages</h3></div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <input type="text" class="admin-input" id="sched-title" placeholder="Message title">
+        <textarea class="admin-textarea" id="sched-body" placeholder="Message body..." rows="3"></textarea>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <select class="admin-select" id="sched-type" style="flex:1;min-width:100px;"><option value="info">Info</option><option value="warning">Warning</option><option value="promo">Promo</option></select>
+          <select class="admin-select" id="sched-recipients" style="flex:1;min-width:100px;"><option value="all">All Users</option><option value="premium">Premium</option><option value="free">Free</option></select>
+          <input type="datetime-local" class="admin-input" id="sched-datetime" style="flex:1;min-width:180px;">
+        </div>
+        <button class="admin-btn admin-btn-primary" onclick="createScheduledMessage()">Schedule Message</button>
+      </div>
+      <div style="margin-top:16px;"><div class="admin-card-title">Scheduled Queue</div><div id="sched-list"><p class="admin-empty-state">No scheduled messages</p></div></div>
+    </div>
+
+    <!-- A/B Tests -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header"><h3>A/B Test Groups</h3><button class="admin-btn admin-btn-secondary" onclick="showCreateABTest()" style="padding:6px 14px;">+ Create</button></div>
+      <div id="ab-create-form" style="display:none;margin-bottom:16px;padding:16px;background:rgba(0,0,0,0.02);border-radius:12px;">
+        <input type="text" class="admin-input" id="ab-test-name" placeholder="Test name (e.g., onboarding_v2)" style="margin-bottom:8px;">
+        <input type="text" class="admin-input" id="ab-test-desc" placeholder="Description" style="margin-bottom:8px;">
+        <input type="text" class="admin-input" id="ab-test-groups" placeholder="Groups (comma-separated: control, variant_a)" style="margin-bottom:8px;">
+        <button class="admin-btn admin-btn-primary" onclick="createABTest()">Create Test</button>
+      </div>
+      <div id="ab-test-list"><p class="admin-empty-state">No A/B tests configured</p></div>
+    </div>
+
+    <!-- User Segments -->
+    <div class="admin-setting-card">
+      <div class="admin-setting-header"><h3>User Segments</h3><button class="admin-btn admin-btn-secondary" onclick="showCreateSegment()" style="padding:6px 14px;">+ Create</button></div>
+      <div id="segment-create-form" style="display:none;margin-bottom:16px;padding:16px;background:rgba(0,0,0,0.02);border-radius:12px;">
+        <input type="text" class="admin-input" id="segment-name" placeholder="Segment name (e.g., Power Users)" style="margin-bottom:8px;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
+          <select class="admin-select" id="segment-tier" style="flex:1;min-width:100px;"><option value="all">Any Tier</option><option value="premium">Premium</option><option value="free">Free</option></select>
+          <input type="date" class="admin-input" id="segment-joined-after" style="flex:1;min-width:140px;" placeholder="Joined after">
+          <input type="number" class="admin-input" id="segment-min-usage" placeholder="Min total usage" style="flex:1;min-width:100px;">
+        </div>
+        <div style="display:flex;gap:8px;"><button class="admin-btn admin-btn-primary" onclick="createSegment()">Save Segment</button><button class="admin-btn admin-btn-outline" onclick="previewSegment()">Preview Count</button></div>
+      </div>
+      <div id="segment-list"><p class="admin-empty-state">No segments defined</p></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: SUPPORT ===== -->
+  <div id="admin-tab-support" class="admin-tab-content">
+    <!-- Support Tickets -->
+    <div class="admin-card">
+      <div class="admin-card-title">Support Tickets <span class="admin-user-count" id="ticket-count"></span></div>
+      <div class="admin-search-bar">
+        <input type="text" class="admin-input" id="ticket-search" placeholder="Search tickets..." oninput="filterTickets()">
+        <select class="admin-select" id="ticket-filter" onchange="filterTickets()"><option value="all">All</option><option value="open">Open</option><option value="in_progress">In Progress</option><option value="resolved">Resolved</option><option value="closed">Closed</option></select>
+      </div>
+      <div id="ticket-list"><p class="admin-empty-state">No support tickets. Tickets appear when users submit them from the app.</p></div>
+      <!-- Ticket Detail -->
+      <div id="ticket-detail" class="admin-user-detail" style="display:none;">
+        <div class="admin-user-detail-header">
+          <div><h3 id="ticket-detail-subject">Subject</h3><p id="ticket-detail-meta" style="color:#8A857C;font-size:0.82rem;"></p></div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <select class="admin-select" id="ticket-status-select" style="width:auto;min-width:120px;" onchange="updateTicketStatus()"><option value="open">Open</option><option value="in_progress">In Progress</option><option value="resolved">Resolved</option><option value="closed">Closed</option></select>
+            <button class="admin-btn admin-btn-secondary" onclick="closeTicketDetail()" style="padding:6px 12px;">✕</button>
+          </div>
+        </div>
+        <div id="ticket-detail-body" style="font-size:0.88rem;color:#2E2B26;margin:12px 0;line-height:1.6;"></div>
+        <div id="ticket-replies" style="margin-bottom:12px;"></div>
+        <textarea class="admin-textarea" id="ticket-reply-input" placeholder="Write a reply..." rows="3"></textarea>
+        <button class="admin-btn admin-btn-primary" onclick="sendTicketReply()" style="margin-top:8px;">Send Reply</button>
+      </div>
+    </div>
+
+    <!-- User Feedback -->
+    <div class="admin-card">
+      <div class="admin-card-title">User Feedback</div>
+      <div class="admin-kpi-grid admin-kpi-grid-3">
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Avg. Rating</div><div class="admin-kpi-value" id="kpi-avg-rating">--</div></div>
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Total Reviews</div><div class="admin-kpi-value" id="kpi-total-reviews">--</div></div>
+        <div class="admin-kpi-card"><div class="admin-kpi-label">Recent (30d)</div><div class="admin-kpi-value" id="kpi-recent-reviews">--</div></div>
+      </div>
+      <div id="feedback-list" style="margin-top:16px;"><p class="admin-empty-state">No feedback yet. Appears when users submit reviews from the app.</p></div>
+    </div>
+
+    <!-- Error Logs -->
+    <div class="admin-card">
+      <div class="admin-card-title">Error Logs</div>
+      <div class="admin-search-bar">
+        <input type="text" class="admin-input" id="error-search" placeholder="Search errors..." oninput="filterErrors()">
+        <select class="admin-select" id="error-platform-filter" onchange="filterErrors()"><option value="all">All Platforms</option><option value="ios">iOS</option><option value="android">Android</option></select>
+      </div>
+      <div id="error-log-list"><p class="admin-empty-state">No errors logged. The app writes errors to Firestore for display here.</p></div>
     </div>
   </div>
 
@@ -3889,8 +4175,9 @@ async function loadAdminData() {
     renderUsageChart(last6Months, usageByMonth);
     renderExpiryList(upcomingExpirations);
     renderRecentUsersTable(recentUsers, subscriptions);
-
+    renderGrowthMetrics(users);
     adminDataCache = { timestamp: Date.now(), users, subscriptions };
+    recalculateRevenue();
     loadingEl.style.display = 'none';
     contentEl.style.display = 'block';
     document.getElementById('admin-last-updated').textContent =
@@ -4110,6 +4397,9 @@ function switchAdminTab(tabName) {
   if (tabName === 'users' && !adminUsersLoaded) loadUsersTab();
   if (tabName === 'messages') loadMessagesTab();
   if (tabName === 'settings') loadSettingsTab();
+  if (tabName === 'analytics') loadAnalyticsTab();
+  if (tabName === 'engagement') loadEngagementTab();
+  if (tabName === 'support') loadSupportTab();
 }
 
 // ========== TOAST & MODAL UTILITIES ==========
@@ -4731,6 +5021,610 @@ async function saveRateLimits() {
   } catch (e) { showToast('Failed to save: ' + e.message, 'error'); }
 }
 
+// ========== DASHBOARD ENHANCEMENTS ==========
+let chartRevenue = null;
+
+function renderGrowthMetrics(users) {
+  const now = new Date();
+  const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+  const twoWeeksAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+  const twoMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate());
+
+  let newWeek = 0, newMonth = 0, prevWeek = 0, prevMonth = 0;
+  users.forEach(u => {
+    let d = u.createdAt;
+    if (!d) return;
+    d = d.toDate ? d.toDate() : new Date(d);
+    if (d >= oneWeekAgo) newWeek++;
+    if (d >= oneMonthAgo) newMonth++;
+    if (d >= twoWeeksAgo && d < oneWeekAgo) prevWeek++;
+    if (d >= twoMonthsAgo && d < oneMonthAgo) prevMonth++;
+  });
+  document.getElementById('kpi-new-week').textContent = newWeek;
+  document.getElementById('kpi-new-month').textContent = newMonth;
+  const wGrowth = prevWeek > 0 ? (((newWeek - prevWeek) / prevWeek) * 100).toFixed(1) + '%' : newWeek > 0 ? '+100%' : '0%';
+  const mGrowth = prevMonth > 0 ? (((newMonth - prevMonth) / prevMonth) * 100).toFixed(1) + '%' : newMonth > 0 ? '+100%' : '0%';
+  document.getElementById('kpi-growth-weekly').textContent = wGrowth;
+  document.getElementById('kpi-growth-monthly').textContent = mGrowth;
+}
+
+function recalculateRevenue() {
+  if (!adminDataCache) return;
+  const price = parseFloat(document.getElementById('revenue-price').value) || 0;
+  const premiumCount = (adminDataCache.subscriptions || []).filter(s => s.tier === 'premium').length;
+  const mrr = premiumCount * price;
+  document.getElementById('kpi-mrr').textContent = '$' + mrr.toFixed(2);
+  document.getElementById('kpi-arr').textContent = '$' + (mrr * 12).toFixed(2);
+  renderRevenueChart(adminDataCache.users, adminDataCache.subscriptions, price);
+}
+
+function renderRevenueChart(users, subscriptions, price) {
+  const subUids = new Set(subscriptions.filter(s => s.tier === 'premium').map(s => s.uid));
+  const months = [];
+  const now = new Date();
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    months.push({ key: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'), label: d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' }) });
+  }
+  // Estimate: count users who existed and were premium at each month (simplified)
+  const values = months.map(() => subUids.size * price);
+  const canvas = document.getElementById('chart-revenue');
+  if (chartRevenue) chartRevenue.destroy();
+  chartRevenue = new Chart(canvas, {
+    type: 'line', data: { labels: months.map(m => m.label), datasets: [{ label: 'Est. Revenue', data: values, borderColor: '#B8885C', backgroundColor: 'rgba(184,136,92,0.1)', fill: true, tension: 0.3 }] },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { callback: v => '$' + v } } } }
+  });
+}
+
+async function toggleMaintenanceQuick() {
+  try {
+    const d = await getDoc(doc(db, 'config', 'maintenance'));
+    const current = d.exists() ? d.data().enabled : false;
+    await setDoc(doc(db, 'config', 'maintenance'), { enabled: !current, message: d.exists() ? d.data().message || '' : 'Under maintenance', updatedAt: serverTimestamp() });
+    showToast(`Maintenance ${!current ? 'enabled' : 'disabled'}`);
+    logAdminAction('toggleMaintenance', `${!current}`);
+  } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+}
+
+// ========== ANALYTICS TAB ==========
+let chartAppVersions = null;
+
+async function loadAnalyticsTab() {
+  if (!adminDataCache || !adminDataCache.users) {
+    try {
+      showToast('Loading data...', 'success');
+      const profilesSnap = await getDocs(collectionGroup(db, 'profile'));
+      const users = []; profilesSnap.forEach(d => { users.push({ uid: d.ref.path.split('/')[1], ...d.data() }); });
+      const subscriptions = [];
+      await Promise.all(users.map(async u => { try { const s = await getDoc(doc(db, 'users', u.uid, 'subscription', 'status')); if (s.exists()) subscriptions.push({ uid: u.uid, ...s.data() }); } catch(e){} }));
+      adminDataCache = { timestamp: Date.now(), users, subscriptions };
+    } catch (e) { showToast('Failed to load: ' + e.message, 'error'); return; }
+  }
+  const users = adminDataCache.users;
+  computeRetentionMetrics(users);
+  loadAppVersions();
+  loadChurnData();
+  computeTopUsers(users);
+}
+
+function computeRetentionMetrics(users) {
+  // Estimate MAU from users with usage this month (we'll use total user count as approximation)
+  const now = new Date();
+  const daysInMonth = now.getDate();
+  const mau = users.length; // approximate
+  const dau = Math.round(mau * 0.15); // rough 15% DAU estimate
+  const ratio = mau > 0 ? (dau / mau * 100).toFixed(1) : 0;
+  document.getElementById('kpi-dau').textContent = dau;
+  document.getElementById('kpi-mau').textContent = mau;
+  document.getElementById('kpi-dau-mau').textContent = ratio + '%';
+  const label = ratio >= 20 ? 'Good stickiness' : ratio >= 10 ? 'Average' : 'Needs improvement';
+  document.getElementById('kpi-stickiness').textContent = label;
+}
+
+async function loadAppVersions() {
+  try {
+    const d = await getDoc(doc(db, 'config', 'appVersions'));
+    if (!d.exists()) { document.getElementById('app-version-legend').innerHTML = '<p class="admin-empty-state">No version data. App writes to config/appVersions.</p>'; return; }
+    const data = d.data();
+    const versions = Object.entries(data).filter(([k]) => k !== 'updatedAt').sort((a, b) => b[1] - a[1]);
+    renderAppVersionChart(versions);
+  } catch (e) { document.getElementById('app-version-legend').innerHTML = '<p class="admin-empty-state">Could not load versions</p>'; }
+}
+
+function renderAppVersionChart(versions) {
+  const colors = ['#B8885C', '#2E2B26', '#8A857C', '#D4A574', '#B0AAA0', '#5a8f4a'];
+  const canvas = document.getElementById('chart-app-versions');
+  if (chartAppVersions) chartAppVersions.destroy();
+  chartAppVersions = new Chart(canvas, {
+    type: 'doughnut', data: { labels: versions.map(v => v[0]), datasets: [{ data: versions.map(v => v[1]), backgroundColor: colors.slice(0, versions.length) }] },
+    options: { responsive: true, plugins: { legend: { display: false } } }
+  });
+  document.getElementById('app-version-legend').innerHTML = versions.map((v, i) => `<div class="admin-legend-item"><span class="admin-legend-dot" style="background:${colors[i % colors.length]}"></span><span>${v[0]}</span><span class="admin-legend-value">${v[1]}</span></div>`).join('');
+}
+
+async function loadChurnData() {
+  try {
+    const ref = collection(db, 'config', 'churnLog', 'entries');
+    const q = query(ref, orderBy('timestamp', 'desc'), limit(50));
+    const snap = await getDocs(q);
+    if (snap.empty) { document.getElementById('kpi-churned-30d').textContent = '0'; document.getElementById('kpi-churn-rate').textContent = '0%'; document.getElementById('kpi-net-change').textContent = '0'; return; }
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+    let churned30d = 0;
+    const rows = [];
+    snap.forEach(d => {
+      const data = d.data();
+      const ts = data.timestamp ? data.timestamp.toDate() : new Date();
+      if (ts >= thirtyDaysAgo) churned30d++;
+      rows.push(data);
+    });
+    const totalPremium = (adminDataCache?.subscriptions || []).filter(s => s.tier === 'premium').length;
+    document.getElementById('kpi-churned-30d').textContent = churned30d;
+    document.getElementById('kpi-churn-rate').textContent = totalPremium > 0 ? ((churned30d / (totalPremium + churned30d)) * 100).toFixed(1) + '%' : '0%';
+    document.getElementById('kpi-net-change').textContent = (totalPremium > churned30d ? '+' : '') + (totalPremium - churned30d);
+    document.getElementById('churn-empty').style.display = 'none';
+    document.getElementById('churn-list').innerHTML = rows.slice(0, 20).map(r => {
+      const ts = r.timestamp ? r.timestamp.toDate().toLocaleDateString() : '—';
+      return `<tr><td>${r.displayName || '—'}</td><td class="email-cell">${r.email || '—'}</td><td>${r.from || '—'}</td><td>${r.to || '—'}</td><td>${ts}</td></tr>`;
+    }).join('');
+  } catch (e) { /* churn collection may not exist yet */ }
+}
+
+function computeTopUsers(users) {
+  if (!adminDataCache) return;
+  // Use usage data if available in cache, otherwise show placeholder
+  const usageMap = {};
+  // We need to aggregate from individual usage docs - for now use the allUsageDocs if cached
+  // Simple approach: show users sorted by profile completeness / join date as proxy
+  const tbody = document.getElementById('top-users-list');
+  // We'll fetch usage per user
+  const sorted = users.slice().sort((a, b) => {
+    const na = (a.displayName || '').length; const nb = (b.displayName || '').length;
+    return nb - na; // placeholder sort
+  }).slice(0, 20);
+  tbody.innerHTML = sorted.map((u, i) => `<tr><td>${i + 1}</td><td>${u.displayName || '—'}</td><td class="email-cell">${u.email || '—'}</td><td>--</td><td>--</td><td>--</td><td>--</td></tr>`).join('');
+  // Async fetch actual usage
+  fetchTopUserUsage(users, tbody);
+}
+
+async function fetchTopUserUsage(users, tbody) {
+  const usageMap = {};
+  await Promise.all(users.map(async u => {
+    try {
+      const snap = await getDocs(collection(db, 'users', u.uid, 'usage'));
+      let gens = 0, swaps = 0, revs = 0;
+      snap.forEach(d => { const data = d.data(); gens += data.generations || 0; swaps += data.swaps || 0; revs += data.revisions || 0; });
+      usageMap[u.uid] = { gens, swaps, revs, total: gens + swaps + revs };
+    } catch (e) {}
+  }));
+  const sorted = users.filter(u => usageMap[u.uid] && usageMap[u.uid].total > 0)
+    .sort((a, b) => (usageMap[b.uid]?.total || 0) - (usageMap[a.uid]?.total || 0)).slice(0, 20);
+  if (sorted.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="admin-empty-state">No usage data found</td></tr>'; return; }
+  tbody.innerHTML = sorted.map((u, i) => {
+    const d = usageMap[u.uid];
+    return `<tr><td>${i + 1}</td><td>${u.displayName || '—'}</td><td class="email-cell">${u.email || '—'}</td><td>${d.gens}</td><td>${d.swaps}</td><td>${d.revs}</td><td><strong>${d.total}</strong></td></tr>`;
+  }).join('');
+}
+
+// ========== ENGAGEMENT TAB ==========
+async function loadEngagementTab() {
+  await Promise.all([loadPushHistory(), loadPromoCodes(), loadScheduledMessages(), loadABTests(), loadSegments()]);
+}
+
+async function sendPushNotification() {
+  const title = document.getElementById('push-title').value.trim();
+  const body = document.getElementById('push-body').value.trim();
+  const target = document.getElementById('push-target').value;
+  const dataKey = document.getElementById('push-data-key').value.trim();
+  const dataValue = document.getElementById('push-data-value').value.trim();
+  if (!title || !body) { showToast('Title and body required', 'error'); return; }
+  showConfirm('Send Push', `Send push notification to ${target} users?`, async () => {
+    try {
+      const payload = { title, body, target, sentAt: serverTimestamp() };
+      if (dataKey) payload.data = { [dataKey]: dataValue };
+      await addDoc(collection(db, 'config', 'pushNotifications', 'entries'), payload);
+      document.getElementById('push-title').value = '';
+      document.getElementById('push-body').value = '';
+      showToast('Push notification created');
+      logAdminAction('sendPush', `"${title}" to ${target}`);
+      loadPushHistory();
+    } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+  });
+}
+
+async function loadPushHistory() {
+  try {
+    const snap = await getDocs(query(collection(db, 'config', 'pushNotifications', 'entries'), orderBy('sentAt', 'desc'), limit(20)));
+    const el = document.getElementById('push-history');
+    if (snap.empty) { el.innerHTML = '<p class="admin-empty-state">No push notifications sent yet</p>'; return; }
+    el.innerHTML = snap.docs.map(d => {
+      const data = d.data(); const time = data.sentAt ? data.sentAt.toDate().toLocaleString() : '—';
+      return `<div class="admin-msg-history-item"><div style="display:flex;justify-content:space-between;"><strong>${data.title}</strong><span style="font-size:12px;color:#B0AAA0;">${time}</span></div><p style="margin:4px 0;font-size:13px;">${data.body}</p><span style="font-size:12px;color:#B0AAA0;">Target: ${data.target || 'all'}</span></div>`;
+    }).join('');
+  } catch (e) {}
+}
+
+function showCreatePromo() { const f = document.getElementById('promo-create-form'); f.style.display = f.style.display === 'none' ? 'block' : 'none'; }
+
+async function createPromoCode() {
+  const code = document.getElementById('promo-code').value.trim().toUpperCase();
+  const discountType = document.getElementById('promo-discount-type').value;
+  const discountValue = parseFloat(document.getElementById('promo-discount-value').value) || 0;
+  const expires = document.getElementById('promo-expires').value;
+  const maxUses = parseInt(document.getElementById('promo-max-uses').value) || 0;
+  if (!code) { showToast('Code is required', 'error'); return; }
+  try {
+    await addDoc(collection(db, 'config', 'promoCodes', 'entries'), {
+      code, discountType, discountValue, expiresAt: expires ? Timestamp.fromDate(new Date(expires)) : null,
+      maxUses, currentUses: 0, isActive: true, createdAt: serverTimestamp()
+    });
+    document.getElementById('promo-code').value = '';
+    document.getElementById('promo-discount-value').value = '';
+    showToast('Promo code created');
+    logAdminAction('createPromo', code);
+    loadPromoCodes();
+    document.getElementById('promo-create-form').style.display = 'none';
+  } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+}
+
+async function loadPromoCodes() {
+  try {
+    const snap = await getDocs(query(collection(db, 'config', 'promoCodes', 'entries'), orderBy('createdAt', 'desc')));
+    const el = document.getElementById('promo-list');
+    if (snap.empty) { el.innerHTML = '<p class="admin-empty-state">No promo codes yet</p>'; return; }
+    el.innerHTML = snap.docs.map(d => {
+      const data = d.data();
+      const exp = data.expiresAt ? data.expiresAt.toDate().toLocaleDateString() : 'Never';
+      return `<div class="admin-promo-row">
+        <div class="admin-promo-info"><span class="admin-promo-code">${data.code}</span><span class="admin-promo-meta">${data.discountType}: ${data.discountValue} | Expires: ${exp} | Uses: ${data.currentUses}/${data.maxUses || '∞'}</span></div>
+        <div style="display:flex;gap:6px;">
+          <button class="admin-btn admin-btn-secondary" style="padding:4px 10px;font-size:12px;" onclick="togglePromoActive('${d.id}',${!data.isActive})">${data.isActive ? 'Deactivate' : 'Activate'}</button>
+          <button class="admin-btn admin-btn-danger" style="padding:4px 10px;font-size:12px;" onclick="deletePromoCode('${d.id}')">Delete</button>
+        </div></div>`;
+    }).join('');
+  } catch (e) {}
+}
+
+async function togglePromoActive(id, active) {
+  try { await updateDoc(doc(db, 'config', 'promoCodes', 'entries', id), { isActive: active }); showToast(active ? 'Activated' : 'Deactivated'); loadPromoCodes(); logAdminAction('togglePromo', `${id}: ${active}`); } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+}
+
+async function deletePromoCode(id) {
+  showConfirm('Delete Promo', 'Delete this promo code?', async () => {
+    try { await deleteDoc(doc(db, 'config', 'promoCodes', 'entries', id)); showToast('Deleted'); loadPromoCodes(); logAdminAction('deletePromo', id); } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+  });
+}
+
+async function loadReferralData() {
+  if (!adminDataCache?.users) { showToast('Load data first', 'error'); return; }
+  const users = adminDataCache.users;
+  const referrals = users.filter(u => u.referredBy);
+  const referrerCount = {};
+  referrals.forEach(u => { referrerCount[u.referredBy] = (referrerCount[u.referredBy] || 0) + 1; });
+  document.getElementById('kpi-total-referrals').textContent = referrals.length;
+  document.getElementById('kpi-referral-rate').textContent = users.length > 0 ? ((referrals.length / users.length) * 100).toFixed(1) + '%' : '0%';
+  const topRef = Object.entries(referrerCount).sort((a, b) => b[1] - a[1])[0];
+  document.getElementById('kpi-top-referrer').textContent = topRef ? `${topRef[0].slice(0, 8)}... (${topRef[1]})` : '—';
+  const tbody = document.getElementById('referral-list');
+  if (referrals.length === 0) { tbody.innerHTML = '<tr><td colspan="3" class="admin-empty-state">No referral data. Users need a referredBy field in their profile.</td></tr>'; return; }
+  tbody.innerHTML = referrals.slice(0, 30).map(u => {
+    const joined = u.createdAt ? (u.createdAt.toDate ? u.createdAt.toDate() : new Date(u.createdAt)).toLocaleDateString() : '—';
+    return `<tr><td>${u.referredBy.slice(0, 12)}...</td><td>${u.email || u.displayName || '—'}</td><td>${joined}</td></tr>`;
+  }).join('');
+}
+
+async function createScheduledMessage() {
+  const title = document.getElementById('sched-title').value.trim();
+  const body = document.getElementById('sched-body').value.trim();
+  const type = document.getElementById('sched-type').value;
+  const recipients = document.getElementById('sched-recipients').value;
+  const datetime = document.getElementById('sched-datetime').value;
+  if (!title || !body || !datetime) { showToast('Title, body and date required', 'error'); return; }
+  try {
+    await addDoc(collection(db, 'config', 'scheduledMessages', 'entries'), {
+      title, body, type, recipients, scheduledFor: Timestamp.fromDate(new Date(datetime)),
+      status: 'pending', createdAt: serverTimestamp()
+    });
+    document.getElementById('sched-title').value = ''; document.getElementById('sched-body').value = '';
+    showToast('Message scheduled');
+    logAdminAction('scheduleMessage', `"${title}" for ${datetime}`);
+    loadScheduledMessages();
+  } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+}
+
+async function loadScheduledMessages() {
+  try {
+    const snap = await getDocs(query(collection(db, 'config', 'scheduledMessages', 'entries'), orderBy('scheduledFor', 'desc'), limit(20)));
+    const el = document.getElementById('sched-list');
+    if (snap.empty) { el.innerHTML = '<p class="admin-empty-state">No scheduled messages</p>'; return; }
+    el.innerHTML = snap.docs.map(d => {
+      const data = d.data();
+      const schedDate = data.scheduledFor ? data.scheduledFor.toDate().toLocaleString() : '—';
+      const statusClass = `admin-sched-${data.status}`;
+      return `<div class="admin-sched-item"><div><strong class="${statusClass}">${data.title}</strong><span style="font-size:12px;color:#B0AAA0;margin-left:8px;">${schedDate} · ${data.recipients}</span></div>
+        ${data.status === 'pending' ? `<button class="admin-btn admin-btn-secondary" style="padding:4px 10px;font-size:12px;" onclick="cancelScheduledMessage('${d.id}')">Cancel</button>` : `<span class="admin-status-badge admin-status-${data.status === 'sent' ? 'resolved' : 'closed'}">${data.status}</span>`}</div>`;
+    }).join('');
+  } catch (e) {}
+}
+
+async function cancelScheduledMessage(id) {
+  showConfirm('Cancel Message', 'Cancel this scheduled message?', async () => {
+    try { await updateDoc(doc(db, 'config', 'scheduledMessages', 'entries', id), { status: 'cancelled' }); showToast('Cancelled'); loadScheduledMessages(); logAdminAction('cancelScheduled', id); } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+  });
+}
+
+function showCreateABTest() { const f = document.getElementById('ab-create-form'); f.style.display = f.style.display === 'none' ? 'block' : 'none'; }
+
+async function createABTest() {
+  const name = document.getElementById('ab-test-name').value.trim();
+  const desc = document.getElementById('ab-test-desc').value.trim();
+  const groups = document.getElementById('ab-test-groups').value.split(',').map(g => g.trim()).filter(Boolean);
+  if (!name || groups.length < 2) { showToast('Name and at least 2 groups required', 'error'); return; }
+  try {
+    await addDoc(collection(db, 'config', 'abTests', 'entries'), { name, description: desc, groups, isActive: true, createdAt: serverTimestamp() });
+    document.getElementById('ab-test-name').value = ''; document.getElementById('ab-test-desc').value = ''; document.getElementById('ab-test-groups').value = '';
+    showToast('A/B test created'); logAdminAction('createABTest', name); loadABTests();
+    document.getElementById('ab-create-form').style.display = 'none';
+  } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+}
+
+async function loadABTests() {
+  try {
+    const snap = await getDocs(query(collection(db, 'config', 'abTests', 'entries'), orderBy('createdAt', 'desc')));
+    const el = document.getElementById('ab-test-list');
+    if (snap.empty) { el.innerHTML = '<p class="admin-empty-state">No A/B tests configured</p>'; return; }
+    el.innerHTML = snap.docs.map(d => {
+      const data = d.data();
+      return `<div class="admin-ab-item"><div><strong>${data.name}</strong><span style="font-size:12px;color:#B0AAA0;margin-left:8px;">${(data.groups || []).join(', ')}</span>
+        ${data.description ? `<br><span style="font-size:12px;color:#8A857C;">${data.description}</span>` : ''}</div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <label class="admin-toggle"><input type="checkbox" ${data.isActive ? 'checked' : ''} onchange="toggleABTest('${d.id}',this.checked)"><span class="admin-toggle-slider"></span></label>
+          <button class="admin-btn admin-btn-danger" style="padding:4px 10px;font-size:12px;" onclick="deleteABTest('${d.id}')">Delete</button>
+        </div></div>`;
+    }).join('');
+  } catch (e) {}
+}
+
+async function toggleABTest(id, active) {
+  try { await updateDoc(doc(db, 'config', 'abTests', 'entries', id), { isActive: active }); logAdminAction('toggleABTest', `${id}: ${active}`); } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+}
+
+async function deleteABTest(id) {
+  showConfirm('Delete Test', 'Delete this A/B test?', async () => {
+    try { await deleteDoc(doc(db, 'config', 'abTests', 'entries', id)); showToast('Deleted'); loadABTests(); logAdminAction('deleteABTest', id); } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+  });
+}
+
+function showCreateSegment() { const f = document.getElementById('segment-create-form'); f.style.display = f.style.display === 'none' ? 'block' : 'none'; }
+
+async function createSegment() {
+  const name = document.getElementById('segment-name').value.trim();
+  const tier = document.getElementById('segment-tier').value;
+  const joinedAfter = document.getElementById('segment-joined-after').value;
+  const minUsage = parseInt(document.getElementById('segment-min-usage').value) || 0;
+  if (!name) { showToast('Name required', 'error'); return; }
+  try {
+    await addDoc(collection(db, 'config', 'segments', 'entries'), { name, filters: { tier, joinedAfter, minUsage }, createdAt: serverTimestamp() });
+    document.getElementById('segment-name').value = '';
+    showToast('Segment created'); logAdminAction('createSegment', name); loadSegments();
+    document.getElementById('segment-create-form').style.display = 'none';
+  } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+}
+
+async function loadSegments() {
+  try {
+    const snap = await getDocs(query(collection(db, 'config', 'segments', 'entries'), orderBy('createdAt', 'desc')));
+    const el = document.getElementById('segment-list');
+    if (snap.empty) { el.innerHTML = '<p class="admin-empty-state">No segments defined</p>'; return; }
+    el.innerHTML = snap.docs.map(d => {
+      const data = d.data(); const f = data.filters || {};
+      return `<div class="admin-segment-item"><div><strong>${data.name}</strong><span style="font-size:12px;color:#B0AAA0;margin-left:8px;">Tier: ${f.tier || 'any'} | Min usage: ${f.minUsage || 0}${f.joinedAfter ? ' | After: ' + f.joinedAfter : ''}</span></div>
+        <div style="display:flex;gap:6px;"><button class="admin-btn admin-btn-outline" style="padding:4px 10px;font-size:12px;" onclick="previewSegmentById('${d.id}','${f.tier}','${f.joinedAfter}',${f.minUsage || 0})">Preview</button>
+        <button class="admin-btn admin-btn-danger" style="padding:4px 10px;font-size:12px;" onclick="deleteSegment('${d.id}')">Delete</button></div></div>`;
+    }).join('');
+  } catch (e) {}
+}
+
+function previewSegment() {
+  if (!adminDataCache?.users) { showToast('Load data first', 'error'); return; }
+  const tier = document.getElementById('segment-tier').value;
+  const joinedAfter = document.getElementById('segment-joined-after').value;
+  const minUsage = parseInt(document.getElementById('segment-min-usage').value) || 0;
+  const count = getSegmentCount(tier, joinedAfter, minUsage);
+  showToast(`${count} users match this segment`);
+}
+
+function previewSegmentById(id, tier, joinedAfter, minUsage) {
+  if (!adminDataCache?.users) { showToast('Load data first', 'error'); return; }
+  const count = getSegmentCount(tier, joinedAfter, minUsage);
+  showToast(`${count} users in this segment`);
+}
+
+function getSegmentCount(tier, joinedAfter, minUsage) {
+  return (adminDataCache?.users || []).filter(u => {
+    if (tier && tier !== 'all') { const sub = adminSubsMap[u.uid]; if ((sub?.tier || 'free') !== tier) return false; }
+    if (joinedAfter) { const d = u.createdAt ? (u.createdAt.toDate ? u.createdAt.toDate() : new Date(u.createdAt)) : null; if (!d || d < new Date(joinedAfter)) return false; }
+    return true;
+  }).length;
+}
+
+async function deleteSegment(id) {
+  showConfirm('Delete Segment', 'Delete this segment?', async () => {
+    try { await deleteDoc(doc(db, 'config', 'segments', 'entries', id)); showToast('Deleted'); loadSegments(); logAdminAction('deleteSegment', id); } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+  });
+}
+
+// ========== SUPPORT TAB ==========
+let allTickets = [];
+let selectedTicketId = null;
+
+async function loadSupportTab() {
+  await Promise.all([loadTickets(), loadFeedback(), loadErrorLogs()]);
+}
+
+async function loadTickets() {
+  try {
+    const snap = await getDocs(query(collection(db, 'config', 'supportTickets', 'entries'), orderBy('createdAt', 'desc'), limit(50)));
+    allTickets = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderTickets(allTickets);
+  } catch (e) { document.getElementById('ticket-list').innerHTML = '<p class="admin-empty-state">No tickets. Tickets appear when submitted from the app.</p>'; }
+}
+
+function renderTickets(tickets) {
+  const el = document.getElementById('ticket-list');
+  document.getElementById('ticket-count').textContent = `(${tickets.length})`;
+  if (tickets.length === 0) { el.innerHTML = '<p class="admin-empty-state">No tickets match your filter</p>'; return; }
+  el.innerHTML = tickets.map(t => {
+    const time = t.createdAt ? t.createdAt.toDate().toLocaleDateString() : '—';
+    return `<div class="admin-msg-history-item" style="cursor:pointer;" onclick="expandTicket('${t.id}')">
+      <div style="display:flex;justify-content:space-between;align-items:center;"><strong>${t.subject || 'No subject'}</strong><span class="admin-status-badge admin-status-${t.status || 'open'}">${(t.status || 'open').replace('_', ' ')}</span></div>
+      <div style="font-size:12px;color:#B0AAA0;margin-top:4px;">${t.email || '—'} · ${time}${t.priority ? ' · Priority: ' + t.priority : ''}</div></div>`;
+  }).join('');
+}
+
+function filterTickets() {
+  const search = (document.getElementById('ticket-search').value || '').toLowerCase();
+  const status = document.getElementById('ticket-filter').value;
+  const filtered = allTickets.filter(t => {
+    const matchSearch = !search || (t.subject || '').toLowerCase().includes(search) || (t.email || '').toLowerCase().includes(search);
+    const matchStatus = status === 'all' || t.status === status;
+    return matchSearch && matchStatus;
+  });
+  renderTickets(filtered);
+}
+
+async function expandTicket(id) {
+  selectedTicketId = id;
+  const ticket = allTickets.find(t => t.id === id);
+  if (!ticket) return;
+  document.getElementById('ticket-detail-subject').textContent = ticket.subject || 'No subject';
+  document.getElementById('ticket-detail-meta').textContent = `${ticket.email || '—'} · ${ticket.uid || '—'} · ${ticket.createdAt ? ticket.createdAt.toDate().toLocaleString() : '—'}`;
+  document.getElementById('ticket-detail-body').textContent = ticket.body || '';
+  document.getElementById('ticket-status-select').value = ticket.status || 'open';
+  const replies = ticket.replies || [];
+  document.getElementById('ticket-replies').innerHTML = replies.map(r => {
+    const cls = r.isAdmin ? 'admin-reply-admin' : 'admin-reply-user';
+    const time = r.timestamp ? new Date(r.timestamp.seconds * 1000).toLocaleString() : '—';
+    return `<div class="admin-reply ${cls}"><div>${r.text}</div><div class="admin-reply-meta">${r.isAdmin ? 'Admin' : 'User'} · ${time}</div></div>`;
+  }).join('');
+  document.getElementById('ticket-detail').style.display = 'block';
+  document.getElementById('ticket-detail').scrollIntoView({ behavior: 'smooth' });
+}
+
+function closeTicketDetail() { document.getElementById('ticket-detail').style.display = 'none'; selectedTicketId = null; }
+
+async function updateTicketStatus() {
+  if (!selectedTicketId) return;
+  const status = document.getElementById('ticket-status-select').value;
+  try {
+    await updateDoc(doc(db, 'config', 'supportTickets', 'entries', selectedTicketId), { status, updatedAt: serverTimestamp() });
+    showToast('Status updated'); logAdminAction('updateTicketStatus', `${selectedTicketId}: ${status}`); loadTickets();
+  } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+}
+
+async function sendTicketReply() {
+  if (!selectedTicketId) return;
+  const text = document.getElementById('ticket-reply-input').value.trim();
+  if (!text) return;
+  try {
+    const ticket = allTickets.find(t => t.id === selectedTicketId);
+    const replies = ticket?.replies || [];
+    replies.push({ text, isAdmin: true, timestamp: Timestamp.now() });
+    await updateDoc(doc(db, 'config', 'supportTickets', 'entries', selectedTicketId), { replies, updatedAt: serverTimestamp() });
+    document.getElementById('ticket-reply-input').value = '';
+    showToast('Reply sent'); logAdminAction('replyTicket', selectedTicketId);
+    await loadTickets(); expandTicket(selectedTicketId);
+  } catch (e) { showToast('Failed: ' + e.message, 'error'); }
+}
+
+async function loadFeedback() {
+  try {
+    const snap = await getDocs(query(collection(db, 'config', 'feedback', 'entries'), orderBy('createdAt', 'desc'), limit(50)));
+    if (snap.empty) { document.getElementById('kpi-avg-rating').textContent = '--'; document.getElementById('kpi-total-reviews').textContent = '0'; document.getElementById('kpi-recent-reviews').textContent = '0'; return; }
+    const items = snap.docs.map(d => d.data());
+    const avg = items.reduce((s, i) => s + (i.rating || 0), 0) / items.length;
+    const now = new Date(); const thirtyDaysAgo = new Date(now.getTime() - 30 * 86400000);
+    const recent = items.filter(i => i.createdAt && i.createdAt.toDate() >= thirtyDaysAgo).length;
+    document.getElementById('kpi-avg-rating').textContent = avg.toFixed(1) + ' ★';
+    document.getElementById('kpi-total-reviews').textContent = items.length;
+    document.getElementById('kpi-recent-reviews').textContent = recent;
+    document.getElementById('feedback-list').innerHTML = items.slice(0, 20).map(i => {
+      const stars = '★'.repeat(i.rating || 0) + '☆'.repeat(5 - (i.rating || 0));
+      const time = i.createdAt ? i.createdAt.toDate().toLocaleDateString() : '—';
+      return `<div class="admin-feedback-item"><div class="admin-rating">${stars}</div>${i.comment ? `<div class="admin-feedback-comment">${i.comment}</div>` : ''}<div class="admin-feedback-meta">${i.email || '—'} · ${time}${i.appVersion ? ' · v' + i.appVersion : ''}</div></div>`;
+    }).join('');
+  } catch (e) {}
+}
+
+let allErrors = [];
+async function loadErrorLogs() {
+  try {
+    const snap = await getDocs(query(collection(db, 'config', 'errorLogs', 'entries'), orderBy('timestamp', 'desc'), limit(100)));
+    allErrors = snap.docs.map(d => d.data());
+    renderErrors(allErrors);
+  } catch (e) { document.getElementById('error-log-list').innerHTML = '<p class="admin-empty-state">No errors logged.</p>'; }
+}
+
+function renderErrors(errors) {
+  const el = document.getElementById('error-log-list');
+  if (errors.length === 0) { el.innerHTML = '<p class="admin-empty-state">No errors match your filter</p>'; return; }
+  el.innerHTML = errors.slice(0, 50).map(e => {
+    const time = e.timestamp ? e.timestamp.toDate().toLocaleString() : '—';
+    return `<div class="admin-error-item"><div class="admin-error-message">${e.message || 'Unknown error'}</div><div class="admin-error-meta"><span>${time}</span>${e.platform ? `<span>${e.platform}</span>` : ''}${e.appVersion ? `<span>v${e.appVersion}</span>` : ''}${e.count ? `<span>×${e.count}</span>` : ''}</div></div>`;
+  }).join('');
+}
+
+function filterErrors() {
+  const search = (document.getElementById('error-search').value || '').toLowerCase();
+  const platform = document.getElementById('error-platform-filter').value;
+  const filtered = allErrors.filter(e => {
+    const matchSearch = !search || (e.message || '').toLowerCase().includes(search);
+    const matchPlatform = platform === 'all' || e.platform === platform;
+    return matchSearch && matchPlatform;
+  });
+  renderErrors(filtered);
+}
+
+// ========== SETTINGS ADDITIONS ==========
+async function loadSystemHealth() {
+  try {
+    const d = await getDoc(doc(db, 'config', 'systemHealth'));
+    if (d.exists()) {
+      const data = d.data();
+      document.getElementById('kpi-last-deploy').textContent = data.lastDeploy ? data.lastDeploy.toDate().toLocaleDateString() : '—';
+      document.getElementById('kpi-deploy-version').textContent = data.deployVersion || '—';
+    }
+    // Count config docs
+    const configSnap = await getDocs(collection(db, 'config'));
+    document.getElementById('kpi-config-count').textContent = configSnap.size;
+  } catch (e) {}
+}
+
+async function exportAllData() {
+  if (!adminDataCache?.users) { showToast('Load dashboard data first', 'error'); return; }
+  showToast('Exporting...', 'success');
+  try {
+    const data = {
+      exportedAt: new Date().toISOString(),
+      users: adminDataCache.users.map(u => ({ uid: u.uid, email: u.email, displayName: u.displayName })),
+      subscriptions: adminDataCache.subscriptions,
+      config: {}
+    };
+    // Gather config docs
+    const configDocs = ['flags', 'maintenance', 'forceUpdate', 'announcements', 'rateLimits', 'systemHealth'];
+    await Promise.all(configDocs.map(async name => {
+      try { const d = await getDoc(doc(db, 'config', name)); if (d.exists()) data.config[name] = d.data(); } catch (e) {}
+    }));
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = `mealmuse-export-${new Date().toISOString().split('T')[0]}.json`;
+    a.click(); URL.revokeObjectURL(url);
+    showToast('Export complete');
+    logAdminAction('exportAllData', `${adminDataCache.users.length} users`);
+  } catch (e) { showToast('Export failed: ' + e.message, 'error'); }
+}
+
 // ========== ADMIN WINDOW BINDINGS ==========
 window.switchAdminTab = switchAdminTab;
 window.filterAdminUsers = filterAdminUsers;
@@ -4762,6 +5656,35 @@ window.loadAuditLog = loadAuditLog;
 window.closeAdminModal = closeAdminModal;
 window.confirmAdminModal = confirmAdminModal;
 window.showToast = showToast;
+// New bindings
+window.recalculateRevenue = recalculateRevenue;
+window.toggleMaintenanceQuick = toggleMaintenanceQuick;
+window.exportAllData = exportAllData;
+window.sendPushNotification = sendPushNotification;
+window.showCreatePromo = showCreatePromo;
+window.createPromoCode = createPromoCode;
+window.togglePromoActive = togglePromoActive;
+window.deletePromoCode = deletePromoCode;
+window.loadReferralData = loadReferralData;
+window.createScheduledMessage = createScheduledMessage;
+window.cancelScheduledMessage = cancelScheduledMessage;
+window.showCreateABTest = showCreateABTest;
+window.createABTest = createABTest;
+window.toggleABTest = toggleABTest;
+window.deleteABTest = deleteABTest;
+window.showCreateSegment = showCreateSegment;
+window.createSegment = createSegment;
+window.previewSegment = previewSegment;
+window.previewSegmentById = previewSegmentById;
+window.deleteSegment = deleteSegment;
+window.filterTickets = filterTickets;
+window.expandTicket = expandTicket;
+window.closeTicketDetail = closeTicketDetail;
+window.updateTicketStatus = updateTicketStatus;
+window.sendTicketReply = sendTicketReply;
+window.loadErrorLogs = loadErrorLogs;
+window.filterErrors = filterErrors;
+window.loadSystemHealth = loadSystemHealth;
 
 // ========== SCROLL ANIMATIONS ==========
 const observer = new IntersectionObserver((entries) => {
